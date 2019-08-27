@@ -1,4 +1,5 @@
-#####元素筛选
+### 元素筛选
+
 ```
 nextAll()           /*后边全部元素*/
 prevAll()           /*前边所有元素*/
@@ -12,13 +13,15 @@ input[type="checkbox"]       /*标签[属性名='属性值']*/
 input[type="radio"]:checked	/*复选框选中*/
 option:selected		       /*下拉列表选中的 option*/
 ```
-#####input复选框是否选中
+### input复选框是否选中
+
 ```
 $("input").is(":checked")        /*返回 true/false*/
 $("input").prop('checked')      /*返回 true/false*/
 $("input").attr('checked')     /*返回 xx/undefined 属性判断，需添加checked 属性*/
 ```
-#####css样式
+### css样式
+
 ```
 border: 1px dashed #F00		    /*边框为虚线*/
 letter-spacing  			    /*字间距*/
@@ -34,7 +37,8 @@ vertical-align:middle/text-bottom/text-top/bottom……
 /*:hover可操纵该元素及其子元素，若想操作不相关两种元则要用 :hover+*/
 :hover(:hover)		
 ```
-#####设置宽高比
+### 设置宽高比
+
 ```
 width:100%;
 height:0;
@@ -46,21 +50,26 @@ padding-bottom:31.25%;
 width:100%;
 height:31.25vw;
 ```
-#####flex布局
+### flex布局
+
 写在父元素上，子元素会居中
+
 ```
 display: flex;	            		/*定位（写在父元素中）*/
 justify-content:center;     	  /*水平居中*/
 align-items:Center;	        	/*垂直居中 */
 ```
-#####文字超出隐藏
-单行文本溢出显示省略号
+### 文字超出隐藏
+
+#### 单行文本溢出显示省略号
+
 ```
 overflow: hidden;               /*把超出的内容进行隐藏*/
 white-space: nowrap;          /*设置内容不换行*/
 text-overflow: ellipsis;    /*设置超出内容为省略号*/
 ```
-多行文本溢出显示省略号
+#### 多行文本溢出显示省略号
+
 ```
 overflow: hidden;
 text-overflow: ellipsis;
@@ -68,24 +77,34 @@ display: -webkit-box;
 -webkit-line-clamp: 3;     /*设置行数*/
 -webkit-box-orient: vertical;
 ```
-文字超出换行
+#### 文字超出换行
+
 ```
 word-break:break-all;     /*写一个就可以*/
-word-wrap:break-word；
+word-wrap:break-word;
 ```
-#####三角制作方法(利用边框的宽度去实现)
+### 三角制作方法(利用边框的宽度去实现)
+
 ```
 border-top: 50px solid transparent;
 border-bottom: 50px solid transparent;
 border-right: 50px solid red;/*箭头背景颜色，使其颜色与整体颜色一致*/
 border-left: 50px solid transparent;  
 ```
-说明：transparent—>透明色
-  画三角的时候，省略对边（画左三角，不用写右边）；
- 边宽即为三角宽
-外层div不要设置高（设置就设成0，或等边宽）
-宽最好设成0
-#####checkbox选中样式修改
+说明：
+
+- transparent—>透明色
+
+- 画三角的时候，省略对边（画左三角，不用写右边）
+
+- 边宽即为三角宽
+
+- 外层div不要设置高（设置就设成0，或等边宽）
+
+- 宽最好设成0
+
+### checkbox选中样式修改
+
 ```
 input[type="checkbox"]{
     width:15px;
@@ -119,7 +138,8 @@ input[type="checkbox"]:checked::before{
     font-weight: bold;
 }
 ```
-#####其它
+### 其它
+
 ```
 accept="image/*"					 //input只能上传图片
 accept="image/gif, image/jpeg"      //限制图片类型
@@ -131,7 +151,8 @@ $('#content_box').load('/mana/weekly/write_admin.html');	//引入html页面
 window.location.reload();		//刷新页面
 blur						   //失去焦点事件
 ```
-#####回车执行
+### 回车执行
+
 ```
 $(document).keyup(function(event){
     if(event.keyCode ==13){
@@ -139,8 +160,10 @@ $(document).keyup(function(event){
     }
 });
 ```
-#####获取url参数
+### 获取url参数
+
 方法1：
+
 ```
 //方法封装
 function GetRequest() { 
@@ -176,7 +199,8 @@ function getUrlParam(key) {
 //调用
 getUrlParam("参数名");
 ```
-#####双层ul展开
+### 双层ul展开
+
 ```
 function liLa_title(e){
     if($(e).find("ul").css("display")=="none"){
@@ -188,7 +212,8 @@ function liLa_title(e){
     }
 }
 ```
-#####文字颜色渐变
+### 文字颜色渐变
+
 ```
 p{
     /*渐变背景*/
@@ -227,7 +252,8 @@ p{
     }
 }
 ```
-#####点击定位（滚动条滚动）
+### 点击定位（滚动条滚动）
+
 ```
 function scrollToLocation() {
     var mainContainer = $('#thisMainPanel'),
@@ -245,7 +271,8 @@ function scrollToLocation() {
     }, 2000);//2秒滑动到指定位置
 }
 ```
-#####JQ事件绑定
+### JQ事件绑定
+
 ```
 // 拿到所有的a标签，全部绑定事件，并且自动解决浏览器兼容问题
 $("a").on("click", removerItem);
@@ -256,12 +283,15 @@ $("#id").on("click", addItem)
 //例
 $("#cut_right").on("click",function (){})
 ```
- 注意:jqery绑定事件的时候 \$(this)代表当前的标签，通过$(this)就可以实现给多个标签绑定相同事件，达到可以操作当前点击的标签;如果不使用jQuery，原生js需要使用this.getArrribute('ga')可以获得当前点击的标签的ga属性的值
-#####JQ动画
+注意:jqery绑定事件的时候 \$(this)代表当前的标签，通过$(this)就可以实现给多个标签绑定相同事件，达到可以操作当前点击的标签;如果不使用jQuery，原生js需要使用this.getArrribute('ga')可以获得当前点击的标签的ga属性的值
+
+### JQ动画
+
 ```
 $("div").animate({left:'250px'});
 ```
-#####input日期修改
+### input日期修改
+
 ```
 ::-webkit-datetime-edit // 控制编辑区域的
 ::-webkit-datetime-edit-fields-wrapper // 控制年月日这个区域的
@@ -273,7 +303,8 @@ $("div").animate({left:'250px'});
 ::-webkit-calendar-picker-indicator // 这是控制下拉小箭头的
 ::-webkit-clear-button //这是控制清除按钮的
 ```
-#####兼容性写法
+### 兼容性写法
+
 ```
 -webkit-		 /* Safari 和 Chrome */
 -moz-		/* Firefox */
