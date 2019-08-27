@@ -20,12 +20,12 @@
 
 使用 Chrome 开发者工具分析页面性能的步骤如下：
 
-①打开 Chrome 开发者工具，切换到 Performance 面板；
+① 打开 Chrome 开发者工具，切换到 Performance 面板；
 
-②点击 Record 开始录制；
+② 点击 Record 开始录制；
 
-③刷新页面或展开某个节点；
+③ 刷新页面或展开某个节点；
 
-④点击 Stop 停止录制。
+④ 点击 Stop 停止录制。
 
 #### [上一篇](VueOptimize2.md)
