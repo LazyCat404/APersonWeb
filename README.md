@@ -1,7 +1,7 @@
 # APersonWeb
-前端知识整理
+前端知识整理,欢迎补充（持续更新ing）
 
-###目录
+### 目录
 
 #### [CSS](CSS/README.md)
 
