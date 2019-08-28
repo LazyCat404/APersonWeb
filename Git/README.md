@@ -60,6 +60,7 @@ git branch --set-upstream-to=origin/本地分支名 远程分支名
 git push -f origin master
 ```
 执行上边的命令，将本地仓库强行推送到远程，如果你使用的是VSCode可用通过它的git管理功能，通过点击‘拉去自……’将远程仓库内容更新到本地。
+
 2. 无法从远程拉去
 
 ![拉取错误](https://upload-images.jianshu.io/upload_images/17728182-3403a4b8f6398f34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
