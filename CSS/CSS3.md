@@ -1,4 +1,4 @@
-# 是最新的 CSS 标准
+# 最新的 CSS 标准
 
 >其实CS3在平时我们就会经常用到，但是很多时候经常搞不懂到底那些是CS3傻傻的分不清楚，下面咱们就好好掰扯掰扯。
 
@@ -140,44 +140,44 @@ PS: 1. 进行所方变换时子元素也进行相应变换；
 > Internet Explorer 9 以及更早的版本，不支持 transition 属性;
 JavaScript 语法：object.style.transition="width 2s"
 
-- `transition` : (简写属性)
+`transition` : 过渡动画简写属性，其属性值如下，按顺序！
 
-    1. `transition-property` : 属性名（width、height……）,多个属性时用‘,’隔开【必要值】。除了属性名外，它的值也可以是`all`表示所有属性；`none`表示没有属性获得过渡效果。
+1. `transition-property` : 属性名（width、height……）,多个属性时用‘,’隔开【必要值】。除了属性名外，它的值也可以是`all`表示所有属性；`none`表示没有属性获得过渡效果。
 
-    2. `transition-duration` : 过度需要完成的时间,单位是秒【必要值】。
+2. `transition-duration` : 过度需要完成的时间,单位是秒【必要值】。
 
-    3. `transition-timing-function` : 速度曲线
+3. `transition-timing-function` : 速度曲线
 
-        - `linear`：匀速（cubic-bezier(0,0,1,1)）
+    - `linear`：匀速（cubic-bezier(0,0,1,1)）
 
-        ![linear](../Imgs/CSS/linear.png)
+    ![linear](../Imgs/CSS/linear.png)
 
-        - `ease`：先慢后快（cubic-bezier(0.25,0.1,0.25,1)）
+    - `ease`：先慢后快（cubic-bezier(0.25,0.1,0.25,1)）
 
-        ![ease](../Imgs/CSS/ease.png)
+    ![ease](../Imgs/CSS/ease.png)
 
-        - `ease-in`：慢速开始（cubic-bezier(0.42,0,1,1)）
+    - `ease-in`：慢速开始（cubic-bezier(0.42,0,1,1)）
 
-        ![ease-in](../Imgs/CSS/ease-in.png)
+    ![ease-in](../Imgs/CSS/ease-in.png)
 
-        - `ease-out`：慢速结束（cubic-bezier(0,0,0.58,1)）
+    - `ease-out`：慢速结束（cubic-bezier(0,0,0.58,1)）
 
-        ![ease-out](../Imgs/CSS/ease-out.png)
+    ![ease-out](../Imgs/CSS/ease-out.png)
 
-        - `ease-in-out`：以慢速开始，以慢速结束（cubic-bezier(0.42,0,0.58,1)）
+    - `ease-in-out`：以慢速开始，以慢速结束（cubic-bezier(0.42,0,0.58,1)）
 
-        ![ease-in-out](../Imgs/CSS/ease-in-out.png)
+    ![ease-in-out](../Imgs/CSS/ease-in-out.png)
 
-        - `cubic-bezier(<x1>,<y1>,<x2>,<y2>)`：贝塞尔曲线，自定义生成速度(动画)曲线。
+    - `cubic-bezier(<x1>,<y1>,<x2>,<y2>)`：贝塞尔曲线，自定义生成速度(动画)曲线。
 
-            ![贝塞尔曲线](../Imgs/CSS/bezier.png)
+        ![贝塞尔曲线](../Imgs/CSS/bezier.png)
 
-            可以看到上图中存在4个点，分别是P0、P1、P2、P3，其中，P0和P3是不动的，而我们也只需要控制两个点，即P1(x1,y1)，P2(x2,y2)，对应`cubic-bezier`的四个值。
+        可以看到上图中存在4个点，分别是P0、P1、P2、P3，其中，P0和P3是不动的，而我们也只需要控制两个点，即P1(x1,y1)，P2(x2,y2)，对应`cubic-bezier`的四个值。
 
-            > X轴的范围是0~1，超出则失效，Y轴的取值没有规定，但是也不宜过大。
+        > X轴的范围是0~1，超出则失效，Y轴的取值没有规定，但是也不宜过大。
 
 
-    4. `transition-delay`：开始之前需要等待的时间，以秒或毫秒计
+4. `transition-delay`：开始之前需要等待的时间，以秒或毫秒计
 
 ```
 div{
@@ -199,9 +199,84 @@ div:hove{
 ```
 > `transform`【定义变换】、`translate`【平移】、`transition`【过渡效果】
 
+### 动画 @keyframes
+
+> Internet Explorer 9，以及更早的版本，不支持 `@keyframe` 规则或 `animation` 属性。
+
+#### 帧动画
+
+> 0%、100%作为关键帧，必写！！！
+
+```
+@keyframes aniName{ //声明帧动画名字，以此绑定到选择上。
+    0%{}
+    100%{}
+}
+
+@-moz-keyframes aniName{ /* Firefox */
+    0%{}
+    100%{}
+}
+
+@-webkit-keyframes aniName{ /* Safari 和 Chrome */
+    0%{}
+    100%{}
+}
+
+@-o-keyframes aniName{ /* Opera */
+    0%{}
+    100%{}
+}
+```
+#### animation
+
+> 利用声明帧动画名作为`animation`属性值，将动画绑定到选择器。
+
+`animation`：所有动画属性简写（除了`animation-play-state`）,其属性值如下，按顺序！
+
+1. `animation-name`：动画名，自己声明【必须值】
+
+2. `animation-duration`：动画执行一个周期所需时间（秒、毫秒），默认是0，无动画效果【必须值】
+
+3. `animation-timing-function`：速度曲线，同过渡，默认是`ease`
+
+4. `animation-delay`：开始之前需要等待的时间，默认是0
+
+5. `animation-iteration-count`：动画播放次数，默认是1，`infinite` → 无限次播放
+
+> 动画在播放完规定的次数后会会到最开始的状态。
+
+6. `animation-direction`：是否在下一周期逆向地播放，默认是`normal` → 正常播放，`alternate` → 下周期逆向，即动画会在奇数次数（1、3、5 ……）正常播放，而在偶数次数（2、4、6 ……）反向向播放。
+
+7. `animation-fill-mode`：动画时间之外的状态，动画在播放之前或之后，其动画效果是否可见。
+
+    - `none`：不改变默认行为，默认值。
+
+    - `forwards`：当动画完成后，保持最后一个属性值（在最后一个关键帧中定义）。
+
+    - `backwards`：在 `animation-delay` 所指定的一段时间内，在动画显示之前，应用开始属性值（在第一个关键帧中定义）。
+
+    - `both`：向前和向后填充模式都被应用。
+
+    > 有时候会遇到这种需求：动画执行一次，并保持最后执行完的状态。
+
+8. `animation-play-state`：动画是否暂停，默认是 `running` → 运行，`paused` → 暂停
 
 
 
+
+
+
+
+
+```
+div{
+    animation: aniName 5s; 
+    -moz-animation: aniName 5s;	/* Firefox */
+    -webkit-animation: aniName 5s;	/* Safari 和 Chrome */
+    -o-animation: aniName 5s;	/* Opera */
+}
+```
 
 
 
