@@ -91,15 +91,15 @@ PS: `angle` 表示旋转角度，如：30deg ,即 30° 。
 
 - rotateX(angle)	
 
-[沿X轴旋转](../Imgs/CSS/X轴旋转.png)
+![沿X轴旋转](../Imgs/CSS/X轴旋转.png)
 
 - rotateY(angle)
 
-[沿Y轴旋转](../Imgs/CSS/X轴旋转.png)
+![沿Y轴旋转](../Imgs/CSS/X轴旋转.png)
 
 - rotateZ(angle)
 
-[沿Z轴旋转](../Imgs/CSS/X轴旋转.png)
+![沿Z轴旋转](../Imgs/CSS/X轴旋转.png)
 
 - rotate3d(x,y,z,angle)	
 
@@ -150,27 +150,27 @@ JavaScript 语法：object.style.transition="width 2s"
 
         - `linear`：匀速（cubic-bezier(0,0,1,1)）
 
-        [linear](../Imgs/CSS/linear.png)
+        ![linear](../Imgs/CSS/linear.png)
 
         - `ease`：先慢后快（cubic-bezier(0.25,0.1,0.25,1)）
 
-        [ease](../Imgs/CSS/ease.png)
+        ![ease](../Imgs/CSS/ease.png)
 
         - `ease-in`：慢速开始（cubic-bezier(0.42,0,1,1)）
 
-        [ease-in](../Imgs/CSS/ease-in.png)
+        ![ease-in](../Imgs/CSS/ease-in.png)
 
         - `ease-out`：慢速结束（cubic-bezier(0,0,0.58,1)）
 
-        [ease-out](../Imgs/CSS/ease-out.png)
+        ![ease-out](../Imgs/CSS/ease-out.png)
 
         - `ease-in-out`：以慢速开始，以慢速结束（cubic-bezier(0.42,0,0.58,1)）
 
-        [ease-in-out](../Imgs/CSS/ease-in-out.png)
+        ![ease-in-out](../Imgs/CSS/ease-in-out.png)
 
         - `cubic-bezier(<x1>,<y1>,<x2>,<y2>)`：贝塞尔曲线，自定义生成速度(动画)曲线。
 
-            [贝塞尔曲线](../Imgs/CSS/bezier.png)
+            ![贝塞尔曲线](../Imgs/CSS/bezier.png)
 
             可以看到上图中存在4个点，分别是P0、P1、P2、P3，其中，P0和P3是不动的，而我们也只需要控制两个点，即P1(x1,y1)，P2(x2,y2)，对应`cubic-bezier`的四个值。
 
