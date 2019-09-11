@@ -7,6 +7,8 @@
 
 #### [HTML](HTML/README.md)
 
+#### [HTML](JS/README.md)
+
 #### [Git](Git/README.md)
 
 #### [Vue](Vue/README.md)
