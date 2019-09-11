@@ -7,7 +7,7 @@
 
 #### [HTML](HTML/README.md)
 
-#### [HTML](JS/README.md)
+#### [JS](JS/README.md)
 
 #### [Git](Git/README.md)
 
