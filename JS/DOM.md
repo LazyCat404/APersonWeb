@@ -83,7 +83,7 @@
 
 - `nodeValue` : Text 文本节点或注释节点(`Comment`)的文本内容,可读写
 
-- `nodeType` : **【最有用】**该节点的类型，只读返回这个 div 的所有的元素节点
+- `nodeType` : 【最有用】该节点的类型，只读返回这个 div 的所有的元素节点
 
 - `attributes` : Element 节点的属性集合
 
