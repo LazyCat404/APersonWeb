@@ -125,3 +125,5 @@ div.appendChild(span)
 - `ele.getAttribute('属性名')` : 取属性
 
 #### [上一篇：基础进阶二](基础进阶二.md)
+
+#### [下一篇：BOM](BOM.md)
