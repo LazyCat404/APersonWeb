@@ -3,3 +3,5 @@
 #### [前端通用优化](Optimize.md)
 
 #### [Vue项目优化](Vue/README.md)
+
+#### [同用方法封装](封装/Currency.md)
