@@ -2,7 +2,7 @@
 
 > DOM 定义了表示和修改文档所需的方法（对象、这些对象的行为和属性以及这些对象之间的关系。）DOM 对象即为宿主对象，由浏览器厂商定义，用来操作 html和 xml 功能的一类对象的集合。
 
-### DOM 基本操作(大部分都是类数组) 
+### DOM 基本操作 -->【遍历，查找】(大部分都是类数组) 
 
 > document 代表整个文档（如果给 html 标签上面再套一层标签就是 document）
 
@@ -91,19 +91,37 @@
 
 > 节点的一个方法 `Node.hasChildNodes()`——他有没有子节点，返回值是 true 或 false
 
-### 定时器
+### DOM 基本操作 -->【增、插、删、改】
 
-#### setInterval
+- `document.createElement('div')` : 增加或创建元素节点（标签）——常见
 
-```
-//常规使用
-setInterval(function (){
-    //定时执行函数体
-},30); //30是间隔时间，以毫秒（ms）为单位
-```
-清除定时器，需要先给定时器绑定到一个变量上
+- `document.createTextNode()` : 创建文本节点
+
+- `document.createComment()` : 创建注释节点
+
+- `父节点.appendChild()` ： 向父节点内添加元素（写在括号内）；可以理解成.push
 
 ```
- var timer = setInterval(function (){},500);
- clearInterval(timer);  //清除定时器
+var div= document.getElementsByTagName('div');
+var span = document.createElement("span");
+div.appendChild(span)
 ```
+- `父节点.insertBefore(a, b)` : 在 a 前插入 b （待完善）
+
+- `parent.removeChild()` : 将节点剪切出来
+
+- `child.remove()` : 彻底删除
+
+- `parent.replaceChild(new, origin)` : 用 **new** 替换 **origin**
+
+#### DOM 节点上的方法
+
+- `ele.innerHTML` : 可取，可写，可赋值
+
+- `ele.innerText` : 可取，可赋值 (老版本火狐不兼容) / `textContent`(火狐使用这个，老版本 IE 不好使)
+
+- `ele.setAttribute('属性名','属性值')` :设置行间属性
+
+- `ele.getAttribute('属性名')` : 取属性
+
+#### [上一篇：基础进阶二](基础进阶二.md)
