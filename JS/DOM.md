@@ -101,7 +101,7 @@
 
 - `父节点.appendChild()` ： 向父节点内添加元素（写在括号内）；可以理解成.push
 
-```
+```js
 var div= document.getElementsByTagName('div');
 var span = document.createElement("span");
 div.appendChild(span)
@@ -134,7 +134,7 @@ div.appendChild(span)
 
 2. 基本等同于写在 HTML 行间上
 
-```
+```html
 <div onclick = 'funName()'></div>
 ```
 > 事件解除：`ele.事件 = false/null`
@@ -145,7 +145,7 @@ div.appendChild(span)
 
 > 里面三个参数：**事件类型**、**处理函数**、**false**
 
-```
+```js
 div.addEventListener('click',function(){},false)    //匿名函数，无法解除
 //function(){} 是函数引用，和外面定义一个 function test(){}直接写 test 是一样的
 ```
@@ -334,7 +334,7 @@ div.addEventListener('click',function(){},false)    //匿名函数，无法解�
 
 1. 字面量【建议】
 
-```
+```js
 var reg = /abc/; 
 var str = 'abcde';
 reg.test(str);
