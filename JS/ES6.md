@@ -41,7 +41,214 @@ var b = "banana";
 
 ### 解构赋值
 
+> 是一种针对**数组**或者**对象**进行模式匹配，然后对其中的变量进行赋值。
 
+####  数组模型
+
+```js
+// 基本
+let [a,b,c] = [1,2,3];
+/*
+    a = 1
+    b = 2 
+    c = 3
+*/
+//可嵌套
+let [a, [[b], c]] = [1, [[2], 3]];
+/*
+    a = 1
+    b = 2 
+    c = 3
+*/
+// 可忽略
+let [a, , b] = [1, 2, 3];
+/*
+    a = 1
+    b = 2 
+*/
+// 不完全解构
+let [a = 1, b] = [];
+/*
+    a = 1
+    b = undefined
+*/
+// 剩余运算符
+let [a, ...b] = [1, 2, 3];
+/*
+    a = 1
+    b = [2, 3]
+*/
+// 字符串
+let [a, b, c, d, e] = 'hello';
+/*
+    a = 'h'
+    b = 'e'
+    c = 'l'
+    d = 'l'
+    e = 'o'
+*/
+// 默认值
+let [a = 2] = [undefined]; 
+let [a = 2, b = a] = [];
+/*
+    a = 2  （2 是 a 的默认值）
+    b = 2  （但是这里不能把b = a ,写在 a = 2 前边，会报错）
+    当解构模式有匹配结果，且匹配结果是 undefined 时，会触发默认值作为返回结果
+*/
+```
+
+####  对象模型
+
+```js
+// 基本
+
+let { foo, bar } = { foo: 'aaa', bar: 'bbb' };
+/*
+    foo = 'aaa'
+    bar = 'bbb'
+*/ 
+let { baz : foo } = { baz : 'ddd' };
+/* 
+    foo = 'ddd'
+*/
+// 可嵌套可忽略
+let obj = {p: ['hello', {y: 'world'}] };
+let {p: [x, { y }] } = obj;
+/*
+    x = 'hello'
+    y = 'world'
+*/
+let obj = {p: ['hello', {y: 'world'}] };
+let {p: [x, {  }] } = obj;
+/* 
+    x = 'hello'
+*/
+// 不完全解构
+let obj = {p: [{y: 'world'}] };
+let {p: [{ y }, x ] } = obj;
+/*
+    x = undefined
+    y = 'world'
+*/
+// 剩余运算符
+let {a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40};
+/*
+    a = 10
+    b = 20
+    rest = {c: 30, d: 40}
+*/
+// 解构默认值
+let {a = 10, b = 5} = {a: 3};
+/* 
+    a = 3
+    b = 5;
+*/
+let {a: aa = 10, b: bb = 5} = {a: 3};
+/*
+    aa = 3
+    bb = 5;
+    a,b 未定义
+*/
+```
+
+### Symbol
+
+> 一种新的原始数据类型 Symbol ，表示独一无二的值，最大的用法是用来定义对象的唯一属性名；不是对象，不能`new`，但可以接收一个字符串作为参数，为新创建的 `Symbol` 提供描述。
+
+```js
+let sy = Symbol("KK");
+console.log(sy);   // Symbol(KK)
+typeof(sy);        // "symbol"
+ 
+// 相同参数 Symbol() 返回的值不相等
+let sy1 = Symbol("kk"); 
+sy === sy1;       // false
+```
+
+#### 使用场景
+
+1. 作为属性名
+
+> 由于每一个 `Symbol` 的值都是**不相等**的，所以 `Symbol` 作为对象的属性名，可以**保证属性不重名**
+
+```js
+let sy = Symbol("key1");
+ 
+// 写法1
+let syObject = {};
+syObject[sy] = "kk";
+console.log(syObject);    // {Symbol(key1): "kk"}
+ 
+// 写法2
+let syObject = {
+  [sy]: "kk"
+};
+console.log(syObject);    // {Symbol(key1): "kk"}
+ 
+// 写法3
+let syObject = {};
+Object.defineProperty(syObject, sy, {value: "kk"});
+console.log(syObject);   // {Symbol(key1): "kk"}
+```
+**注意：**`Symbol` 作为对象属性名时不能用 **.** ，要用 **[]** ，因为 **.** 运算符后面是字符串，所以取到的是字符串 `sy` 属性，而不是 `Symbol` 值 `sy` 属性。
+
+```js
+let syObject = {};
+syObject[sy] = "kk";
+ 
+syObject[sy];  // "kk"
+syObject.sy;   // undefined
+```
+> `Symbol` 值作为属性名时，该属性是**公有属性**不是私有属性，可以在类的外部访问。但是不会出现在 `for...in` 、 `for...of` 的循环中，也不会被 `Object.keys()` 、 `Object.getOwnPropertyNames()` 返回。如果要读取一个对象的 `Symbol` 属性，可以通过 `Object.getOwnPropertySymbols()` 和 `Reflect.ownKeys()` 获取。
+
+```js
+let syObject = {};
+syObject[sy] = "kk";
+console.log(syObject);
+ 
+for (let i in syObject) {
+  console.log(i);
+}    // 无输出
+ 
+Object.keys(syObject);                     // []
+Object.getOwnPropertySymbols(syObject);    // [Symbol(key1)]
+Reflect.ownKeys(syObject);                 // [Symbol(key1)]
+```
+2. 定义常量
+
+> 在 ES5 使用字符串表示常量，不能保证常量是**独特的**，这样会引起一些问题；而使用 `Symbol` 定义常量，就可以保证这一组常量的值**都不相等**
+
+```js
+//ES5 定义字符串常量
+const COLOR_RED = "red";
+const COLOR_YELLOW = "yellow";
+//Symbol定义常量
+const COLOR_RED = Symbol("red");
+const COLOR_YELLOW = Symbol("yellow");
+```
+
+#### Symbol.for()
+
+> `Symbol.for()` 类似单例模式，首先会在全局搜索被登记的 `Symbol` 中是否有该字符串参数作为名称的 `Symbol` 值，如果有即返回该 `Symbol` 值，若没有则新建并返回一个以该字符串参数为名称的 `Symbol` 值，并登记在全局环境中供搜索。
+
+```js
+let yellow = Symbol("Yellow");
+let yellow1 = Symbol.for("Yellow");
+console.log(yellow === yellow1);      // false
+let yellow2 = Symbol.for("Yellow");
+console.log(yellow1 === yellow2);     // true
+```
+
+#### Symbol.keyFor()
+
+> `Symbol.keyFor() `返回一个已登记的 `Symbol` 类型值的 `key` ，用来检测该字符串参数作为名称的 `Symbol` 值是否已被登记。
+
+```js
+let yellow1 = Symbol.for("Yellow");
+Symbol.keyFor(yellow1);    // "Yellow"
+```
+
+### Map 对象
 
 
 
