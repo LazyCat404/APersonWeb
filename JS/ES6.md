@@ -263,15 +263,68 @@ Symbol.keyFor(yellow1);    // "Yellow"
 
 
 
-### 字符串扩展
 
-> 利用两个‘`’将字符串包裹
+### 模板字符串
+
+> 利用两个[ ` ]将字符串包裹
 
 1. 语义化：支持换行，格式化HTML标签
 
-2. 变量用`${变量}`包裹
+2. 添加变量：变量用`${变量}`包裹
 
+3. 添加表达式：
 
-#### 模板字符串
+```js
+let x = 1,y = 2;
+let str = `${x + y}`    // 3 字符串
+```
+4. 添加方法：`${方法名()}`
 
-1. 更加语义化，可折行、换行
+5. 嵌套：模板字符串内写模板字符串
+
+```js
+let arr = [1,2,3,4,5];
+let resStr = `${arr.map(function(item,index){
+    return `${item}:${index}`
+})}`    // "1:0,2:1,3:2,4:3,5:4"
+```
+
+### 标签模板
+
+> 函数调用的一种特殊形式，参数是模板字符串
+
+1. ` 方法名`` ` 就相当于执行了方法，` `` ` 可以有参数，有点类似 方法名() 
+
+```js
+let name = 'xiaoMing';
+let place = 'BeiJing';
+function show(){
+    console.log(arguments);
+}
+show `hello${name},welcome to ${place}`
+/*
+    依据以下截图,以上方法调用等价于：
+    show(['hell',',welcome to ',''],name,place)
+*/
+```
+![结果截图](../Img/JS/标签模板.png)
+
+2. 常用于**过滤HTML字符串**，防止用户输入恶意内容
+
+```js
+let name = '<script>alter("xiaoMing")</script>';
+HT`<p>Hello${name},welcome!</p>`;
+function HT (data){
+    /*
+        arguments:[['<p>Hello',',welcome!</p>'],<script>alter("xiaoMing")</script>]
+        data:['<p>Hello',',welcome!</p>']     ==> 解构赋值，对应的结果
+    */
+    let str = data[0];
+    for(let i = 1;i < arguments.length;i++){
+        let arg = String(arguments[i]);
+        str += arg.replace(/&/g,'amp').replace(/</g,'&lt;').replace(/>/g,'&gt');
+        str += data[i];
+    }
+    console.log(str)    // <p>Hello&lt;script&gtalter("xiaoMing")&lt;/script&gt,welcome!</p>
+}
+```
