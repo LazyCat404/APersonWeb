@@ -380,6 +380,6 @@ function HT (data){
         str += arg.replace(/&/g,'amp').replace(/</g,'&lt;').replace(/>/g,'&gt');
         str += data[i];
     }
-    console.log(str)// <p>Hello&lt;script&gtalter("xiaoMing")&lt;/script&gt,welcome!</p>
+    console.log(str)//<p>Hello&lt;script&gtalter("xiaoMing")&lt;/script&gt,welcome!</p>
 }
 ```
