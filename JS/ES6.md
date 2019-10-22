@@ -304,6 +304,10 @@ f(1);  //1
 > **多个参数**要用()括起来；当**只有一行语句**，并且**需要返回结果**时，可以**省略 {}** , 结果**会自动返回**
 
 ```js
+// 没有参数
+var f = () => x + y
+
+// 多个参数
 var f = (x,y) => x + y
 
 //当箭头函数要返回对象的时候，为了区分于代码块，要用 () 将对象包裹起来
@@ -317,7 +321,7 @@ var f = (a,b) => {
 }
 f(6,2);  // 8
 ```
-> 箭头函数没有 `this`、`super`、`arguments` 和 `new.target` 绑定。箭头函数体中的 `this` 对象，是**定义函数时的对象**，而**不是使用函数时的对象**
+> 箭头函数没有 `this`、`super`、`arguments` 和 `new.target` 绑定。箭头函数体中的 `this` 对象，是**定义函数时的对象**，而**不是使用函数时的对象**，通过`...`获取参数列表
 
 ### 模板字符串
 
@@ -383,3 +387,163 @@ function HT (data){
     console.log(str)//<p>Hello&lt;script&gtalter("xiaoMing")&lt;/script&gt,welcome!</p>
 }
 ```
+
+### 数组
+
+#### 扩展运算符（...）的应用
+
+> 数组的扩展运算符就相当于把 `[]` 去掉，(但是不能直接写，会报错)
+
+```js
+var arr = []
+var arr1 = [1,2,3,4,5]
+arr.push(arr1)
+console.log(arr)    //这样直接push可以看到，arr相当于一个二维数组，它的第0位是arr1
+```
+![扩展运算符对比结果一](../Img/JS/数组1.jpg)
+
+```js
+arr.push(...arr1)   //利用扩展运算符
+Array.prototype.push.apply(arr,arr1)    //不使用扩展运算符实现相同结果的方法（和上一行代码效果一样）
+console.log(arr)    //arr经过调用push方法后仍为一维数组，数组长度为5
+```
+![扩展运算符对比结果二](../Img/JS/数组2.jpg)
+
+**利用扩展运算符可以实现数组的合并**
+
+```js
+var arr = ['abc']
+var arr1 = [1,2,3]
+var arr2 = [false,NaN]
+var newArr = [...arr,...arr1,...arr2]   //['abc',1,2,3,false,NaN]
+
+```
+> 不利用扩展运算符拼接数组可以使用`数组.concat()`实现数组拼接，在[基础进阶二](./基础进阶二.md)有数组常用方法的介绍
+
+**字符串也可以使用扩展运算符**
+
+> 原理：字符串通过包装类变成了**类数组**，使用扩展运算符达到了和数组一样的效果
+
+```js
+var strArr = [...'xiaoming']
+console.log(strArr) // ["x", "i", "a", "o", "m", "i", "n", "g"]
+```
+#### 新增方法
+
+1. `Array.from()`：将类数组对象或可迭代对象转化为数组，且有回调函数
+
+```js
+var obj = { //类数组
+    '0':'a',
+    '1':'b',
+    '2':'c',
+    length:3
+}
+var arr = Array.from(obj,function(item,index){
+    return item + index   //回调函数，遍历类数组中的值（不包括length），执行函数体,返回一个新数组
+})
+console.log(arr)    //["a0", "b1", "c2"]
+//利用 map 方法也可以实现同样的效果(但不完全一样)
+var arr = Array.from(obj).map((item,index) => item + index)
+```
+> 如果参数本身就是一个数组，会返回一个新数组，但两个数组不相等
+
+2. `Array.of()`：将（传入的）所有参数，作为元素形成新数组
+
+```js
+var arr = Array.of(1,2,3,4)
+console.log(arr)    //[1,2,3,4]
+
+//有点像 new Array()，当参数长度（个数）大于1时，两者么有什么区
+var arr1 = new Array(6) //表示创建了一个长度为6，值为空的数组，而不是[6]
+```
+**实现 `Array.of()` 方法**
+
+```js
+function arrayOf(){
+    return Array.prototype.slice.call(arguments)
+    // return Array.from(argumrnts)     //也能实现Array.of()
+}
+console.log(arrayOf(1)) //[1]
+```
+3. `copyWithin()`：将一定范围索引的数组元素修改为此数组另一指定范围索引的元素
+
+> 如果参数为负数，和以前一样，倒着数
+
+```js
+/*
+    参数1：从那里（索引）开始被覆盖
+    参数2：选择要覆盖索引起点
+    参数3(可选)：要覆盖索引起终点（不包括），默认为数组末尾
+*/
+var arr = [1,2,3,4,5]
+arr.copyWithin(0,3) //表示：将从索引为3的值开始复制，并替换索引为0的值
+console.log(arr)    //[4, 5, 3, 4, 5]
+```
+4. `fill()`：按照一定规则对数组进行填充（替换）
+
+```js
+/*
+    参数1：用来填充的值
+    参数2：被填充的起始索引
+    参数3(可选)：被填充的结束索引(不包括)，默认为数组末尾
+*/
+var arr = [1,2,3,4,5]
+arr.fill(6,1,3)
+console.log(arr)    //[1, 6, 6, 4, 5]
+```
+5. `entries()`：遍历键值对
+
+6. `keys()`：遍历键名（数组下标）
+
+7. `values()`：遍历键值（值）
+
+```js
+//如果直接使用上边三个方法，并不能直接拿到值
+var arr = [1,2,3,4,5]
+var a = arr.keys()  //Array Iterator {}
+//需要利用迭代器去遍历，后边详细说
+for(item of arr.keys()){  
+    console.log(item)   //0 1 2 3 4 
+}
+//换成其它两个方法也是一样的，如果是entries() 则有 item,index 两个返回值
+
+//手动取值
+a.next().value
+```
+8. `includes()`：数组是否包含指定值（返回一个布尔值），与 【`indexOf()` ==> 有返回数组下标，没有返回 -1 】类似，但是`indexOf()`无法判断`NaN`
+
+```JS
+var arr = [1,NaN,2]
+arr.includes(NaN)   //true
+arr.indexOf(NaN)    // -1(没找到)
+```
+> 与 Set 和 Map 的 has 方法区分；Set 的 has 方法用于查找值；Map 的 has 方法用于查找键名
+
+```js
+/*
+    参数1：包含的指定值
+    参数2(可选)：搜索的起始索引，默认为0
+*/
+```
+
+9. `find()`：查找数组中符合条件的元素,若有多个符合条件的元素，则返回第一个元素
+
+> 数组空位处理为 undefined
+
+```js
+var arr = [1,2,3,4,5]
+arr.find(function(item){
+    //查找条件
+    return item > 3 //大于3的有4，5 但只返回一个4
+})
+```
+10. `findIndex()`：查找数组中符合条件的元素索引，若有多个符合条件的元素，则返回第一个元素索引（与`find()`对应）
+
+```js
+/*
+    参数1：回调函数
+    参数2(可选)：指定回调函数中的 this 值
+*/
+```
+> PS：（以上方法）从第3个开始到最后，都是数组实例方法，有关实例方法和静态方法的区别可在[常识](./常识.md)中找到
