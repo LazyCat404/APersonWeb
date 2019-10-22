@@ -249,20 +249,72 @@ let yellow1 = Symbol.for("Yellow");
 Symbol.keyFor(yellow1);    // "Yellow"
 ```
 
-### Map 对象
+### 函数
 
+#### 参数默认值
 
+> ES6规定参数默认值可以直接写在括号内，但使用函数默认参数时，**不允许有同名参数**（会报错）
 
+```js
+function(age = 18){ 
+    console.log(age);
+}
+//只有在未传递参数，或者参数为 undefined 时，才会使用默认参数，null/false被认为是有效的值传递。
+```
+> 在函数参数默认值表达式中，还**未初始化赋值**的参数值无法作为其他参数的默认值
 
+```js
+function f(x,y=x){
+    console.log(x,y);
+}
+f(1);  // 1 1
+ 
+function f(x=y){
+    console.log(x);
+}
+f();    // ReferenceError: y is not defined
+```
+#### 不定参数
 
+> `...变量名`，具名参数只能放在参数组的最后，并且有且只有一个不定参数
 
+```js
+function f(...values){
+    console.log(values.length);
+}
+f(1,2);      //2
+f(1,2,3,4);  //4
+```
+#### 箭头函数
 
+> 参数 => 函数体，**不可以作为构造函数**，也就是**不能使用 `new` 命令**，否则会报错
 
+```js
+// 基本用法
+var f = v => v;
+//等价于
+var f = function(v){
+    return v;
+}
+f(1);  //1
+```
+> **多个参数**要用()括起来；当**只有一行语句**，并且**需要返回结果**时，可以**省略 {}** , 结果**会自动返回**
 
+```js
+var f = (x,y) => x + y
 
+//当箭头函数要返回对象的时候，为了区分于代码块，要用 () 将对象包裹起来
+var f = (id,name) => ({id: id, name: name});    //如果没写()会报错
+f(6,2); //{id: 6, name: 2}
 
-
-
+// 多行语句
+var f = (a,b) => {
+    let result = a+b;
+    return result;
+}
+f(6,2);  // 8
+```
+> 箭头函数没有 `this`、`super`、`arguments` 和 `new.target` 绑定。箭头函数体中的 `this` 对象，是**定义函数时的对象**，而**不是使用函数时的对象**
 
 ### 模板字符串
 
