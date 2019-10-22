@@ -259,7 +259,10 @@ Symbol.keyFor(yellow1);    // "Yellow"
 function(age = 18){ 
     console.log(age);
 }
-//只有在未传递参数，或者参数为 undefined 时，才会使用默认参数，null/false被认为是有效的值传递。
+/*
+    只有在未传递参数，或者参数为 undefined 时，才会使用默认参数
+    null/false被认为是有效的值传递
+*/
 ```
 > 在函数参数默认值表达式中，还**未初始化赋值**的参数值无法作为其他参数的默认值
 
@@ -377,6 +380,6 @@ function HT (data){
         str += arg.replace(/&/g,'amp').replace(/</g,'&lt;').replace(/>/g,'&gt');
         str += data[i];
     }
-    console.log(str)    // <p>Hello&lt;script&gtalter("xiaoMing")&lt;/script&gt,welcome!</p>
+    console.log(str)// <p>Hello&lt;script&gtalter("xiaoMing")&lt;/script&gt,welcome!</p>
 }
 ```
