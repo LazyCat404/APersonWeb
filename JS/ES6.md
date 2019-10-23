@@ -547,3 +547,94 @@ arr.find(function(item){
 */
 ```
 > PS：（以上方法）从第3个开始到最后，都是数组实例方法，有关实例方法和静态方法的区别可在[常识](./常识.md)中找到
+
+### 对象
+
+#### 属性的简洁表示
+
+1. 属性名和属性值相同，可只写一个，且属性值可以是变量
+
+```js
+var food = 'Apple';
+var obj = {
+    food,
+}
+console.log(obj);   //{food: "Apple"}
+```
+2. 属性方法简写
+
+> 如果是Generator 函数，则要在前面加一个星号，具体可查看[ES6补充](./ES6补充.md)
+
+```js
+// ES5
+var obj = {
+    name:'xiaoming',
+    sayName:function (){
+        console.log(this.name)
+    }
+}
+//ES6
+var obj = {
+    name:'xiaoming',
+    sayName(){
+        console.log(this.name)
+    }
+}
+```
+3. 属性名表达式
+
+> ES6允许用**表达式作为属性名**，但是一定要将表达式放在`[]`内；**属性的简写**和**属性名表达式**不能同时使用，否则会报错
+
+```js
+var x = 'name'
+var obj = {
+    [x]:'小明',
+    ['a'+'ge']:18
+}
+console.log(obj);   //{name: "小明", age: 18}
+```
+#### 新增方法
+
+> 对象详细介绍及其他方法可查看[基础进阶二](./基础进阶二.md)
+
+1. `Object.is(value1, value2)`: 用来比较两个值是否严格相等，与（===）基本类似
+
+```js
+// 与 === 的区别
+// 1. NaN
+Object.is(NaN,NaN)  //true
+NaN === NaN //false
+
+// 2.+0/=0
+Object.is(+0,-0);  //false
++0 === -0  //true
+```
+2. `Object.assign(target, source_1, ···)`: 将源对象的所有可枚举属性复制到目标对象中
+
+> 参数不能是 `null/undefine`,会报错
+
+```js
+var obj = {}    //可以为空也可以有属性,
+var obj1 = {name:'xiaoMing'}
+var obj2 = {age:18}
+var newObj = Object.assign(obj,obj1,obj2)   //把obj1,obj2中可枚举的属性,复制到obj中
+//这里最后的结果 obj = newObj
+```
+> 当它只有一个合法参数但不是一个引用值(例如一个数字),会进行隐式转换,变成引用值，复制到对象中。
+
+#### 对象的扩展运算符
+
+> 也是三个点 `...`，,和数组扩展运算符类似，数组相当于扒掉`[]`，对象同理相当于扒掉`{}`
+
+```js
+// 和数组扩展运算符一样,可用于合并两个对象
+var name = {name:'xiaoMing'}
+var age = {age:'18'}
+var per = {...name,...age}  //{name:'xiaoMing',age:18}
+```
+
+1. `自定义的属性`和`拓展运算符对象里的属性`相同时，谁在后边保留谁的值
+
+    * 自定义的属性在拓展运算符后面: 拓展运算符对象内部同名的属性将被覆盖掉
+
+    * 自定义的属性在拓展运算度前面: 拓展对象属性值覆盖自定义属性
