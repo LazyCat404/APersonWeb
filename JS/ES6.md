@@ -622,6 +622,31 @@ var newObj = Object.assign(obj,obj1,obj2)   //把obj1,obj2中可枚举的属性,
 ```
 > 当它只有一个合法参数但不是一个引用值(例如一个数字),会进行隐式转换,变成引用值，复制到对象中。
 
+3. `Object.keys()`：遍历属性名
+
+4. `Object.value()`：遍历属性值
+
+5. `Object.entrise()`：遍历对象树
+
+```js
+var obj = {
+    name:'xiaoMing',
+    age:18,
+    say(){
+        return this.name + this.age
+    }
+}
+var keys = Object.keys(obj) // ["name", "age", "say"]
+var values = Object.values(obj) // ["xiaoMing", 18, ƒ]
+var entries = Object.entries(obj)   // [Array(2), Array(2), Array(2)]
+/*
+    0: (2) ["name", "xiaoMing"]
+    1: (2) ["age", 18]
+    2: (2) ["say", ƒ]
+*/
+```
+PS：3 - 5 ，和数组的三个方法有些类似，但这三个方法返回值都是**数组**，而数组对应的三个方法返回的是**数组迭代器`Array Iterator {}`**，详细可向上查看。
+
 #### 对象的扩展运算符
 
 > 也是三个点 `...`，,和数组扩展运算符类似，数组相当于扒掉`[]`，对象同理相当于扒掉`{}`
@@ -638,3 +663,7 @@ var per = {...name,...age}  //{name:'xiaoMing',age:18}
     * 自定义的属性在拓展运算符后面: 拓展运算符对象内部同名的属性将被覆盖掉
 
     * 自定义的属性在拓展运算度前面: 拓展对象属性值覆盖自定义属性
+
+2. 拓展运算符后面是`null`或者`undefined`，没有效果也不会报错
+
+3. 拓展运算符后面是**空对象**`{}`，没有任何效果也不会报错。
