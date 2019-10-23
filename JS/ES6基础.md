@@ -563,7 +563,7 @@ console.log(obj);   //{food: "Apple"}
 ```
 2. 属性方法简写
 
-> 如果是Generator 函数，则要在前面加一个星号，具体可查看[ES6补充](./ES6补充.md)
+> 如果是Generator 函数，则要在前面加一个星号，具体可查看[ES6进阶](./ES6进阶.md)
 
 ```js
 // ES5
@@ -667,3 +667,7 @@ var per = {...name,...age}  //{name:'xiaoMing',age:18}
 2. 拓展运算符后面是`null`或者`undefined`，没有效果也不会报错
 
 3. 拓展运算符后面是**空对象**`{}`，没有任何效果也不会报错。
+
+[下一篇](./ES6进阶.md)
+
+[上一篇](./DOM.md)
