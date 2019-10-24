@@ -251,6 +251,9 @@ Symbol.keyFor(yellow1);    // "Yellow"
 
 ### Set/Map 数据解构
 
+> ES6 提供的新的数据结构`Set`（类似于数组）
+> ES6 还提供了`Map`数据结构（它类似于对象）
+
 #### Set
 
 > 
