@@ -249,16 +249,6 @@ let yellow1 = Symbol.for("Yellow");
 Symbol.keyFor(yellow1);    // "Yellow"
 ```
 
-### Set/Map 数据解构
-
-> ES6 提供的新的数据结构`Set`（类似于数组）
-> ES6 还提供了`Map`数据结构（它类似于对象）
-
-#### Set
-
-> 
-
-
 ### 函数
 
 #### 参数默认值
@@ -560,7 +550,7 @@ var a = arr.keys()  //Array Iterator {}
 for(item of arr.keys()){  
     console.log(item)   //0 1 2 3 4 
 }
-//换成其它两个方法也是一样的，如果是entries() 则有 item,index 两个返回值
+//换成其它两个方法也是一样的，如果是entries() 则返回遍历器，同时包括键名和键值 （item,index） 两个返回值
 
 //手动取值
 a.next().value
@@ -649,7 +639,7 @@ console.log(obj);   //{name: "小明", age: 18}
 ```
 #### 新增方法
 
-> 对象详细介绍及其他方法可查看[基础进阶二](./基础进阶二.md)
+> 对象详细介绍及其他方法可查看[基础进阶一](./基础进阶一.md)
 
 1. `Object.is(value1, value2)`: 用来比较两个值是否严格相等，与（===）基本类似
 
