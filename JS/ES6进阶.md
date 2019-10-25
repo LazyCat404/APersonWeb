@@ -138,9 +138,34 @@ ws.add(Symbol())
 
 #### Map   
 
+> 类似于对象（键-值组合），但是‘键’的范围不限，各种类型甚至包括对象都可以（对象的键名只能是字符串）
 
+```js
+const m = new Map();
+const o = {p: 'Hello World'};
 
+m.set(o, 'content') // 将对象 o 当作 m 的一个键（可以理解为添加一个键）
+m.get(o) // "content"   get方法读取这 o 键
 
+m.has(o) // true    m 上存在 o 键
+m.delete(o) // true 删除成功
+m.has(o) // false   m 上不存在这个键
+```
+> `Map` （作为构造函数）也可以接受一个数组作为参数，该数组的成员是一个个表示键值对的数组
+
+```js
+const map = new Map([
+  ['name', '小明'],
+  ['title', '程序猿']
+]);
+
+map.size // 2
+map.has('name') // true
+map.get('name') // "小明"
+map.has('title') // true
+map.get('title') // "程序猿"
+```
+**PS：不仅是数组，任何具有 Iterator 接口、且每个成员都是一个双元素的数组的数据结构都可以当作Map构造函数的参数（方法参见Set）**
 
 
 
