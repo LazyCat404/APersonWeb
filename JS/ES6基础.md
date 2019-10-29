@@ -712,6 +712,8 @@ var per = {...name,...age}  //{name:'xiaoMing',age:18}
 
 3. 拓展运算符后面是**空对象**`{}`，没有任何效果也不会报错。
 
-[下一篇](./ES6进阶.md)
+### [下一篇：ES6进阶](./ES6进阶.md)
 
-[上一篇](./DOM.md)
+### [上一篇：DOM](./DOM.md)
+
+### [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com/)
