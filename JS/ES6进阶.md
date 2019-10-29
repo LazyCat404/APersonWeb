@@ -150,6 +150,12 @@ m.get(o) // "content"   get方法读取这 o 键
 m.has(o) // true    m 上存在 o 键
 m.delete(o) // true 删除成功
 m.has(o) // false   m 上不存在这个键
+
+// 也可以通过Set生成Map对象
+const set = new Set([
+    ['foo', 1],
+    ['bar', 2]
+]);
 ```
 > `Map` （作为构造函数）也可以接受一个数组作为参数，该数组的成员是一个个表示键值对的数组
 
@@ -164,13 +170,296 @@ map.has('name') // true
 map.get('name') // "小明"
 map.has('title') // true
 map.get('title') // "程序猿"
+map.get('age') // undefined (age 是未知键)
 ```
 **PS：不仅是数组，任何具有 Iterator 接口、且每个成员都是一个双元素的数组的数据结构都可以当作Map构造函数的参数（方法参见Set）**
 
+> `Map`在判断是否是同一个键的时候，实际上是判断内存地址，只要内存地址不同，则视为两个键（使用对象最为键名，内存地址不同）；如果 `Map` 的键是一个简单类型的值（数字、字符串、布尔值），则只要两个值严格相等，即可判断为同一个键
 
+* **0** 和 **-0** 是一个键
 
+* `NaN` 是一个键
 
+```js
+const map = new Map();
 
+map.set(['a'], 555);
+map.get(['a']) // undefined ，两个方法看上去是针对同一个键，但实际上是两个不同的数组实例，内存地址是不一样的
+```
+
+**PS：`Map`遍历方法请参照`Set`遍历方法，但需要注意的是，Map的遍历顺序就是插入顺序**
+
+#### WeakMap
+
+> `WeakMap`结构与`Map`结构类似，也是用于生成键值对的集合，但与Map有以下两点区别：
+
+1. `WeakMap`只接受对象作为键名（null除外），否则报错
+
+2. `WeakMap`的键名所指向的对象，不计入垃圾回收机制（自动回收，避免造成内存泄漏）
+
+> 应用场景：在网页的 `DOM` 元素上添加数据，就可以使用`WeakMap`结构。当该 `DOM` 元素被清除，其所对应的`WeakMap`记录就会自动被移除。
+
+### Proxy（代理/拦截）
+
+> 对目标对象的读取、函数调用等操作进行**拦截**，然后进行操作处理。它不直接操作对象，而是像代理模式，通过对象的代理对象进行操作
+
+#### Proxy 构造函数，用来生成 Proxy 实例
+
+```js
+/*
+    new Proxy()：生成一个Proxy实例
+    target： 要拦截的目标对象
+    handler：也是对象，用来制定拦截行为
+*/
+var proxy = new Proxy(target, handler);
+
+// 另一种写法
+var proxy = new Proxy({}, { // 目标对象设置为空对象
+    get: function(target, property) {   //访问任何属性都只返回 35
+        return 35;
+    }
+});
+```
+**PS：handler没有设置任何拦截，那就等于直接通向原对象（访问`proxy`就等同于访问`target`）**
+
+#### 将Proxy对象，设置到object.proxy属性，就可以在object对象上调用
+
+```js
+var object = { proxy: new Proxy(target, handler) };
+```
+#### Proxy 实例可以作为其它对象的原型
+
+```js
+//结合上边的 proxy 实例代码
+let obj = Object.create(proxy); // Object.create 在原型上创建对象
+obj.time // 35   obj 对象本身没有time属性，根据原型链读取proxy对象上属性，被拦截
+```
+#### Proxy支持得拦截操作（实例方法）
+
+> 以下方法参数对应：`target`< = >目标对象、`propKey`< = >属性名、`receiver`< = >`proxy`实例本身
+
+- `get(target, propKey, receiver)`：拦截对象属性的读取,如果有`get`拦截，访问目标对象不存在属性会报错，没有拦截则是`undefined`
+
+```js
+proxy.foo
+proxy['foo']
+```
+- `set(target, propKey, value, receiver)`：拦截对象属性的设置，返回一个布尔值
+
+> `value` 为自定义参数 
+
+```js
+proxy.foo = v
+proxy['foo'] = v
+```
+- `has(target, propKey)`：拦截`HasProperty`的操作，即判断对象是否具有某个属性，返回一个布尔值
+
+> 典型操作就是 `in` 运算符，无法对`for……in`起作用
+
+```js
+var handler = {
+    has (target, key) {
+        if (key[0] === '_') {   // 以 _ 开头的属性，返回 false ，达到了隐藏属性的效果
+            return false;
+        }
+    }
+};
+var target = { _prop: 'foo', prop: 'foo' };
+var proxy = new Proxy(target, handler);
+'_prop' in proxy // false
+```
+> 如果原对象不可配置或者禁止扩展，这时`has`拦截会报错
+
+```js
+var obj = { a: 10 };
+Object.preventExtensions(obj);  //obj 禁止扩展
+```
+
+- `deleteProperty(target, propKey)`：拦截`delete`操作，如果这个方法**抛出错误**或者返回`false`，当前属性就无法被`delete`命令删除
+
+> 目标对象自身的不可配置（`configurable`）的属性，不能被`deleteProperty`方法删除，否则报错
+
+```js
+delete proxy.name   //会被deleteProperty拦截
+```
+- `ownKeys(target)`：拦截对象自身属性的读取操作，返回一个数组
+
+> 该方法返回目标对象所有自身的属性的属性名，而`Object.keys()`的返回结果仅包括目标对象自身的可遍历属性
+
+> 拦截以下操作：
+`Object.getOwnPropertyNames()`
+`Object.getOwnPropertySymbols()`
+`Object.keys()`
+`for...in`循环
+
+- `getOwnPropertyDescriptor(target, propKey)`：拦截`Object.getOwnPropertyDescriptor(proxy, propKey)`，返回属性的描述对象
+
+- `defineProperty(target, propKey, propDesc)`：拦截`Object.defineProperty`即添加属性操作，返回一个布尔值
+
+> 如果目标对象不可扩展（`non-extensible`），则`defineProperty`不能增加目标对象上不存在的属性，否则会报错。另外，如果目标对象的某个属性不可写（`writable`）或不可配置（`configurable`），则`defineProperty`方法不得改变这两个设置
+
+- `preventExtensions(target)`：拦截`Object.preventExtensions()`，返回一个布尔值（不是布尔值会被自动转为布尔值）
+
+> 只有目标对象不可扩展时（即`Object.isExtensible(proxy)`为`false`），`proxy.preventExtensions`才能返回`true`，否则会报错，为了防止出现这个问题，通常要在`proxy.preventExtensions`方法里面，调用一次`Object.preventExtensions`
+
+```js
+var proxy = new Proxy({}, {
+    preventExtensions: function(target) {
+        console.log('called');
+        Object.preventExtensions(target);
+        return true;
+    }
+});
+Object.preventExtensions(proxy)
+// "called"
+// Proxy {}
+```
+- `getPrototypeOf(target)`：拦截获取**对象原型**，返回一个布尔值
+
+> 拦截以下操作：
+`Object.prototype.__proto__`
+`Object.prototype.isPrototypeOf()`
+`Object.getPrototypeOf()`
+`Reflect.getPrototypeOf()`
+`instanceof`
+
+- `isExtensible(target)`：拦截`Object.isExtensible`操作，返回一个布尔值
+
+> 该方法的返回值必须与目标对象的`isExtensible`属性保持一致，否则就会抛出错误
+
+```js
+Object.isExtensible(proxy) === Object.isExtensible(target)
+```
+- `setPrototypeOf(target, proto)`：拦截`Object.setPrototypeOf()`，只返回一个布尔值
+
+- `apply(target, object, args)`：拦截 `Proxy` 实例作为**函数的调用**、`call`和`apply`操作
+
+```js
+var target = function () { return 'I am the target'; }; //一个函数
+var p = new Proxy(target, {
+    apply: function () {
+        return 'I am the proxy';
+    }
+});
+p() // "I am the proxy" p执行，目标函数执行target()调用，触发apply拦截
+```
+- `construct(target, args)`：用于拦截`new`命令，该方法返回的必须是一个对象，否则会报错
+
+> `args`：构造函数的参数对象
+
+```js
+var p = new Proxy(function () {}, {
+    construct: function(target, args) {
+        return { value: args[0] * 10 };
+    }
+});
+new p(1)    // {value: 10}
+```
+#### Proxy.revocable()
+
+> 该法返回一个可取消的 `Proxy` 实例，方法返回一个对象，该对象的`proxy`属性是`Proxy`实例，`revoke`属性是一个函数
+
+```js
+let target = {};
+let handler = {};
+
+let {proxy, revoke} = Proxy.revocable(target, handler);
+
+proxy.foo = 123;
+proxy.foo // 123
+
+revoke();
+proxy.foo // TypeError: Revoked
+```
+> 应用场景：目标对象不允许直接访问，必须通过代理访问，一旦访问结束，就收回代理权，不允许再次访问
+
+### Reflect
+
+> 与`Proxy`对象一样，为了操作对象二提供新的API
+
+#### 设计目的
+
+**1. 将Object对象的一些明显属于语言内部的方法（如：`Object.defineProperty`），放到Reflect对象上**
+
+**2. 修改某些Object方法的返回结果，让其变得更合理**
+
+```js
+/* 
+    老写法：Object.defineProperty
+    在无法定义属性时，会抛出一个错误
+*/
+try {
+  Object.defineProperty(target, property, attributes);
+  // success
+} catch (e) {
+  // failure
+}
+
+/* 
+    新写法：Reflect.defineProperty
+    在无法定义属性时，会返回false
+*/
+if (Reflect.defineProperty(target, property, attributes)) {
+  // success
+} else {
+  // failure
+}
+```
+**3. 让Object操作都变成函数行为**
+
+> 某些Object操作是命令式，比如`name in obj`和`delete obj[name]`
+
+**4. Reflect对象的方法与Proxy对象的方法一一对应**
+
+> 不管`Proxy`怎么修改默认行为，你总可以在`Reflect`上获取默认行为
+
+#### 静态方法
+
+> 大部分与`Object对象`的同名方法的作用都是相同的，而且它与`Proxy对象`的方法是一一对应的
+
+- `Reflect.get(target, name, receiver)`：查找并返回`target`对象的`name`属性，如果没有该属性，则返回`undefined`
+
+- `Reflect.set(target, name, value, receiver) `：设置`target`对象的`name`属性等于`value`
+
+- `Reflect.has(obj, name)`：对应name in obj里面的in运算符
+
+- `Reflect.deleteProperty(obj, name)`：等同于`delete obj[name]`，用于删除对象的属性
+
+- `Reflect.construct(target, args)`：等同于`new target(...args)`，这提供了一种不使用`new`，来调用构造函数的方法
+
+- `Reflect.getPrototypeOf(obj)`：读取对象的`__proto__`属性
+
+- `Reflect.setPrototypeOf(obj, newProto)`：设置目标对象的原型（`prototype`）
+
+- `Reflect.apply(func, thisArg, args)`：用于绑定`this`对象后执行给定函数
+
+- `Reflect.defineProperty(target, propertyKey, attributes)`：用来为对象定义属性
+
+- `Reflect.getOwnPropertyDescriptor(target, propertyKey)`：用于得到指定属性的描述对象，将来会替代掉后者
+
+- `Reflect.isExtensible (target)`：表示当前对象是否可扩展
+
+- `Reflect.preventExtensions(target)`：于让一个对象变为不可扩展，返回一个布尔值
+
+- `Reflect.ownKeys (target)`：用于返回对象的所有属性
+
+#### Proxy简单实现观察者模式
+
+> 观察者模式即实现`observable`和`observe`两个函数：`observable`函数返回一个原始对象的`Proxy`代理，拦截赋值操作，触发充当观察者的各个函数
+
+```js
+const queuedObservers = new Set();  //所有观察者函数都放进这个集合
+
+const observe = fn => queuedObservers.add(fn);
+// 返回原始对象的代理，拦截赋值操作。拦截函数set之中，会自动执行所有观察者
+const observable = obj => new Proxy(obj, {set});   
+
+function set(target, key, value, receiver) {    //观察者
+    const result = Reflect.set(target, key, value, receiver);
+    queuedObservers.forEach(observer => observer());
+    return result;
+}
+```
 
 ### Class 类
 
@@ -382,92 +671,8 @@ new class{
 > 普通函数：谁调用指向谁
 > 箭头函数：父级作用域
 
+### [下一篇](./Promise.md)
 
+### [上一篇](./ES6基础.md)
 
-
-### Generator（生成器）
-
-> 是ES6标准引入的**新的数据类型**。一个generator看上去像一个函数，但可以**返回多次**
-
-1. `generator`由`function*`定义（注意多出的`*`号，普通函数没有），并且除了`return`语句，还可以用`yield`(关键字)返回多次
-
-```js
-function* test(x) {
-    yield x + 1;
-    yield x + 2;
-    return x + 3;
-}
-```
-以上就是一个简单的`generator`，按照普通函数的调用方法，我们可能会想到`test(1)`来执行函数，结果如下：
-
-![test(1)结果截图](../Img/JS/generator1.jpg)
-
-2. `generator`调用：通过上边的截图我们可以看出按照普通函数的调用方式`test(1)`，仅仅是创建了一个`generator`对象，还没有去执行它
-
-**方法一：不断地调用`generator`对象的`next()`方法**
-
-> `next()`方法会执行`generator`的代码，然后，每次遇到`yield`；就返回一个对象`{value: x, done: true/false}`，然后“暂停”。返回的`value`就是`yield`的返回值，`done`表示这个`generator`是否已经执行结束了。如果`done`为`true`，则`value`就是`return`的返回值。当执行到`done`为`true`时，这个`generator`对象就已经全部执行完毕，不要再继续调用`next()`了
-
-由此，我们使用`test(1).next()`执行（这里只调用了一次），结果如下：
-
-![test(1)结果截图](../Img/JS/generator2.jpg)
-
-**方法二：直接用`for ... of`循环迭代`generator`对象**
-
-> 这种方式不需要我们自己判断`done`
-
-```js
-for (var x of test(1)) {
-    console.log(x); //2 3   (并没有返回 return 的返回值)
-}
-```
-3. `generator`作用 ：
-
-* `generator`可以在执行过程中**多次返回**，所以它看上去就像一个可以**记住执行状态**的函数，利用这一点，写一个`generator`就可以实现需要用面向对象才能实现的功能
-
-* `generator`可以把**异步回调**代码变成**同步**代码
-
-```js
-// 不使用generator
-ajax('http://url-1', data1, function (err, result) {
-    if (err) {
-        return handle(err);
-    }
-    ajax('http://url-2', data2, function (err, result) {
-        if (err) {
-            return handle(err);
-        }
-        ajax('http://url-3', data3, function (err, result) {
-            if (err) {
-                return handle(err);
-            }
-            return success(result);
-        });
-    });
-});
-// 使用generator
-try {
-    r1 = yield ajax('http://url-1', data1);
-    r2 = yield ajax('http://url-2', data2);
-    r3 = yield ajax('http://url-3', data3);
-    success(r3);
-}
-catch (err) {
-    handle(err);
-}
-```
-4. 此外,作为对象属性时简写`generator`
-
-```js
-var obj = {
-    * myGenerator() {
-        yield 'hello world';
-    }
-};
-//等同于
-var obj = {
-    myGenerator: function* () {
-        yield 'hello world';
-    }
-};
-```
+### [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com/)
