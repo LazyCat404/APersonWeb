@@ -716,4 +716,4 @@ var per = {...name,...age}  //{name:'xiaoMing',age:18}
 
 ### [上一篇：DOM](./DOM.md)
 
-### [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com/)
+### [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com)
