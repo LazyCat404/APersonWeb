@@ -1,11 +1,10 @@
 # 你以为结束了？天真！
 
-
-### Generator（生成器）
+### Generator 函数（生成器）
 
 > 是ES6标准引入的**新的数据类型**。一个generator看上去像一个函数，但可以**返回多次**
 
-1. `generator`由`function*`定义（注意多出的`*`号，普通函数没有），并且除了`return`语句，还可以用`yield`(关键字)返回多次
+#### generator由function*定义（注意多出的 * 号，普通函数没有），并且除了return语句，还可以用yield(关键字)返回多次
 
 ```js
 function* test(x) {
@@ -18,7 +17,9 @@ function* test(x) {
 
 ![test(1)结果截图](../Img/JS/generator1.jpg)
 
-2. `generator`调用：通过上边的截图我们可以看出按照普通函数的调用方式`test(1)`，仅仅是创建了一个`generator`对象，还没有去执行它
+#### generator调用：
+
+> 通过上边的截图我们可以看出按照普通函数的调用方式`test(1)`，仅仅是创建了一个`generator`对象，还没有去执行它
 
 **方法一：不断地调用`generator`对象的`next()`方法**
 
@@ -37,11 +38,11 @@ for (var x of test(1)) {
     console.log(x); //2 3   (并没有返回 return 的返回值)
 }
 ```
-3. `generator`作用 ：
+#### generator作用 ：
 
-* `generator`可以在执行过程中**多次返回**，所以它看上去就像一个可以**记住执行状态**的函数，利用这一点，写一个`generator`就可以实现需要用面向对象才能实现的功能
+- `generator`可以在执行过程中**多次返回**，所以它看上去就像一个可以**记住执行状态**的函数，利用这一点，写一个`generator`就可以实现需要用面向对象才能实现的功能
 
-* `generator`可以把**异步回调**代码变成**同步**代码
+- `generator`可以把**异步回调**代码变成**同步**代码
 
 ```js
 // 不使用generator
@@ -72,7 +73,7 @@ catch (err) {
     handle(err);
 }
 ```
-4. 此外,作为对象属性时简写`generator`
+#### 此外,作为对象属性时简写generator
 
 ```js
 var obj = {

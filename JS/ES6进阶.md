@@ -461,6 +461,138 @@ function set(target, key, value, receiver) {    //观察者
 }
 ```
 
+### Iterator（迭代器/遍历器）
+
+> 为各种不同的数据结构提供统一的访问机制，任何数据结构只要部署 Iterator 接口，就可以完成遍历操作；可结合[Promise](./Promise.md)中的`Generator`函数部分理解
+
+#### 作用
+
+1. 为各种数据结构，提供一个统一的、简便的访问接口
+
+2. 使数据结构的成员能够按某种次序排列
+
+3. ES6 创造了一种新的遍历命令`for...of`循环，`Iterator` 接口主要供`for...of`消费
+
+#### 默认 Iterator 接口
+
+> 默认的 `Iterator` 接口部署在数据结构的`Symbol.iterator`属性，或者说，一个数据结构只要具有`Symbol.iterator`属性，就可以认为是“可遍历的”。`Symbol.iterator`属性本身是一个函数，就是当前数据结构默认的遍历器生成函数。执行这个函数，就会返回一个遍历器，原生具备 Iterator 接口的数据结构有：
+
+- `Array`
+
+- `Map`
+
+- `Set`
+
+- `String`
+
+- `TypedArray`
+
+- 函数的 `arguments` 对象
+
+- `NodeList` 对象
+
+```js
+let arr = ['a', 'b'];
+let iter = arr[Symbol.iterator]();
+
+iter.next() // { value: 'a', done: false }
+iter.next() // { value: 'b', done: false }
+iter.next() // { value: undefined, done: true }
+```
+#### 其它数据结构需要自己在Symbol.iterator属性上面部署Iterator接口
+
+**1. 类部署 Iterator 接口的写法**
+
+```js
+class RangeIterator {
+    constructor(start, stop) {
+        this.value = start;
+        this.stop = stop;
+    }
+
+    [Symbol.iterator]() { return this; }    // Symbol.iterator属性对应一个函数，执行后返回当前对象的遍历器对象
+
+    next() {
+        var value = this.value;
+        if (value < this.stop) {
+        this.value++;
+        return {done: false, value: value};
+        }
+        return {done: true, value: undefined};
+    }
+}
+
+function range(start, stop) {
+    return new RangeIterator(start, stop);
+}
+
+for (var value of range(0, 3)) {
+    console.log(value); // 0, 1, 2
+}
+```
+**2. 为对象添加 Iterator 接口**
+
+```js
+let obj = {
+    data: [ 'hello', 'world' ],
+    [Symbol.iterator]() {
+        const self = this;
+        let index = 0;
+        return {
+        next() {
+            if (index < self.data.length) {
+            return {
+                value: self.data[index++],
+                done: false
+            };
+            } else {
+            return { value: undefined, done: true };
+            }
+        }
+        };
+    }
+};
+```
+**3. 引用数组的Iterator 接口（一）**
+
+> 对于类似数组的对象（存在数值键名和`length`属性），部署`Iterator`接口，使用`Symbol.iterator`方法直接引用数组的 `Iterator`接口
+
+```js
+NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
+// 或者
+NodeList.prototype[Symbol.iterator] = [][Symbol.iterator];
+
+[...document.querySelectorAll('div')] // 可以执行了
+```
+**4. 引用数组的Iterator 接口（二）**
+
+```js
+let iterable = {
+    0: 'a',
+    1: 'b',
+    2: 'c',
+    length: 3,
+    [Symbol.iterator]: Array.prototype[Symbol.iterator]
+};
+for (let item of iterable) {
+    console.log(item); // 'a', 'b', 'c'
+}
+```
+> 普通对象部署数组的Symbol.iterator方法，并无效果
+
+```js
+let iterable = {
+    a: 'a',
+    b: 'b',
+    c: 'c',
+    length: 3,
+    [Symbol.iterator]: Array.prototype[Symbol.iterator]
+};
+for (let item of iterable) {
+    console.log(item); // undefined, undefined, undefined
+}
+```
+
 ### Class 类
 
 > 在ES6中，`class`(类)作为**对象的模板**被引入，可以通过`class`关键字定义类；其本质就是`function`，只是它的出现让对象原型的写法更**清晰**，更像面向对象编程语法
