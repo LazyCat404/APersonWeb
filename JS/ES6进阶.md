@@ -671,8 +671,8 @@ new class{
 > 普通函数：谁调用指向谁
 > 箭头函数：父级作用域
 
-### [下一篇](./Promise.md)
+### [下一篇：Promise](./Promise.md)
 
-### [上一篇](./ES6基础.md)
+### [上一篇：ES6基础](./ES6基础.md)
 
 ### [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com/)
