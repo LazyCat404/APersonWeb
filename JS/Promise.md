@@ -178,7 +178,7 @@ import(path);   //path -> 模块位置变量
 ```js
 import('./myModule.js')
 .then(({export1, export2}) => {
-    // ...·
+    // ...
 });
 ```
 
