@@ -19,3 +19,5 @@
 #### [ES6基础](ES6基础.md)
 
 #### [ES6进阶](ES6进阶.md)
+
+#### [Promise](Promise.md)
