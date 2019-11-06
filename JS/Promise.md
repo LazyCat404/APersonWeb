@@ -1,7 +1,5 @@
 # 你以为结束了？天真！
 
-
-
 ### module（模块）
 
 > ES6模块自动采用严格模式（严格模式相关可查看[常识](./常识.md)），其中，`this`的限制使得ES6模块中，顶层的`this`指向`undefined`，即不应该在顶层代码使用`this`
@@ -181,6 +179,57 @@ import('./myModule.js')
     // ...
 });
 ```
+
+### Promise （承诺、保证、答应）
+
+> `Promise` 是异步编程的一种解决方案，比传统的解决方案（回调函数和事件）更合理，更强大
+
+#### 特点
+
+> `Promise`可以理解为一个容器（或状态集），里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。从语法上说，`Promise` 是一个对象，通过它可以获取异步操作的消息
+
+**1. `Promise`对象的状态不受外界影响**
+
+`Promise`对象代表一个异步操作，有三种状态：`pending`（进行中）、`fulfilled`（已成功）和`rejected`（已失败）；只有异步操作的结果才能决定`Promise`到底处于那种状态
+
+**2. 一旦状态改变，就不会再变，任何时候都可以得到这个结果**
+
+`Promise`对象的状态改变，只有两种可能：
+
+- `pending` => `fulfilled`
+
+- `pending` => `rejected`
+
+**PS：只要这两种情况发生，状态就不会在发生改变（会一直保持这个结果），继续回调会立刻得到这个结果**
+
+**3. Promise 缺点**
+
+- 无法取消`Promise`，一旦新建它就会立即执行，无法中途取消
+
+- 如果**不设置**回调函数，`Promise`内部抛出的错误，不会反应到外部
+
+- 当处于`pending`状态时，无法得知目前进展到哪一个阶段
+
+> 如果某些事件**不断地反复**发生，一般来说，使用 [Stream](https://nodejs.org/api/stream.html) 模式是比部署`Promise`更好的选择。
+
+#### 基本用法
+
+> ES6 规定`Promise`对象是一个构造函数，用来生成`Promise`实列
+
+```js
+const promise = new Promise(function(resolve, reject) {
+    // ... 
+    if (/* 异步操作成功 */){
+        resolve(value);
+    } else {
+        reject(error);
+    }
+});
+```
+
+
+
+
 
 ### Generator 函数（生成器）
 
