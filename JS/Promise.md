@@ -216,8 +216,10 @@ import('./myModule.js')
 
 > ES6 规定`Promise`对象是一个构造函数，用来生成`Promise`实列
 
+1. `Promise `构造函数接收函数（`resovle`、`reject`）作为参数，这两个参数由JS引擎提供，自己不能部署
+
 ```js
-const promise = new Promise(function(resolve, reject) {
+const pro = new Promise(function(resolve, reject) {
     // ... 
     if (/* 异步操作成功 */){
         resolve(value);
@@ -226,7 +228,30 @@ const promise = new Promise(function(resolve, reject) {
     }
 });
 ```
+2. `Promise`实例生成以后，可以用`then`方法分别指定`resolved`状态和`rejected`状态的回调函数
 
+> `then` 方法可以接受**两个回调函数**作为参数，这两个函数都接受`Promise`对象传出的值作为参数
+
+```js
+pro.then(function(value) {
+    // PRimise 变为 resolved 时调用
+}, function(error) {    //可选参数
+    // PRimise 变为 rejected 时调用
+});
+```
+3. `Promise`新建后会立即执行
+
+```js
+let pro = new Promise(function(resolve,reject){
+    console.log('我会第一个输出');    // Promise 新建后立即执行，所以最先输出
+    resolve();
+});
+pro.then(function(){
+    console.log('我是最后输出');   // then 方法指定回调函数，在（当前脚本）所有同步任务执行完后才会执行，所以最后输出
+});
+console.log('我会第二个输出'); // 同步任务，执行完后才执行then方法回调函数
+```
+#### Promise.prototype.then() 
 
 
 
