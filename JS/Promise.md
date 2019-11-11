@@ -253,8 +253,90 @@ console.log('我会第二个输出'); // 同步任务，执行完后才执行the
 ```
 #### Promise.prototype.then() 
 
+> 为 `Promise` 实例添加**状态改变时**的回调函数，第一个参数是`resolved`状态的回调函数，第二个参数（可选）是`rejected`状态的回调函数；返回一个**新的**`Promise`实列，因此可以采用链式写法调用
 
+```js
+getJSON("/post/1.json").then(function(post) {
+    return getJSON(post.commentURL);
+}).then(function (comments) {   //链式调用，将上一个then方法的返回结果作为参数，传入
+    console.log("resolved: ", comments);    //第一个then方法返回resolved调用
+}, function (err){
+    console.log("rejected: ", err); //第一个then方法返回rejected调用
+});
 
+// 箭头函数写法
+getJSON("/post/1.json").then(
+    post => getJSON(post.commentURL)
+).then(
+    comments => console.log("resolved: ", comments),
+    err => console.log("rejected: ", err)
+);
+```
+#### Promise.prototype.catch()
+
+> 该方法是`.then(null, rejection)`或`.then(undefined, rejection)`的别名，用于指定**发生错误**时的回调函数
+
+```js
+getJSON('/posts.json').then(function(posts) {
+    // ...
+}).catch(function(error) {
+    // 处理 getJSON 和 前一个回调函数运行时发生的错误
+    console.log('发生错误！', error);
+});
+```
+> `Promise`对象的错误具有**冒泡**性质，会一直向后传递，直到被捕获为止。也就是说，错误总是会被下一个`catch`语句捕获
+
+```js
+// 方式一：
+promise.then(function(data) {
+    // success
+}, function(err) {
+    // error
+});
+
+/*
+    方式二（建议）：
+    该写法可以捕获前面then方法执行中的错误，更接近同步的写法（try/catch）
+    建议使用catch方法，而不使用then方法的第二个参数。
+*/
+promise.then(function(data) { //cb
+    // success
+}).catch(function(err) {
+    // error
+});
+```
+#### Promise.prototype.finally()
+
+> 该方法用于指定不管`Promise`对象最后状态如何，都会执行的操作
+
+```js
+promise.then(result => {
+    //成功
+}).catch(error => {
+    //失败
+}).finally(() => {
+    //必执行
+});
+```
+#### Promise.all()
+
+> 该方法用于将多个`Promise`实例，包装成一个新的`Promise`实例，参数必须有`Iterator`接口，返回`Promise`实例
+
+```js
+const p = Promise.all([p1, p2, p3]); //p1、p2、p3都是 Promise 实例，如果不是也会调用Promise.resolve方法后在处理
+/*
+    p的状态由p1、p2、p3决定:
+    1. p1、p2、p3的状态都变成fulfilled，p的状态才会变成fulfilled，此时，p1、p2、p3的返回值组成一个数组，传递给p的回调函数
+    2. p1、p2、p3中有一个被rejected，p的状态就变成rejected，此时，第一个被reject的实例的返回值，会传递给p的回调函数
+*/
+```
+#### Promise.race()
+
+> 该方法也是将多个`Promise`实例，包装成一个新的`Promise`实例（参考`Promise.all()`）
+
+#### Promise.allSettled()
+
+> 该方法接受一组`Promise`实例作为参数，包装成一个新的`Promise`实例。只有等到所有这些参数实例都返回结果，不管是`fulfilled`还是`rejected`，包装实例才会结束
 
 ### Generator 函数（生成器）
 
