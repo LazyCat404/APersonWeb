@@ -190,13 +190,13 @@ import('./myModule.js')
 
 **1. `Promise`对象的状态不受外界影响**
 
-`Promise`对象代表一个异步操作，有三种状态：`pending`（进行中）、`fulfilled`（已成功）和`rejected`（已失败）；只有异步操作的结果才能决定`Promise`到底处于那种状态
+`Promise`对象代表一个异步操作，有三种状态：`pending`（进行中）、`resolved`（已成功）和`rejected`（已失败）；只有异步操作的结果才能决定`Promise`到底处于那种状态
 
 **2. 一旦状态改变，就不会再变，任何时候都可以得到这个结果**
 
 `Promise`对象的状态改变，只有两种可能：
 
-- `pending` => `fulfilled`
+- `pending` => `resolved`
 
 - `pending` => `rejected`
 
@@ -322,6 +322,8 @@ promise.then(result => {
 
 > 该方法用于将多个`Promise`实例，包装成一个新的`Promise`实例，参数必须有`Iterator`接口，返回`Promise`实例
 
+> 可以理解为：只有所有参数的状态都为`resolved`（成功）状态，返回的`Promise`才为`resolved`状态
+
 ```js
 const p = Promise.all([p1, p2, p3]); //p1、p2、p3都是 Promise 实例，如果不是也会调用Promise.resolve方法后在处理
 /*
@@ -334,6 +336,26 @@ const p = Promise.all([p1, p2, p3]); //p1、p2、p3都是 Promise 实例，如�
 
 > 该方法也是将多个`Promise`实例，包装成一个新的`Promise`实例（参考`Promise.all()`）
 
+> 可以理解为：**只要有一个**参数的状态为`resolved`（成功）状态，返回的`Promise`就为`resolved`状态
+
+```js
+var P1 = new Promise((resolved,rejected) =>{
+    setTimeout(function(){
+        resolved('P1');
+    },Math.random()*5000)
+})
+var P2 = new Promise((resolved,rejected) =>{
+    setTimeout(function(){
+        resolved('P2');
+    },Math.random()*5000)
+})
+var P3 = new Promise((resolved,rejected) =>{
+    setTimeout(function(){
+        resolved('P3');
+    },Math.random()*5000)
+})
+Promise.race([P1,P2,P3]).then(data => console.log(data),err => console.log(err))    //谁先达到resolved,就用谁的
+```
 #### Promise.allSettled()
 
 > 该方法接受一组`Promise`实例作为参数，包装成一个新的`Promise`实例。只有等到所有这些参数实例都返回结果，不管是`fulfilled`还是`rejected`，包装实例才会结束
