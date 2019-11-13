@@ -448,3 +448,7 @@ var obj = {
     }
 };
 ```
+
+### [上一篇：ES6进阶](./ES6进阶.md)
+
+### [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com)

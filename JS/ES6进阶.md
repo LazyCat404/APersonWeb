@@ -806,5 +806,3 @@ new class{
 ### [下一篇：Promise](./Promise.md)
 
 ### [上一篇：ES6基础](./ES6基础.md)
-
-### [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com)
