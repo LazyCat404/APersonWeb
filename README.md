@@ -11,7 +11,7 @@
 
 #### [Git](Git/README.md)
 
-#### [Reavt](Reavt/README.md)
+#### [React](React/README.md)
 
 #### [Vue](Vue/README.md)
 
