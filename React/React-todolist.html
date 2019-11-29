@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>React-ToDoList</title>
+    <!-- 核心库 -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <!-- 提供操作DOM的扩展库 -->
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- 解析jsx语法 -->
+    <script src="https://cdn.bootcss.com/babel-standalone/7.0.0-beta.3/babel.min.js"></script>
+</head>
+<body>
+    <div id='app'></div>
+
+    <!-- js -->
+    <script type="text/babel"> 
+        class Add extends React.Component{
+            myClick = () =>{
+                if(!this.refs.input.value){
+                    return;
+                }else{
+                    this.props.allAdd(this.refs.input.value)    //将value的值传递给父组件
+                }
+                this.refs.input.value = ''; // 清空输入框
+            }
+            render(){
+                const {length} = this.props;
+                return (
+                    <div>
+                        <input type="text" ref = 'input'/>
+                        <button onClick = {this.myClick}>点击{length}</button>
+                    </div>
+                )
+            }
+        }
+        class List extends React.Component{
+            myClick = (event) =>{
+                this.props.allDel(event)
+            }
+            render(){
+                const {list} = this.props;
+                return (
+                    <div>
+                        <ul>
+                            {
+                                list.map((value,index) => {
+                                    return (
+                                        <li 
+                                            key = {index+value} 
+                                            onClick = {this.myClick.bind(this,index)}
+                                        >
+                                            {value}
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
+                )
+            }
+        }
+        class App extends React.Component{
+            state = {   //和写在constructor的state一样
+                list:['吃饭','睡觉','写代码']
+            }
+            //回调函数-> 添加列表
+            add = (value) =>{   //value 接收子组件传递过来的值
+                const {list} = this.state;
+                list.push(value);//添加到数组
+                this.setState({ //更新state
+                    list    //Es6 语法， list:list
+                })
+            }
+            // 回调函数 -> 删除列表
+            del = (index) =>{
+                const {list} = this.state;
+                list.splice(index,1);//添加到数组
+                this.setState({ //更新state
+                    list    //Es6 语法， list:list
+                })
+            }
+            render(){
+                const {list} = this.state;
+                return (
+                    <div>
+                        <Add allAdd = {this.add} length = {list.length}/>   
+                        <List list = {list} allDel = {this.del}/>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<App/>,document.getElementById('app'))
+
+    </script>
+</body>
+</html>
