@@ -25,7 +25,7 @@
 
 - `@font-face` : 自定义字体引入
 
-```
+```css
 /*用法：事先准备好字体文件，`.ttf`、`.eot`等。*/
 
 @font-face{
@@ -45,7 +45,7 @@ div{
 
 向元素应用 2D 或 3D 转换。该属性允许我们对元素进行**旋转**、**缩放**、**移动**或**倾斜**。
 
-```
+```css
 /* 基本用法举例*/
 {
     transform: rotate(30deg);
@@ -57,9 +57,10 @@ div{
 ```
 JavaScript 语法
 
-```
+```js
 object.style.transform="rotate(30deg)"
 ```
+
 ### 2D or 3D
 
 > Opera 不支持 3D 转换
@@ -179,7 +180,7 @@ JavaScript 语法：object.style.transition="width 2s"
 
 4. `transition-delay`：开始之前需要等待的时间，以秒或毫秒计
 
-```
+```css
 div{
     width:100px;
     height:100px;
@@ -207,7 +208,7 @@ div:hove{
 
 > 0%、100%作为关键帧，必写！！！
 
-```
+```css
 @keyframes aniName{ //声明帧动画名字，以此绑定到选择上。
     0%{}
     100%{}
@@ -262,14 +263,7 @@ div:hove{
 
 8. `animation-play-state`：动画是否暂停，默认是 `running` → 运行，`paused` → 暂停
 
-
-
-
-
-
-
-
-```
+```css
 div{
     animation: aniName 5s; 
     -moz-animation: aniName 5s;	/* Firefox */
@@ -278,6 +272,54 @@ div{
 }
 ```
 
+### [CSS 自定义属性（CSS 变量）](https://juejin.im/post/5dcbb766f265da4d3e174f6d)
+
+#### 常规使用
+
+```css
+/* 在:root中声明自定义属性 */
+:root {
+    /* 自定义属性声明，名字自取，以 -- 开头*/
+    --my-color:#f00;    
+}
+
+/* 利用 var(自定义属性名) 来调用属性 */
+body{
+    color:var(--my-color);
+}
+```
+#### calc() 计算
+
+```css
+:root {
+    --block-font-size: 1rem;
+}
+
+.block__highlight {
+    font-size: calc(var(--block-font-size)*1.5);
+}
+```
+#### [Generate Colors](Generate.html)
+
+[Generate Colors](../Img/CSS/Generate.gif)
+#### CSS to JS
+
+```css
+.breakpoints-data {
+    --phone: 480px;
+    --tablet: 800px;
+}
+```
+```js
+const breakpointsData = document.querySelector('.breakpoints-data');
+
+// GET
+const phone = getComputedStyle(breakpointsData).getPropertyValue('--phone');
+
+// SET
+breakpointsData.style.setProperty('--phone', 'custom');
+
+```
 
 
 
@@ -295,10 +337,5 @@ div{
 
 
 
+### [上一篇：CSS基础](基础.md)
 
-
-
-
-#### [CSS基础](基础.md)
-
-#### [面试](面试.md)
