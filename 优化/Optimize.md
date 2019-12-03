@@ -32,7 +32,7 @@
 
 能够放在循环之外的语句或赋值会使循环运行得更快
 
-```
+```js
 // 差
 var i;
 for (i = 0; i < arr.length; i++) {}
@@ -42,15 +42,17 @@ var l = arr.length;
 for (i = 0; i < l; i++) {}
 
 ```
+
 ### 减少 DOM 访问
 
 若频繁访问某 DOM 元素，将它作为本地变量来使用，会更好
 
-```
+```js
 var obj;
 obj = document.getElementById("demo");
 obj.innerHTML = "Hello"; 
 ```
+
 ### 缩减 DOM 规模
 
 尽量保持 HTML DOM 中较少的元素数量
