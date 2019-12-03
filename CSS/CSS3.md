@@ -321,21 +321,6 @@ breakpointsData.style.setProperty('--phone', 'custom');
 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### [上一篇：CSS基础](基础.md)
 
+### [下一篇：移动端适配](移动端适配.md)

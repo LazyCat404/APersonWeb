@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>16：9矩形</title>
+    <style>
+        /* box 用来控制宽度 */
+        .box {
+            width: 70%;
+        }
+        /* scale 用来实现宽高等比例 */
+        .scale {
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            position: relative;
+        }
+        /* item 用来放置全部的子元素 */
+        .item {
+            width: 100%;
+            height: 100%;
+            background-color: rgb(18, 243, 74);
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="scale">
+            <div class="item">
+                Hello World
+            </div>
+        </div>
+    </div>
+</body>
+</html>
