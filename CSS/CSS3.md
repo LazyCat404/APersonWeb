@@ -265,10 +265,10 @@ div:hove{
 
 ```css
 div{
-    animation: aniName 5s; 
-    -moz-animation: aniName 5s;	/* Firefox */
-    -webkit-animation: aniName 5s;	/* Safari 和 Chrome */
-    -o-animation: aniName 5s;	/* Opera */
+    animation: aniName 5s infinite;     /* 动画循环播放*/
+    -moz-animation: aniName 5s infinite;	/* Firefox */
+    -webkit-animation: aniName 5s infinite;	/* Safari 和 Chrome */
+    -o-animation: aniName 5s infinite;	/* Opera */
 }
 ```
 
