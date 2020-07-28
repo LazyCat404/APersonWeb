@@ -22,7 +22,8 @@ function getScrollOffset(){
 
 /**
  * 第二部分：实用
- * 2019/9/25
+ * 创建：2019/9/25
+ * 更新：2020/7/28
  */
 //防抖（函数名，[延迟时间]）
 function debounce(hander,delay){
@@ -52,6 +53,52 @@ function throttle(handler,wait){
            lastTime = nowTime;  
        }
     }
+}
+
+// rgb 转 16进制 （"rgb(255,255,255)"）
+function getHexColor(rgb) {
+    if(rgb.r){  //ps：（参数）也可以是对象格式  
+        var r = rgb.r,
+            g = rgb.g,
+            b = rgb.b;
+        return '#' +
+            ('0' + r.toString(16)).slice(-2) +
+            ('0' + g.toString(16)).slice(-2) +
+            ('0' + b.toString(16)).slice(-2)
+    }else{
+        var color = rgb.split(',');
+        var r = parseInt(color[0].split('(')[1]);
+        var g = parseInt(color[1]);
+        var b = parseInt(color[2].split(')')[0]);
+        var hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        return hex;
+    };
+}
+
+// 日期增加 x 天（'2020-07-28',增加天数n）
+function getNewData(dateTemp, days) {  
+    var dateTemp = dateTemp.split("-");  
+    var nDate = new Date(dateTemp[1] + '-' + dateTemp[2] + '-' + dateTemp[0]); //转换为MM-DD-YYYY格式    
+    var millSeconds = Math.abs(nDate) + (days * 24 * 60 * 60 * 1000);  //-days 则表示减n天
+    var rDate = new Date(millSeconds);  
+    var year = rDate.getFullYear();  //年
+    var month = rDate.getMonth() + 1;  //月
+    if (month < 10) {   // 1-9 月前边加0
+        month = "0" + month; 
+    } 
+    var date = rDate.getDate();  //日
+    if (date < 10){ // 1-0 号前边加0
+        date = "0" + date; 
+    }  
+    return (year + "-" + month + "-" + date);  
+}
+
+// 计算两个日期相差天数（'2020-07-28','2020-08-28'）
+function  getDaysBetween(date1,date2){
+    var  startDate = Date.parse(date1);
+    var  endDate = Date.parse(date2);
+    var days = (endDate - startDate)/(1*24*60*60*1000);
+    return  days;
 }
 
 /**
