@@ -627,6 +627,7 @@ let Test = class Test{
     }
 }
 ```
+
 #### constructor => 构造方法
 
 > * 看过上边我们会发现，每个类里都有一个 `constructor`的方法，其实`constructor`方法是类的默认方法，通过`new`命令生成对象实例时，自动调用该方法（默认返回实例对象 `this`）
@@ -662,6 +663,7 @@ class Person{   //定义/声明了一个名字为Person的类
 var obj=new Person("小明");
 console.log(obj.say()); // My name is 小明
 ```
+
 #### 类中的方法
 
 > 类的所有方法都定义在类的`prototype`属性上面，在类的实例上面调用方法，其实就是调用原型上的方法
@@ -731,6 +733,7 @@ var p = new Person()
 p.sum()       // I so cool
 Person.sum()    // 报错
 ```
+
 #### 继承
 
 > 子类`constructor`方法中必须有`super`，且必须出现在`this`之前：（因为）子类没有`this`，需要使用`super`方法，调用父类的构造函数，将`this`绑定到自己身上
@@ -787,6 +790,7 @@ class B extends A {
 var b = new B()
 b.print()  // Name A （如果没有‘A.prototype.name = 'Name A'’ 则是 undefined）
 ```
+
 #### [Decorator函数](https://juejin.im/post/59f1c484f265da431c6f8940)
 
 #### 其它
