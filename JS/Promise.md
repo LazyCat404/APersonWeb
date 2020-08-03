@@ -65,6 +65,7 @@ function foo() {
   export default 'bar' // Uncaught SyntaxError: Unexpected token 'export'
 }
 ```
+
 #### import（引入/入口）
 
 > 通过`import`命令加载`export`定义的接口模块（不同js文件），有提升效果，会提升到整个模块最前边，如下：
@@ -105,6 +106,7 @@ console.log(test.name)  //正确打印
 //下边这种形式不被允许
 test.heigt = '180cm'    
 ```
+
 #### export default 命令
 
 > 使用`import`命令的时候，用户需要知道所要加载的变量名/函数名，否则无法加载，为了解决这个问题就用到了`export default`命令，为模块指定默认输出。
@@ -150,6 +152,7 @@ export default class { ... }
 import MyClass from 'MyClass';
 let o = new MyClass();
 ```
+
 #### import()
 
 > 阅读完上边，我们可以知道`import`被js引擎静态分析（编译时加载），因此它并**不能实现**按需加载
@@ -166,7 +169,7 @@ if (x) {    //if 语句在运行时才执行
 const path = './' + fileName;
 const myModual = require(path); //运行时加载，到底加载哪一个模块，只有运行时才知道（import 做不到）
 ```
-**通过以上对比，`import()`函数，完成动态加载，应运而生，它和`import`类似，只不过一个是动态，一个是静态态**
+**通过以上对比，`import()`函数，完成动态加载，应运而生，它和`import`类似，只不过一个是动态，一个是静态**
 
 ```js
 import(path);   //path -> 模块位置变量
