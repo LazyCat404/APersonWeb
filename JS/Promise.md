@@ -109,7 +109,7 @@ test.heigt = '180cm'
 
 #### export default 命令
 
-> 使用`import`命令的时候，用户需要知道所要加载的变量名/函数名，否则无法加载，为了解决这个问题就用到了`export default`命令，为模块指定默认输出。
+> 使用`import`命令的时候，用户需要知道所要加载的变量名/函数名，否则无法加载，为了解决这个问题就用到了`export default`命令，为模块指定默认输出（绝大多数第三方模块都是使用该命令）。
 
 ```js
 // default-test.js
@@ -140,7 +140,7 @@ import foo from 'modules';
 **2. 默认输入和其它接口**
 
 ```js   
-import aaa, { name, age } from './……';
+import aaa, { name, age } from './……';  //aaa 是默认输出（暴漏），{}里是分别输出、统一输出
 ```
 **3. class类 也可以输出**
 
@@ -163,7 +163,7 @@ if (x) {    //if 语句在运行时才执行
     import * from './……';   //在编译时就执行
 }
 ```
-> `Node` 的`require`方法是运行时加载
+> `ConmmonJS` 的`require`方法是运行时加载
 
 ```js
 const path = './' + fileName;
@@ -182,7 +182,24 @@ import('./myModule.js')
     // ...
 });
 ```
-**PS：因为现在浏览器还没有完全支持`import`,在无服务器支持的情况下，不同浏览器可能会出现不同的报错**
+
+#### 模块化使用 
+
+> 因为现在浏览器还没有完全支持`import`,在无服务器支持的情况下，不同浏览器可能会出现不同的报错，因此需要引入第三方工具使得浏览器识别 ES6 语法 —— [bable](https://www.babeljs.cn/)
+
+```js
+npm install babel-cli -g
+// 继续安装
+npm install babel-preset-es2015
+```
+PS：事实上，babel 将ES6的模块化语法，依旧转成了ConmmonJS，所以如果这样使用，还要使用浏览器认识ConmmoJS
+
+```js
+// 安装后执行命令（编译）
+babel src -d dist   
+// 至此浏览器依旧报错，因还需要将生成的文件在进行编译，即 ConmmonJS
+```
+PS：关于ConmmonJS 的使用，请移步[Node 模块化](../Node/常识.md)
 
 ### Promise （承诺、保证、答应）
 
