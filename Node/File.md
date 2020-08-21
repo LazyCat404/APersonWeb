@@ -1,7 +1,7 @@
 # [fs - 文件系统](http://nodejs.cn/api/fs.html)
 
 > 要知道浏览器中的 JS 是没有文件处理能力的。<br>
-  基础模块引入： <br>
+  文件模块引入： <br>
   `const fs = require('fs');`
 
 ### 读文件
@@ -32,7 +32,14 @@ fs.writeFile('./xxx/xxx.xx','写入内容',function(err){
     if(err){
         console.log("写入文件失败！");  //可能有错误字符
     }else{
-         console.log("写入文件成功！");   
+        console.log("写入文件成功！");   
     }
 })
+```
+
+### 目录读取
+
+```js
+fs.readdir(path,function(err,files){});  //读取目录
+fs.rmdir(path,function(err){}); //删除空目录（不能删除文件），如果目录下有文件则无法删除
 ```
