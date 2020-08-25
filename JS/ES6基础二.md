@@ -463,7 +463,7 @@ function set(target, key, value, receiver) {    //观察者
 
 ### Iterator（迭代器/遍历器）
 
-> 为各种不同的数据结构提供统一的访问机制，任何数据结构只要部署 Iterator 接口，就可以完成遍历操作；可结合[Promise](./Promise.md)中的`Generator`函数部分理解
+> 为各种不同的数据结构提供统一的访问机制，任何数据结构只要部署 Iterator 接口，就可以完成遍历操作；可结合[ES6进阶一](./ES6进阶一.md)中的`Generator`函数部分理解
 
 #### 作用
 
@@ -473,6 +473,12 @@ function set(target, key, value, receiver) {    //观察者
 
 3. ES6 创造了一种新的遍历命令`for...of`循环，`Iterator` 接口主要供`for...of`消费
 
+    >  `for...of`可以写出遍历任意对象（object），注意原生js的`obj`没有对象遍历接口，因此无法使用`for...of`，如果想要使用需要通过`Generator`函数转换一下。
+    ```js
+    for (let [key, value] of demo()) {
+        console.log(key, value)
+    }
+    ```
 #### 默认 Iterator 接口
 
 > 默认的 `Iterator` 接口部署在数据结构的`Symbol.iterator`属性，或者说，一个数据结构只要具有`Symbol.iterator`属性，就可以认为是“可遍历的”。`Symbol.iterator`属性本身是一个函数，就是当前数据结构默认的遍历器生成函数。执行这个函数，就会返回一个遍历器，原生具备 Iterator 接口的数据结构有：
