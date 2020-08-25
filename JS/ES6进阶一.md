@@ -272,6 +272,7 @@ pro.then(function(){
 });
 console.log('我会第二个输出'); // 同步任务，执行完后才执行then方法回调函数
 ```
+
 #### Promise.prototype.then() 
 
 > 为 `Promise` 实例添加**状态改变时**的回调函数，第一个参数是`resolved`状态的回调函数，第二个参数（可选）是`rejected`状态的回调函数；返回一个**新的**`Promise`实列，因此可以采用链式写法调用
@@ -293,6 +294,7 @@ getJSON("/post/1.json").then(
     err => console.log("rejected: ", err)
 );
 ```
+
 #### Promise.prototype.catch()
 
 > 该方法是`.then(null, rejection)`或`.then(undefined, rejection)`的别名，用于指定**发生错误**时的回调函数
@@ -326,6 +328,7 @@ promise.then(function(data) { //cb
     // error
 });
 ```
+
 #### Promise.prototype.finally()
 
 > 该方法用于指定不管`Promise`对象最后状态如何，都会执行的操作
@@ -339,6 +342,7 @@ promise.then(result => {
     //必执行
 });
 ```
+
 #### Promise.all()
 
 > 该方法用于将多个`Promise`实例，包装成一个新的`Promise`实例，参数必须有`Iterator`接口，返回`Promise`实例
@@ -353,6 +357,7 @@ const p = Promise.all([p1, p2, p3]); //p1、p2、p3都是 Promise 实例，如�
     2. p1、p2、p3中有一个被rejected，p的状态就变成rejected，此时，第一个被reject的实例的返回值，会传递给p的回调函数
 */
 ```
+
 #### Promise.race()
 
 > 该方法也是将多个`Promise`实例，包装成一个新的`Promise`实例（参考`Promise.all()`）
@@ -377,6 +382,7 @@ var P3 = new Promise((resolved,rejected) =>{
 })
 Promise.race([P1,P2,P3]).then(data => console.log(data),err => console.log(err))    //谁先达到resolved,就用谁的
 ```
+
 #### Promise.allSettled()
 
 > 该方法接受一组`Promise`实例作为参数，包装成一个新的`Promise`实例。只有等到所有这些参数实例都返回结果，不管是`fulfilled`还是`rejected`，包装实例才会结束
