@@ -8,18 +8,18 @@
 
 #### [基础进阶二](基础进阶二.md)
 
-#### [DOM](DOM.md)
-
-#### [BOM](BOM.md)
+#### [DOM-BOM](DOM-BOM.md)
 
 #### [进阶提升一](进阶提升一.md)
 
 #### [进阶提升二](进阶提升二.md)
 
-#### [ES6基础](ES6基础.md)
+#### [ES6基础一](ES6基础一.md)
 
-#### [ES6进阶](ES6进阶.md)
+#### [ES6基础二](ES6基础二.md)
 
-#### [Promise](Promise.md)
+#### [ES6进阶一](ES6进阶一.md)
+
+#### [ES6进阶二](ES6进阶二.md)
 
 #### [webpack4.x](webpack4.x.md)

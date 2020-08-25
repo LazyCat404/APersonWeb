@@ -1,4 +1,34 @@
-#  DOM --> Document Object Model(文档对象模型)
+# DOM/BOM 不分家
+
+## BOM --> Browser Object Model(浏览器对象模型)
+
+> Browser Object Model，定义了操作浏览器的接口,BOM 对象: `Window`, `History`,`Navigator`,`Screen`, `Location` 等由于浏览器厂商的不同，**BOM**对象的兼容性极低。一般情况下，只用其中的部分功能。
+
+### BOM 对象
+
+- `Window` : JS中最顶层对象，表示浏览器窗口
+
+> 当然，下边四个对象都是 `Window` 下的属性
+
+- `Navigator` : 客户端浏览器信息
+
+- `History` : 浏览器窗口访问过的 URL
+
+- `Location` : 当前 URL 信息
+
+- `Screen` : 客户端显示屏信息（很少用）
+
+### Window 对象
+
+> 表示一个**浏览器窗口**或一个**框架**（`iframe`），所有浏览器都支持 Window 对象。
+
+1. 所有全局 JavaScript 对象，函数和变量自动成为 window 对象的成员。
+
+2. 全局变量是 window 对象的属性（document 对象也是 window 对象属性）。
+
+3. 全局函数是 window 对象的方法。
+
+##  DOM --> Document Object Model(文档对象模型)
 
 > DOM 定义了表示和修改文档所需的方法（对象、这些对象的行为和属性以及这些对象之间的关系。）DOM 对象即为宿主对象，由浏览器厂商定义，用来操作 html和 xml 功能的一类对象的集合。
 
@@ -391,7 +421,7 @@ reg.test(str);
 
 > 正则就不多说了，需要的时候可以去查
 
-### [下一篇：BOM](BOM.md)
+## [下一篇：进阶提升一](进阶提升一.md)
 
-### [上一篇：基础进阶二](基础进阶二.md)
+## [上一篇：基础进阶二](基础进阶二.md)
 
