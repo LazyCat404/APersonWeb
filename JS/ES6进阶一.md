@@ -389,9 +389,11 @@ Promise.race([P1,P2,P3]).then(data => console.log(data),err => console.log(err))
 
 ### Generator 函数（生成器）
 
-> 是ES6标准引入的**新的数据类型**。一个generator看上去像一个函数，但可以**返回多次**
+> 是ES6标准引入的**新的数据类型**。一个generator看上去像一个函数，但可以**返回多次**，返回值是`Iterator`对象。
 
 #### generator由function*定义（注意多出的 * 号，普通函数没有），并且除了return语句，还可以用yield(关键字)返回多次
+
+> `co`模块约定，`yield`命令后只能是`Thunk`函数或`Promise`对象
 
 ```js
 function* test(x) {
