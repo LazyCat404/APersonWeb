@@ -797,7 +797,7 @@ var b = new B()
 b.print()  // Name A （如果没有‘A.prototype.name = 'Name A'’ 则是 undefined）
 ```
 
-#### [Decorator函数](https://juejin.im/post/59f1c484f265da431c6f8940)
+#### 装饰器[Decorator函数](https://juejin.im/post/59f1c484f265da431c6f8940)
 
 #### 其它
 
