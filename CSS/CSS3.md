@@ -299,7 +299,7 @@ body{
     font-size: calc(var(--block-font-size)*1.5);
 }
 ```
-#### [Generate Colors](Generate.html)
+#### [Generate Colors](../样例/Generate.html)
 
 [Generate Colors](../Img/CSS/Generate.gif)
 #### CSS to JS
@@ -323,4 +323,4 @@ breakpointsData.style.setProperty('--phone', 'custom');
 
 ### [上一篇：CSS基础](基础.md)
 
-### [下一篇：移动端适配](移动端适配.md)
+### [下一篇：自适应布局](自适应.md)

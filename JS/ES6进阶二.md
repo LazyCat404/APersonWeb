@@ -142,6 +142,12 @@ test().then(s => console.log(s),e => console.log(e))
 
 
 
+### 装饰器[Decorator函数](https://juejin.im/post/59f1c484f265da431c6f8940)
+
+
+
+
+
 
 
 ### [上一篇：ES6进阶一](./ES6进阶一.md)
