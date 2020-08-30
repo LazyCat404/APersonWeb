@@ -1,0 +1,119 @@
+/* 超过750px */
+@media screen and (min-width:750px){
+    html{
+        font-size:75px !important;
+    }
+}
+*{
+    margin:0;
+    padding: 0;
+}
+html,body{
+    width:10rem;
+    overflow-x: hidden;
+    margin: 0 auto;
+}
+li{
+    list-style: none;
+}
+#search-nav-wrapper{
+    width: 100%;
+}
+.search-wrapper{
+    padding:0 0.4rem;
+    font-size: 0.32rem;
+    height: 1rem;
+    overflow: hidden;
+    color: #fff;
+    background:#4cc8ab;
+}
+.search-box{
+    width: 6.666667rem;
+    float: left;
+    margin-top: 0.2rem;
+    height:0.8rem;
+    background: #a6e4d5;
+    border-radius: 0.4rem;
+}
+.search-box input{
+    background: transparent;
+    font-size: 0.32rem;
+    width: calc(100% - 1.2rem);
+    margin-left: 0.8rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    border:0;
+}
+.search-box input:focus{ 
+    outline:none;
+}
+.search-left,
+.search-right{
+    width: 1.266667rem;
+    line-height: 1rem;
+    cursor: pointer;
+}
+.search-left{
+    float: left;
+}
+.search-right{
+    float: right;
+    text-align: right;
+}
+.nav-wrapper{
+    position: relative;
+}
+.nav-wrapper img{
+    width: 100%;
+}
+.nav-box{
+    position: absolute;
+    top: 1.333333rem;
+    padding:0 0.4rem;
+    font-size: 0.32rem;
+}
+.nav-box ul{
+    width: 8rem;
+    padding: 0.666667rem 0.6rem 0.533333rem 0.6rem;
+    background: #fff;
+    border-radius: 0.066667rem;
+    overflow: hidden;
+    box-shadow: 0px 0.04rem 0.093333rem -0.066667rem #d6d6d6;
+}
+.nav-box ul>li{
+    width: 2.666667rem;
+    float: left;
+    color: #333;
+    text-align: center;
+}
+.nav-box ul>li>div{
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 0 auto;
+    border-radius: 50% 50%;
+}
+.nav-box ul>li:nth-child(1)>div{
+    background: #8389f1;
+}
+.nav-box ul>li:nth-child(2)>div{
+    background: #2ad9d5;
+}
+.nav-box ul>li:nth-child(3)>div{
+    background: #f99a40;
+}
+.nav-box ul>li:nth-child(4)>div{
+    background: #35b8f1;
+}
+.nav-box ul>li:nth-child(5)>div{
+    background: #2ed664;
+}
+.nav-box ul>li:nth-child(6)>div{
+    background: #189efe;
+}
+.nav-box ul>li>span{
+    line-height: 0.666667rem;
+}
+.nav-seat{
+    height: 1.6rem;
+    background: #fff;
+}
