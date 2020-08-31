@@ -136,11 +136,48 @@ test().then(s => console.log(s),e => console.log(e))
 
 ### ArrayBuffer
 
+> JS没有直接处理二进制数据的能力，但可以通过一个接口 —— `ArrayBuffer`，以数组的语法处理二进制数据（二进制数组），使得JS具有了直接操作内存（更快）的能力，并有可能与操作系统原生接口进行二进制通信。
 
+PS：这里的 `ArrayBuffer` 和`node`中的**缓存器**不完全一样哦！
 
+#### ArrayBuffer对象
 
+> `ArrayBuffer`对象代表存储二进制数据的一段内存，不能直接读写，只能通过视图（以*指定格式*解读二进制数据）来读写。
 
+- `ArrayBuffer`也是一个构造函数，可以通过`new`创建实例，并为其分配一段可以存放数据的连续内存区域。
 
+```js
+// 参数：所需内存大小（单位：字节）
+let buf = new ArrayBuffer(32); 
+```
+![new-ArrayBuffer](../Img/JS/new-ArrayBuffer.png)
+
+- `ArrayBuffer.prototype.byteLength`：返回所分配的内存区域的字节长度
+
+> 当分配内存很大时，有可能会失败（没有足够的连续的空余内存），此外分配长度不得超过`Number.MAX_SAFE_INTEGER`（超出报错）。
+
+```js
+let buf = new ArrayBuffer(888888888); 
+if (buf.byteLength === n) {
+    // 成功
+} else {
+    // 失败
+}
+```
+- `ArrayBuffer.prototype.slice()`：将内存区域的一部分，拷贝生成一个新的`ArrayBuffer`对象。
+
+```js
+let buf = new ArrayBuffer(888);
+// 参数：字节序号
+let newBuf = buffer.slice(0, 33);   // 0 - 33，包含第一个，不包含第二个，如果只有一个参数，则默认至最后  
+```
+PS：除了`slice`方法，`ArrayBuffer`不提供任何直接读写内存的方法，只允许在其上方建立视图，然后通过视图进行读写!
+
+- `ArrayBuffer.isView()`：（静态方法）表示参数是否为`ArrayBuffer`的视图（`TypedArray`或`DataView`）实例，返回布尔值。
+
+#### TypedArray 视图
+
+#### DataView 视图
 
 ### 装饰器[Decorator函数](https://juejin.im/post/59f1c484f265da431c6f8940)
 
