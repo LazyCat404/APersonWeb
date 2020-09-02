@@ -8,6 +8,24 @@
 
 > `fs` 模块提供了与文件系统进行交互的API
 
+* `fs.isFile / fs.isDirectory`：检测是文件还是目录
+
+* `fs.mkdir`：创建目录
+
+* `fs.writeFile`：写入文件（会覆盖文件原有内容）
+
+* `fs.appendFile`：追加文件
+
+* `fs.readFile`：读取文件
+
+* `fs.readdir`：读取目录
+
+* `fs.rename`：重命名文件（如果文件路径有改变会移动文件）
+
+* `fs.rmdir`：删除目录（不可用作是删除文件，目录下有文件会删除失败）
+
+* `fs.unlink`：删除文件（不可用来删除目录）
+
 #### 同步异步
 
 > `fs` 模块下所有的方法都分为同步和异步两种形式：
