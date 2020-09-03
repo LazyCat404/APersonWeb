@@ -134,7 +134,7 @@ async function test(){
 test().then(s => console.log(s),e => console.log(e))
 ```
 
-### ArrayBuffer
+### [ArrayBuffer](https://es6.ruanyifeng.com/#docs/arraybuffer)
 
 > JS没有直接处理二进制数据的能力，但可以通过一个接口 —— `ArrayBuffer`，以数组的语法处理二进制数据（二进制数组），使得JS具有了直接操作内存（更快）的能力，并有可能与操作系统原生接口进行二进制通信。
 
@@ -175,9 +175,66 @@ PS：除了`slice`方法，`ArrayBuffer`不提供任何直接读写内存的方�
 
 - `ArrayBuffer.isView()`：（静态方法）表示参数是否为`ArrayBuffer`的视图（`TypedArray`或`DataView`）实例，返回布尔值。
 
-#### TypedArray 视图
+#### 视图
 
-#### DataView 视图
+> `ArrayBuffer`对象作为内存区域，可以存放多种类型的数据。同一段内存，不同类型数据有不同的解读方式，这就叫做**视图（view）**，每一种视图类型都是一个构造函数，利用这些构造函数生成的数组，具有普通数组的属性和方法。
+
+- `TypedArray`：存储的数据为**同一个**数据类型，连续
+
+    - `Int8Array`：8 位有符号整数，长度 1 个字节（只能存放，8位2进制整数）。
+
+    - `Uint8Array`：8 位无符号整数，长度 1 个字节。
+
+    - `Uint8ClampedArray`：8 位无符号整数，长度 1 个字节，溢出处理不同。
+
+    - `Int16Array`：16 位有符号整数，长度 2 个字节。
+
+    - `Uint16Array`：16 位无符号整数，长度 2 个字节。
+
+    - `Int32Array`：32 位有符号整数，长度 4 个字节。
+
+    - `Uint32Array`：32 位无符号整数，长度 4 个字节。
+
+    - `Float32Array`：32 位浮点数，长度 4 个字节。
+
+    - `Float64Array`：64 位浮点数，长度 8 个字节。  
+
+    > 不同的视图类型所能容纳二点数值范围是确定的，超出这个范围，就会出现溢出
+
+    ```js
+
+    ```
+
+TypedArray 数组的溢出处理规则，简单来说，就是抛弃溢出的位，然后按照视图类型进行解释。
+
+- `DataView`：存储的数据可以**不是同一个**数据类型。
+
+    - `get/setInt8`：读取/写入 1 个字节，返回一个 8 位整数。
+
+    - `get/setUint8`：读取/写入 1 个字节，返回一个无符号的 8 位整数。
+
+    - `get/setInt16`：读取/写入 2 个字节，返回一个 16 位整数。
+
+    - `get/setUint16`：读取/写入 2 个字节，返回一个无符号的 16 位整数。
+
+    - `get/setInt32`：读取/写入 4 个字节，返回一个 32 位整数。
+
+    - `get/setUint32`：读取/写入 4 个字节，返回一个无符号的 32 位整数。
+
+    - `get/setFloat32`：读取/写入 4 个字节，返回一个 32 位浮点数。
+
+    - `get/setFloat64`：读取/写入 8 个字节，返回一个 64 位浮点数。
+
+```js
+    // 向内存申请一块16个字节长度的连续内存
+    const buf = new ArrayBuffer(16);    
+    // 创建一个视图（32位有符号整数），一个32位整数占4个字节，所以这个视图可以存放（16/4）个整数
+    const myView = new Int32Array(buf); // myView 就可以当成一个普通数组使用
+```
+![ArrayBuffer视图](../Img/JS/ArrayBuffer视图.png)
+
+PS：每种视图都有一个`BYTES_PER_ELEMENT`属性，表示这种数据类型占据的字节数。
+
 
 ### 装饰器[Decorator函数](https://juejin.im/post/59f1c484f265da431c6f8940)
 

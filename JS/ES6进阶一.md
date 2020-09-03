@@ -183,7 +183,7 @@ import('./myModule.js')
 });
 ```
 
-#### 模块化使用 
+#### [模块化使用](http://www.ruanyifeng.com/blog/2020/08/how-nodejs-use-es6-module.html) 
 
 > 因为现在浏览器还没有完全支持`import`,在无服务器支持的情况下，不同浏览器可能会出现不同的报错，因此需要引入第三方工具使得浏览器识别 ES6 语法 —— [bable](https://www.babeljs.cn/)
 
