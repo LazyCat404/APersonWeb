@@ -235,14 +235,7 @@ TypedArray 数组的溢出处理规则，简单来说，就是抛弃溢出的位
 
 PS：每种视图都有一个`BYTES_PER_ELEMENT`属性，表示这种数据类型占据的字节数。
 
-
 ### 装饰器[Decorator函数](https://juejin.im/post/59f1c484f265da431c6f8940)
-
-
-
-
-
-
 
 ### [上一篇：ES6进阶一](./ES6进阶一.md)
 
