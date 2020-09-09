@@ -43,7 +43,7 @@ function debounce(hander,delay){
 //节流（函数名，[等待时间]）
 function throttle(handler,wait){
     if(wait == undefined){ 
-        wait = 800;    //如果不传入等待时间，默认1000ms
+        wait = 1000;    //如果不传入等待时间，默认1000ms
     }
     var lastTime = 0;   //上次执行时间
     return function(){
@@ -106,7 +106,7 @@ function  getDaysBetween(date1,date2){
  * 2019/9/25
  */
 
- //拖拽（需要拖动的元素，活动范围元素）
+//拖拽（需要拖动的元素(记得要设置position)，活动范围元素）
 function bindEvent(ele,wrap){
     //分成三个步骤 down -- movw -- up
     var X,  //鼠标落下点的x坐标
