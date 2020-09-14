@@ -39,29 +39,7 @@ div{
 ```
 > CS3的这些属性还有很多延申用法，可能平时并不常见，但思维不要紧限于此。
 
-### transform
-
-> 无论是2D还是3D我们都需利用`transform`属性来完成转换。Internet Explorer 10、Firefox 以及 Opera 支持`transform` 属性；Chrome 和 Safari 需要前缀 `-webkit-`，Internet Explorer 9 需要前缀 `-ms-` 。
-
-向元素应用 2D 或 3D 转换。该属性允许我们对元素进行**旋转**、**缩放**、**移动**或**倾斜**。
-
-```css
-/* 基本用法举例*/
-{
-    transform: rotate(30deg);
-    -ms-transform: rotate(30deg);		/* IE 9 */
-    -webkit-transform: rotate(30deg);	/* Safari and Chrome */
-    -o-transform: rotate(30deg);		/* Opera */
-    -moz-transform: rotate(30deg);		/* Firefox */
-}
-```
-JavaScript 语法
-
-```js
-object.style.transform="rotate(30deg)"
-```
-
-### 2D or 3D
+### 2D or 3D （平移、旋转、缩放、翻转）
 
 > Opera 不支持 3D 转换
 
@@ -136,6 +114,28 @@ PS: 1. 进行所方变换时子元素也进行相应变换；
 
 > 组合方法
 
+### 变换transform
+
+> 无论是2D还是3D我们都需利用`transform`属性来完成转换。Internet Explorer 10、Firefox 以及 Opera 支持`transform` 属性；Chrome 和 Safari 需要前缀 `-webkit-`，Internet Explorer 9 需要前缀 `-ms-` 。
+
+向元素应用 2D 或 3D 转换。该属性允许我们对元素进行**旋转**、**缩放**、**移动**或**倾斜**。
+
+```css
+/* 基本用法举例*/
+{
+    transform: rotate(30deg);
+    -ms-transform: rotate(30deg);		/* IE 9 */
+    -webkit-transform: rotate(30deg);	/* Safari and Chrome */
+    -o-transform: rotate(30deg);		/* Opera */
+    -moz-transform: rotate(30deg);		/* Firefox */
+}
+```
+JavaScript 语法
+
+```js
+object.style.transform="rotate(30deg)"
+```
+
 ### 过渡 transition
 
 > Internet Explorer 9 以及更早的版本，不支持 transition 属性;
@@ -200,7 +200,7 @@ div:hove{
 ```
 > `transform`【定义变换】、`translate`【平移】、`transition`【过渡效果】
 
-### 动画 @keyframes
+### 帧动画 @keyframes
 
 > Internet Explorer 9，以及更早的版本，不支持 `@keyframe` 规则或 `animation` 属性。
 
