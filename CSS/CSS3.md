@@ -301,7 +301,7 @@ body{
 ```
 #### [Generate Colors](../样例/Generate.html)
 
-[Generate Colors](../Img/CSS/Generate.gif)
+![Generate Colors](../Img/CSS/Generate.gif)
 #### CSS to JS
 
 ```css
