@@ -60,6 +60,12 @@ li{
     float: right;
     text-align: right;
 }
+.search-right>img{
+    width:0.453333rem;
+    height: 0.373333rem;
+    position: relative;
+    top: 0.133333rem;
+}
 .nav-wrapper{
     position: relative;
 }
@@ -93,22 +99,28 @@ li{
     border-radius: 50% 50%;
 }
 .nav-box ul>li:nth-child(1)>div{
-    background: #8389f1;
+    background-image:url('../Images/ico1.png');
+    background-size: 100% 100%;
 }
 .nav-box ul>li:nth-child(2)>div{
-    background: #2ad9d5;
+    background-image:url('../Images/ico2.png');
+    background-size: 100% 100%;
 }
 .nav-box ul>li:nth-child(3)>div{
-    background: #f99a40;
+    background-image:url('../Images/ico3.png');
+    background-size: 100% 100%;
 }
 .nav-box ul>li:nth-child(4)>div{
-    background: #35b8f1;
+    background-image:url('../Images/ico4.png');
+    background-size: 100% 100%;
 }
 .nav-box ul>li:nth-child(5)>div{
-    background: #2ed664;
+    background-image:url('../Images/ico5.png');
+    background-size: 100% 100%;
 }
 .nav-box ul>li:nth-child(6)>div{
-    background: #189efe;
+    background-image:url('../Images/ico6.png');
+    background-size: 100% 100%;
 }
 .nav-box ul>li>span{
     line-height: 0.666667rem;
@@ -116,4 +128,32 @@ li{
 .nav-seat{
     height: 1.6rem;
     background: #fff;
+}
+/* 工具 */
+.tool-wrapper{
+    width: 9.2rem;
+    margin: 0 auto;
+}
+.tool-content{
+    width: 3.6rem;
+    padding: 0.466667rem 0.373333rem;
+}
+.tool-content:first-child{
+    float: left;
+    background-color: #edf9f6;
+}
+.tool-content:last-child{
+    float: right;
+    background-color: #e9f1fb;
+}
+.tool-content>img{
+    float: left;
+    height: 1rem;
+    margin-right: 0.4rem;
+}
+.tool-content>div{
+    float: left;
+}
+.tool-content>div>div:first-child{
+    font-size: 0.373333rem;
 }
