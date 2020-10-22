@@ -31,7 +31,7 @@ console.log(b);  //undefined，预编译环节，变量提升，所以并不会�
 var b = "banana"; 
 ```
 
->综合`let`声明变量的优点，在`for`循环语句中用`let`代替`var`可避免`bug`的出现
+> 综合`let`声明变量的优点，在`for`循环语句中用`let`代替`var`可避免`bug`的出现
 
 #### const 
 
