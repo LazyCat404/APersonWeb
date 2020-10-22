@@ -101,6 +101,31 @@ function  getDaysBetween(date1,date2){
     return  days;
 }
 
+// 判断数据类型
+function getType(target) {
+    //先处理最特殊的Null
+    if (target === null) {
+        return "null";
+    }else{
+        const type = typeof(target);
+        //判断是不是基础类型
+        if (type !== "object") {
+            return type;
+        }else{
+            const typeStr = Object.prototype.toString.call(target); //此方法可以准确判断数据类型
+            const template = {
+                "[object Object]": "object",
+                "[object Array]": "array",
+                // 可能是包装类
+                "[object String]": "string",
+                "[object Number]": "number",
+                "[object Boolean]": "boolean",
+              };
+            return template[typeStr];
+        }
+    }
+}
+
 /**
  * 第三部分：可变（根据不同需求封装的方法可能存在变化）
  * 2019/9/25
