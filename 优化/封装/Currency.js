@@ -67,7 +67,7 @@ function add(){
     }
     return _adder;
 }
-add(1,2,3);
+add(1,2,3);     
 add(1)(2)(3);
 
 // rgb 转 16进制 （"rgb(255,255,255)"）
