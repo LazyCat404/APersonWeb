@@ -26,34 +26,49 @@ function getScrollOffset(){
  * 更新：2020/7/28
  */
 //防抖（函数名，[延迟时间]）
-function debounce(hander,delay){
-    if(delay == undefined){ 
-        delay = 300;    //如果不传入延迟时间，默认300ms
-    }
+function debounce(handler,delay = 300){ //如果不传入延迟时间，默认300ms
     var timer = null;   //定时器变量
     return function(){
-        var _this = this, _arg = arguments;
-        clearTimeout(timer);
+        var _this = this;
+        var _arg = arguments;   // 参数列表
+        clearTimeout(timer);    // 清除定时器
         timer = setTimeout(function (){
-            hander.apply(_this,_arg);
+            handler.apply(_this,_arg);
         },delay);
     }
 }
 
 //节流（函数名，[等待时间]）
-function throttle(handler,wait){
-    if(wait == undefined){ 
-        wait = 1000;    //如果不传入等待时间，默认1000ms
-    }
-    var lastTime = 0;   //上次执行时间
+function throttle(handler,wait = 1000){ // 如果不传入等待时间，默认1000ms
+    var lastTime = 0;   // 上次执行时间
     return function(){
-       var nowTime = new Date().getTime();
-       if(nowTime - lastTime > wait){   //超过等待时间
-           handler.apply(this,arguments);
-           lastTime = nowTime;  
+       var nowTime = +new Date();   // 当前执行时间戳
+       var _this = this;
+       var _arg = arguments;   // 参数列表
+       if(nowTime - lastTime > wait){   // 超过等待时间则执行
+            handler.apply(_this,_arg);
+            lastTime = nowTime;  
        }
     }
 }
+
+// 累加求和（柯里化，参数长度不固定）
+function add(){
+    let _args = Array.prototype.slice.call(arguments);  // 将（不定）参数转化为数组对象
+    let _adder = function (){
+        _args.push(...arguments);
+        return _adder;
+    }
+    // toString 隐形转换特性
+    _adder.toString = function() {
+        return _args.reduce(function(a,b){  // reduce方法接收一个函数作为累加器，数组中的每个值（从左到右）开始缩减，最终计算为一个值。
+            return a + b;
+        },0)
+    }
+    return _adder;
+}
+add(1,2,3);
+add(1)(2)(3);
 
 // rgb 转 16进制 （"rgb(255,255,255)"）
 function getHexColor(rgb) {
