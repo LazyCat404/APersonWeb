@@ -7,7 +7,7 @@
 export default function nextToken(tokens) {
     // 结果数组
     let nextedTokens = [];
-    // 栈结构，存放小tokens，栈顶（靠近端口的，最新进入的）的tokens数组中当前操作的这个tokens小数组
+    // 栈结构，存放小tokens，栈顶（靠近端口的，最新进入的）的tokens数组中当前操作的这个tokens子数组
     let sections = [];
     // 收集器，天生指向nextedTokens结果数字，引用类型值，所以指向的是同一数组
     // 收集器的指向会变化，当遇见#的时候，收集器会指向token的下标为2的新数组
