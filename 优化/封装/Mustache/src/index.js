@@ -1,5 +1,13 @@
+import parseTemplateToTokens from './parseTemplateToTokens';
+
 window.SSG_TemplateEngine = {
     render(templateStr,data) {
-        console.log(1111);
+        let tokens = parseTemplateToTokens(templateStr);
+        
+
+
+
+
+
     },
 }
