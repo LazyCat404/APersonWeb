@@ -14,10 +14,13 @@
                 {{#arr}}
                     <li>我的名字：{{name}}</li>
                     <li>从事的工作：{{work}}</li>
+                    <li>我的初中：{{school.first}}</li>
+                    <li>我的高中：{{school.second}}</li>
+                    <li>我的大学：{{school.three}}</li>
                     <li>
                         <ol>
                             {{#hobby}}
-                                <li>{{xx}}</li>
+                                <li>{{.}}</li>
                             {{/hobby}}
                         <ol>
                     </li>
@@ -27,10 +30,16 @@
         let data = {
             arr:[{
                 name:'懒猫',
-                work:'前端'
+                work:'前端',
+                school:{
+                    first:'一中',
+                    second:'二中',
+                    three:'三中',
+                }
             }],
-            hobby:['爱好1','爱好2','爱好3'],
+            hobby:['爱好1','爱好2','爱好3']
         }
+
         SSG_TemplateEngine.render(templateStr,data);
     </script>
 </body>
