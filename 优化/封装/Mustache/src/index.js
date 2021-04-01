@@ -7,8 +7,6 @@ window.SSG_TemplateEngine = {
         let tokens = parseTemplateToTokens(templateStr);
         // 调用 renderTempLate 函数，让tokens数组变为dom字符串
         let domStr = renderTemplate(tokens,data);
-
-
-
+        return domStr;
     },
 }

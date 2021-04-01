@@ -14,8 +14,8 @@
  * @return 调用结果
  */
 export default function lookup(dataObj,keyName=''){
-    //  判断keyName 中有没有 . 
-    if(keyName.indexOf('.') != -1){
+    //  判断keyName 中有没有 . , 但是不能是 . 本身
+    if(keyName.indexOf('.') != -1 && keyName != '.'){
         // 拆成数组
         let keys = keyName.split('.');
         // 临时变量，一层层向下找
