@@ -5,7 +5,7 @@ import parseArray from './parseArray';
  * 让tokens数组变为dom字符串
  * @param { Array } tokens  符合dom结构的数组
  * @param { * } data 模板数据
- * @return 转成dom后的字符串
+ * @returns 转成dom后的字符串
  */
 
 export default function renderTemplate(tokens,data) {

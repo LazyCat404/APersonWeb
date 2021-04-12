@@ -1,7 +1,7 @@
 /**
  * 折叠topkens，将#和/之间的tokens能够整合起来，作为子项
  * @param { Array } tokens 
- * @return { Array } 整合之后的数组 
+ * @returns { Array } 整合之后的数组 
  */
 
 export default function nextToken(tokens) {

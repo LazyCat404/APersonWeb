@@ -23,7 +23,7 @@ export default class Scanner {
     /**
      * 让指针进行扫描，直到遇见指定内容结束，返回结束之前路过的文字
      * @param { String } stopTag 结束标记，{{
-     * @return { String } 开始到（结束）标记之间的字符串
+     * @returns { String } 开始到（结束）标记之间的字符串
      */
     scanUtil(stopTag){
         // 记录一下，执行本方法的时候 pos 的值

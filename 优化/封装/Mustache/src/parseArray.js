@@ -5,7 +5,7 @@ import renderTemplate from './renderTemplate';
  * 这个函数要递归调用renderTemplate函数，调用多少次，由data决定
  * @param { Array } token 只一个简单的数组，例如：['#','xx',[]]
  * @param { * } data 模板数据
- * @return 
+ * @returns 
  */
 export default function parseArray(token,data) {
     // 得到整体数据中，需要使用的部分

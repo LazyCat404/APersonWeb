@@ -11,7 +11,7 @@
  * 那么 lookup(data,'a.b.c')  结果就是100
  * @param { Object } dataObj  数据
  * @param { String } keyName  连续调用
- * @return 调用结果
+ * @returns 调用结果
  */
 export default function lookup(dataObj,keyName=''){
     //  判断keyName 中有没有 . , 但是不能是 . 本身
