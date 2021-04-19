@@ -1,6 +1,7 @@
 import {def} from './utils';
 import defineReactive from './defineReactive';
 import { arrayMethods } from './array';
+import observe from './observe';
 
 /**
  * 将一个正常的Object 转换为每个层级的属性都是响应式的（可以被侦测）Object
@@ -13,6 +14,8 @@ export default class Observer {
         if(Array.isArray(value)){
             // 是数组，强行将该数组原型指向我们改写后的数组原型（arrayMethods）
             Object.setPrototypeOf(value,arrayMethods);
+            // 让这个数组变响应式
+            this.observeArray(value);
         }else{
             this.walk(value);
         }
@@ -23,4 +26,10 @@ export default class Observer {
             defineReactive(value,k);
         }
     }
+    // 数组的特殊遍历
+    observeArray(arr){
+        for(let i = 0,l = arr.length;i< l; i++){
+            observe(arr[i]);
+        }
+    } 
 };
