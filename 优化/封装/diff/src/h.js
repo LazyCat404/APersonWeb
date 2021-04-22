@@ -18,7 +18,8 @@ import vnode from './vnode';
  * 3. h('div',{},h())
  * @param { String } sel   标签
  * @param { Object } data  属性
- * @param { String,Number,Function,Array } c     文本/数字/函数/数组/   
+ * @param { String,Number,Function,Array } c     文本/数字/函数/数组/  
+ * @returns 虚拟DOM 
  */
 export default function(sel,data,c){
     // 检查参数个数
