@@ -182,7 +182,7 @@ function bindEvent(ele,wrap){
  * 2019/11/12
  */
 
- //1. Promise 应用
+// 1. Promise 应用
 
 //图片加载（图片地址）
 const loadUrl = url => new Promise((rejected,resolved) => {
@@ -205,89 +205,60 @@ const myAjax = (type = 'GET',data = {},url) =>{
     })
 }
 
-/**
- * 2. Promise 函数分装
- * 特点：
- *      ① new Promise(),必须传参数，切必须为 function,否则报错
- *      ② 传入的函数（参数），立即执行
- *      ③ pending => resolved/rejected
- *      ④ Promise 对象调用then(fn1,fn2)
- *      ⑤ then 返回Promise对象，可链式调用
- *      ⑥ 链式调用，后一个then的状态取决于前一个then返回的状态(可以这样理解)     
- */
-function myPromise(fn){
-    if(typeof(fn) !== 'function'){  //①
-        throw Error(`Promise resolver ${fn} is not a function`);
-    }
-    let self = this;
-    this.status = 'pending'; //模拟Promise 状态，默认是 pending 
-    this.data = null;
-    this.resolvedArr = []   //将当前状态存取，模拟异步
-    this.rejectedArr = [];
-    function resolved(data){
-        setTimeout(function(){
-            if(self.status == 'pending'){   //状态改变后不可在变
-                self.status = 'resolved';
-                self.data = data;
-                self.rejectedArr.forEach(fn => fn())
-            }
-        },0)
-    };  
-    function rejected(err){
-        setTimeout(function(){  //将下面执行放到事件执行队列尾部
-            if(self.status == 'pending'){   //状态改变后不可在变
-                self.status = 'rejected';
-                self.data = err;
-            }
-        },0)
-    };
-    fn(resolved,rejected); // ②
-}
-myPromise.prototype.then = function(onResolved,onRejected){
-    let self = this;
-    if(this.status == 'resolved'){
-        return new myPromise(function(resolved,rejected){   //⑤
-            var res =  onResolved(self.data)
-            if(res instanceof myPromise){   // 如果res是 myPromise 对象
-                res.then(resolved,rejected)
-            }else{
-                resolved(res)
-            }
-        })
-    };
-    if(this.status == 'rejected'){
-        return new myPromise(function(resolved,rejected){   //⑤
-            var res =  onRejected(self.data)
-            if(res instanceof myPromise){   // 如果res是 myPromise 对象
-                res.then(resolved,rejected)
-            }else{
-                resolved(res)
-            }
-        })
-    };
-    if(this.status == 'pending'){
-        return new myPromise(function(resolved,rejected){   //
-            self.rejectedArr.push((function(onResolved){    //闭包
-                return  function(){ 
-                        var res =  onResolved(self.data)
-                        if(res instanceof myPromise){   // 如果res是 myPromise 对象
-                            res.then(resolved,rejected)
-                        }else{
-                            resolved(res)
-                        }
-                }
-            })(onResolved))
+// 2. 指针 - 相关算法
 
-            self.rejectedArr.push((function(onRejected){    //闭包
-                return  function(){ 
-                        var res =  onRejected(self.data)
-                        if(res instanceof myPromise){   // 如果res是 myPromise 对象
-                            res.then(resolved,rejected)
-                        }else{
-                            resolved(res)
-                        }
-                }
-            })(onRejected))
-        })
+/**
+ * 寻找字符串中连续最多的字符串
+ * @param {String} str  需要查找的字符串
+ */
+function repeatStr(str) {
+    // 两个指针（数组下标）
+    let i = 0;
+    let j = 0;
+    while(i <= str.length - 1){
+        // 当两个指针对应字符不相同时，说明重复结束，将 i 指针移动到 j 位置
+        if(str[i] != str[j]){
+            console.log(`${i}到${j}文字相同！都是${str[i]}，重复了${j - i}次!`);
+            i = j;
+        }
+        // j 指针后移 
+        j++;
+    } 
+}
+/**
+ * 在递归实现斐波那序列的基础上，添加缓存的思想，提高效率
+ * @param {Number} num 
+ */
+{
+    // 缓存对象（类数组）
+    let cache = {};
+    function fib(num){
+        if(cache.hasOwnProperty(num)){
+            // 从缓存中直接获取数据
+            return cache[num];
+        }else{
+            // 没有缓存，将结果加入缓存
+            let v = (num == 1 || num == 2) ? 1 : fib(num - 1) + fib(num - 2);
+            cache[num] = v;
+            return v;
+        }
+    }
+    // 测试
+    console.log(fib(9))
+}   
+/**
+ * 将高维数组转为对象
+ * @param {Array Number String} item 
+ * @returns 
+ */
+ function convert(item) {
+    if(typeof item == 'number' || typeof item == 'string'){
+        return{
+            value:item
+        }
+    }else if(Array.isArray(item)){
+        return {
+            children:item.map(val => convert(val))
+        }
     }
 }
