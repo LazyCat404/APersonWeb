@@ -9,6 +9,8 @@
 
 #### [JS](JS/README.md)
 
+#### [TS](TS/README.md)
+
 #### [React](React/README.md)
 
 #### [Vue](Vue/README.md)
