@@ -44,7 +44,7 @@ git checkout -track 分支名         同查看到的远程分支一样
 git branch 分知名		           新建分支
 git checkout 分支名 		       切换分支
 git checkout -b 分知名	           新建并运行分支（相当于执行上两句）
-git push origin :分支名	           删除远程分支
+git push origin --delete 分支名    删除远程分支（本地分支要和远程分支一致）
 git branch -D 分知名		       删除本地分支
 ```
 #### 将本地分支与远程分支建立连接
