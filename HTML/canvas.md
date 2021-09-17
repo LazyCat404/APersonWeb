@@ -81,6 +81,11 @@ ctx.strokeRect(30, 30, 40, 40); // 从(30,30)开始，绘制一个宽高均为40
 
   - `arc(x,y,r,start,end,direction)`:画一个以`(x,y)`为圆心的以`r`为半径的圆弧（圆），从`start`开始到`end`结束，按照`direction`（`false`：顺时针；`true`：逆时针（默认））给定的方向来生成。
 
+  > 在`arc()`函数中角的单位是**弧度**；js中: `弧度 = ( Math.PI / 180 ) * 角度`。
+
+  - `arcTo(x1,y1,x2,y2,r)`：以`r`为半径，在`(x1,y1)`与`(x2,y2)`画一段圆弧。
+  
+
 3. 闭合路径
 
   - `closePaht()`：闭合路径，但它不是必需的，如果图形已经闭合，即当前点为开始点，则该函数将什么也不做。
@@ -91,4 +96,34 @@ ctx.strokeRect(30, 30, 40, 40); // 从(30,30)开始，绘制一个宽高均为40
 
   - `fill()`： 填充，调用该函数时，所有没有闭合的形状都会**自动闭合**。
 
+```js
+  // 填充三角形
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(80, 15);
+  ctx.lineTo(15, 80);
+  ctx.fill();
 
+  // 描边三角形
+  ctx.beginPath();
+  ctx.moveTo(105, 105);
+  ctx.lineTo(90, 25);
+  ctx.lineTo(25, 90);
+  ctx.closePath();
+  ctx.stroke();
+
+  // 描边一个整圆
+  ctx.beginPath();
+  ctx.arc(150, 30, 20, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // 填充一个半圆
+  ctx.beginPath();
+  ctx.arc(150, 80, 20, 0, Math.PI);
+  ctx.fill();
+```
+![Canvas路径](../Img/HTML/canvas_路径.png)
+
+#### 贝塞尔曲线
+
+> 用于绘制复杂有规律的图形。
