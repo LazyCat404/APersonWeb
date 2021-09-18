@@ -180,4 +180,26 @@ ctx.strokeStyle = 'red';
 ctx.fill();
 ctx.stroke();
 ```
+![canvas颜色](../Img/HTML/canvas_颜色.png)
+
+3. `globalAlpha = num` ：透明度
+
+这个属性影响到 `canvas` 里所有图形的透明度，有效的值范围是 [ 0,1 ]，默认是 1，完全不透明。
+
+```js
+ctx.globalAlpha = 0.2;
+```
+![canvas不透明度](../Img/HTML/canvas_不透明度.png)
+
+PS：这个属性可以用`rgba`代替
+
+### （线）样式
+
+1. `lineWidth`：宽度
+
+2. `lineCap`：线条端点样式，可能值：`butt`（默认），`round` 和 `square`
+
+![canvas线](../Img/HTML/canvas_线.png)
+
+
 
