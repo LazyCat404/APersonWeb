@@ -160,4 +160,24 @@ ctx.stroke(p);
 
 PS：这个东西看上去有点像PS，这里就不详细说了，它实用性不强，如果需要绘制复杂的路径可以考虑上边的方法。
 
+### 颜色
+
+> 通过上边的介绍，可以发现绘制出来的图形，*非黑即白*，现在，就让我们来点颜色瞧瞧吧。
+
+这里主要涉及到两个 API：
+
+1. `fillStyle = color` : 填充颜色
+
+2. `strokeStyle = color` : 不用多说，它一定是描边（轮廓）颜色
+
+PS：上边的 `color` 是颜色值，可以是你能想到任何 css 的颜色，比如：rgba、16进制、颜色英文、渐变等等
+
+```js
+let ctx = canvas.getContext('2d');
+ctx.rect(10, 10, 50, 50);
+ctx.fillStyle = '#FFA500';
+ctx.strokeStyle = 'red';
+ctx.fill();
+ctx.stroke();
+```
 
