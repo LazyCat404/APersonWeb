@@ -45,13 +45,15 @@ if(canvas.getContext){  // 兼容一下浏览器不支持的可能
 
 #### 矩形
 
-绘制矩形`canvas`提供了三种方式（绘制后即时生效）：
+绘制矩形`canvas`提供了几种方式（绘制后即时生效）：
 
 1. 填充矩形 -> `fillRect(x,y,width,height)`
 
 2. 矩形边框 -> `strokeRect(x,y,width,height)`
 
 3. 擦拭区域 -> `clearRect(x,y,width,height)`
+
+4. 直接绘制 -> `rect(x,y,width,height)`
 
 ```js
 var canvas = document.getElementById('myCanvas');
@@ -124,12 +126,38 @@ ctx.strokeRect(30, 30, 40, 40); // 从(30,30)开始，绘制一个宽高均为40
 ```
 ![Canvas路径](../Img/HTML/canvas_路径.png)
 
+#### [Path2D()](https://developer.mozilla.org/zh-CN/docs/Web/API/Path2D/Path2D) 
+
+> 用来缓存或记录绘画命令，暂且把它想想成svg 的 psth；它在方便绘制的同时，他都兼容性并不是很好，目前 IE 及 Safari 均不支持。
+
+1. 克隆路径
+
+```js
+var ctx = canvas.getContext('2d');
+
+var rectangle = new Path2D(); // 创建一个空路径
+rectangle.rect(0, 0, 50, 50); // 克隆路径
+
+ctx.stroke(rectangle);  // 描边路径
+```
+
+2. 从SVG 初始化路径
+
+> `Path2D` 可以通过 SVG 的 `path` 路径来初始化路径
+
+```js
+var ctx = canvas.getContext('2d');
+
+var p = new Path2D('M10 10 h 80 v 80 h -80 Z');
+ctx.stroke(p);
+```
+
 #### 贝塞尔曲线
 
 > 用于绘制复杂有规律的图形。
 
 ![Canvas_贝塞尔.png](../Img/HTML/Canvas_贝塞尔.png)
 
-PS：这个东西看上去有点像PS，这里就不详细说了，它实用性不强，如果需要绘制复杂的路径可以考虑下边的方法。
+PS：这个东西看上去有点像PS，这里就不详细说了，它实用性不强，如果需要绘制复杂的路径可以考虑上边的方法。
 
-#### Path2D 
+
