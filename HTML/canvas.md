@@ -201,5 +201,6 @@ PS：这个属性可以用`rgba`代替
 
 ![canvas线](../Img/HTML/canvas_线.png)
 
+3. `lineJoin`：线条与线条链接处样式，可能值：`round`，`bevel` 和 `miter`（默认）。
 
-
+![canvas不透明度](../Img/HTML/canvas_链接.png)
