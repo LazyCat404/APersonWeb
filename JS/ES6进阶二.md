@@ -148,6 +148,42 @@ async function test(){
 test().then(s => console.log(s),e => console.log(e))
 ```
 
+#### 配合立即执行函数
+
+实际应用中的异步远远不是这样简单的异步，如果在关联上循环，就会更复杂，这里有一个小技巧，利用立即执行函数，去书写异步等待，不但能减少变量定义，还能使代码更清晰。
+
+```js
+// 最外层写立即执行函数，是为了方便在控制台调用
+(async function(){
+  let arr = [];
+  console.log('开始');
+  let setTimer = new Promise(resolve1 => {
+    setTimeout(() => {
+      arr.push(1,2,3);
+      console.log('数组已通过异步赋值：',arr);
+      resolve1(arr);
+    });
+  });
+  await setTimer.then(async res =>{
+    // 在这里处理赋值后的数组
+    for(let i=0;i<res.length;i++){
+      // 在进行异步处理
+      await (function (){
+        return new Promise(async resolve2 => {
+          setTimeout(() => {
+            console.log('异步输出数组项',res[i]);
+            resolve2();
+          })
+        });
+      })();
+    };
+  });
+  console.log('结束');
+})();
+```
+
+![立即执行函数写异步等待](../Img/JS/立即执行函数写异步等待.png)
+
 ### [ArrayBuffer](https://es6.ruanyifeng.com/#docs/arraybuffer)
 
 > JS没有直接处理二进制数据的能力，但可以通过一个接口 —— `ArrayBuffer`，以数组的语法处理二进制数据（二进制数组），使得JS具有了直接操作内存（更快）的能力，并有可能与操作系统原生接口进行二进制通信。
