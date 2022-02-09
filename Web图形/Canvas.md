@@ -10,15 +10,25 @@
 </canvas>
 ```
 
-#### whidth/height
+#### 获取`Canvas`对象
 
-对于 `<canvas>` 来说，`whidth`和`height`这是两个必须属性，如果不写，则会默认` width='300px' height='150px'`
+  1. 通过`getElementById()`方法获取`Canvas`对象
 
-> 通常情况下，尝试用`width`和`height`属性为`<canvas>`明确规定宽高，而不是使用CSS，因为如果CSS的尺寸与初始画布的比例不一致，它会出现扭曲。
+    ```JS
+    let canvas = document.getElementById('myCanvas');
+    ```
 
-#### 渲染上下文
+  2. 通过`createElement()`方法创建`Canvas`对象
 
-> 这里主要介绍 2D 渲染，3D 渲染请移步[WebGL](./WebGL.md)
+    ```JS
+    let canvas = document.createElement('canvas');
+    ```
+
+#### `Canvas`对象方法（渲染上下文）
+
+> `Canvas`**2D**和**3D**绘图功能，平时说的`Canvas`指的是**2D绘图**功能（本文介绍），通过`Canvas`元素实现的**3D绘图**功能，也就是所谓的[WebGL](./WebGL.md)
+
+1. 2D `canvas.getContext('2d')`
 
 ```js
 // 获取 canvas 对象
@@ -31,6 +41,21 @@ if(canvas.getContext){  // 兼容一下浏览器不支持的可能
   let ctx = canvas.getContext('2d');  // 2d，说明我们获取的是平面相关的API，不能写成2D
 }
 ```
+
+2. 3D `canvas.getContext('webgl')`
+
+```js
+let canvas = document.getElementById('myCanvas'); 
+let gl = canvas.getContext('webgl');
+// 不可同时具有2D相关API
+let ctx = canvas.getContext('2d');  // ctx 结果 为 null
+```
+
+#### whidth/height
+
+对于 `<canvas>` 来说，`whidth`和`height`这是两个必须属性，如果不写，则会默认` width='300px' height='150px'`
+
+> 通常情况下，尝试用`width`和`height`属性为`<canvas>`明确规定宽高，而不是使用CSS，因为如果CSS的尺寸与初始画布的比例不一致，它会出现扭曲。
 
 #### 坐标（栅格）
 
