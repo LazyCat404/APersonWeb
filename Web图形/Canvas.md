@@ -14,15 +14,15 @@
 
   1. 通过`getElementById()`方法获取`Canvas`对象
 
-    ```JS
-    let canvas = document.getElementById('myCanvas');
-    ```
+  ```JS
+  let canvas = document.getElementById('myCanvas');
+  ```
 
   2. 通过`createElement()`方法创建`Canvas`对象
 
-    ```JS
-    let canvas = document.createElement('canvas');
-    ```
+  ```JS
+  let canvas = document.createElement('canvas');
+  ```
 
 #### `Canvas`对象方法（渲染上下文）
 
