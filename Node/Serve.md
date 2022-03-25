@@ -120,3 +120,5 @@ server.on('request',function(req,res){
 ```
 
 这样似乎还是不太完美，如果我们想知道某个请求目录下可请求的资源列表怎么做呢？
+
+PS：自己写了一个简单的[NodeServe](./NodeServe/index.js)，功能比较单一，作为一个前端自用的简易资源服务器还是可以的(￣▽￣)"
