@@ -13,8 +13,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "jquery": "^3.6.0",
-        "lodash": "^4.17.21"
+        "axios": "^0.26.1"
     },
     "devDependencies": {
         "html-webpack-plugin": "^5.5.0",
