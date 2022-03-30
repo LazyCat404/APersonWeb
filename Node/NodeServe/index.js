@@ -8,7 +8,7 @@ server.on('request',function(req,res){
     res.setHeader("Access-Control-Allow-Origin","*");
     var url = decodeURI(req.url);
     console.log('收到客户端请求，请求地址：', url);
-    fs.readdir('./www',function(err,dir){
+    fs.readdir('./www',function(err){
         if(err){
             console.log('读取资源文件夹失败！');
         }else{
@@ -19,8 +19,34 @@ server.on('request',function(req,res){
                     // 根据路径,返回静态资源
                     let ContentType = JSON.parse(data.toString())
                     if(url === '/'){
-                        res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
-                        res.end('暂未指定默认资源!');
+                        fs.readdir('./www',(err,dir) => {
+                            if(dir.length === 0){
+                                res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
+                                res.end('暂未指定默认资源！');
+                            }else{
+                                let defaultFile = false // 是否有index 文件
+                                for(let i = 0;i<dir.length;i++){
+                                    if(path.basename(`/${dir[i]}`,path.extname(dir[i])) === 'index'){
+                                        defaultFile = true;
+                                        fs.readFile(`./www/${dir[i]}`,function(err,data){
+                                            if(err){
+                                                res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
+                                                res.end(`文件读取失败!`);
+                                            }else{
+                                                let type = path.extname(dir[i]);
+                                                res.setHeader("content-type",`${ContentType[type]};charset=UTF-8`);
+                                                res.end(data);
+                                            }
+                                        });
+                                        return;
+                                    }
+                                }
+                                if(!defaultFile){
+                                    res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
+                                    res.end('暂未指定默认资源!');
+                                }
+                            }
+                        })
                     }else{
                         let extName = path.extname(url) || null
                         if(extName){
