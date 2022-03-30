@@ -34,34 +34,52 @@ server.on('request',function(req,res){
                                 }
                           })
                         }else{
+                            // 没有扩展名，
                             fs.readdir(`./www${url}`,(err,fileList) =>{
                                 if(err){
-                                    res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
-                                    res.end('未找到资源文件夹!');
+                                    // 查看上一级目录有没有同名文件 
+                                    let a = path.resolve(`./www${url}`, '..')
+                                    fs.readdir(a,(er,file)=>{
+                                        if(er){
+                                            res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
+                                            res.end('未找到资源文件夹!');
+                                        }else{
+                                            let sameName = false // 是否有同名文件
+                                            for(let i=0;i<file.length;i++){
+                                                if(path.basename(`/${file[i]}`,path.extname(file[i])) === path.basename(`${url}`,path.extname(file[i]))){
+                                                    sameName = true
+                                                    fs.readFile(`./www/${url}${path.extname(file[i])}`,function(e,data){
+                                                        if(e){
+                                                            res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
+                                                            res.end('文件读取失败!');
+                                                        }else{
+                                                            let type = path.extname(file[i]);
+                                                            res.setHeader("content-type",`${ContentType[type]};charset=UTF-8`);
+                                                            res.end(data);
+                                                        }
+                                                    });
+                                                    return
+                                                }
+                                            }
+                                            if(!sameName){
+                                                res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
+                                                res.end('未找到资源文件夹!');
+                                            }
+                                        }  
+                                    })
                                 }else{
                                     if(fileList.length === 0){
                                         res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
                                         res.end('该路径下暂无资源');
-                                    }else if(fileList.length === 1){
-                                        fs.readFile(`./www${url}/${fileList[0]}`,(err,data)=>{
-                                            if(err){
-                                                res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
-                                                res.end('文件读取失败!');
-                                            }else{
-                                                let type = path.extname(fileList[0]);
-                                                res.setHeader("content-type",`${ContentType[type]};charset=UTF-8`);
-                                                res.end(data);
-                                            }
-                                        })
                                     }else{
-                                        let defFile = false // 是否有index 文件
+                                        let defaultFile = false // 是否有index 文件
                                         for(let i = 0;i<fileList.length;i++){
                                             if(path.basename(`/${fileList[i]}`,path.extname(fileList[i])) === 'index'){
-                                                defFile = true;
-                                                fs.readFile(`./www/${fileList[i]}`,function(err,data){
+                                                defaultFile = true;
+                                                fs.readFile(`./www/${url}/${fileList[i]}`,function(err,data){
                                                     if(err){
                                                         res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
-                                                        res.end('文件读取失败!');
+                                                        res.end(`文件读取失败!`);
                                                     }else{
                                                         let type = path.extname(fileList[i]);
                                                         res.setHeader("content-type",`${ContentType[type]};charset=UTF-8`);
@@ -71,7 +89,7 @@ server.on('request',function(req,res){
                                                 return;
                                             }
                                         }
-                                        if(!defFile){
+                                        if(!defaultFile){
                                             res.setHeader("content-type",`${ContentType['.html']};charset=UTF-8`);
                                             res.end('暂未指定默认资源!');
                                         }
