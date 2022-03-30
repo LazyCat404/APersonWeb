@@ -61,7 +61,10 @@ class Promise {
             reject(error);
         }
     }
-
+    /**
+     * 添加实例方法
+     * 实例.方法名()
+     */
     // then 方法
     then(onResolved,onRejected) {
         let _this = this;
@@ -130,6 +133,7 @@ class Promise {
 
     /**
      * 添加静态方法
+     * 类名.方法名()
      */
     // resolve 方法
     static resolve(value){
