@@ -27,7 +27,7 @@ function myAxios(customOptions) {
         config => {
             removePending(config)  // 在请求开始前，对之前的请求做检查取消操作
             addPending(config)     // 将当前请求添加到 pending 中
-            config.headers.Authorization = 'k7r+vB0fj+dqxcRF3ts9GwEMGLTGg7y7V6x0prm/5bIHnUKZ60DcLW1REHItxyPm6jhBTxRVMhffeko3g6GNBLZ0UX7HWLr8eI9pkTPEEn7UIMoIR5JL7jnijOLb27Hz' 
+            config.headers.Authorization = 'k7r+vB0fj+dqxcRF3ts9Gw1uVwJGIBgWvgP5qCJH9CDEHpb47F9mKcMgfjo9GTDOlQuIOXpZubwLR5aBQOez2vou/Q6BGMhIpZ1F/dy+tT/MmoOEov33PXWex2LAZEII' 
             /**
              * 其它请求前调整
              * 例如：服务器地址（config.baseURL）、接口地址（config.url）设置token、追加请求头等
@@ -120,40 +120,74 @@ function pendingKey(config) {
 /**
  * post 方法，对应 post 请求
  * @param {String} url 接口地址
- * @param {Object} params 请求参数
- * @param {String} paramsType 参数类型：josn（默认）、query、data
+ * @param {Object Array File } params 请求参数
+ * @param {String} paramsType 参数类型：josn（默认）、query、file、data
  * @param {Object} customOptions [自定义设置]
  */
 export function post(url, params, paramsType, customOptions){
     return new Promise((resolve, reject) => {
-        let headers = {'X-Requested-With': 'application/json'}
-        try{
-            paramsType =  paramsType.toLowerCase()
-            if(paramsType === 'query'){
-                myAxios(customOptions).post(url,null,{params}).then(res => {
-                    resolve(res)
-                }).catch(err => {
-                    reject(err)
-                })
-            }else if(paramsType === 'data' || paramsType === 'form-data'|| paramsType === 'formdata'){
-                myAxios(customOptions).post(url, QS.stringify(params)).then(res => {
-                    resolve(res)
-                }).catch(err => {
-                    reject(err)
-                })
-            }else{
-                myAxios(customOptions).post(url, params).then(res => {
+        if(typeof params == 'object'){
+            let headers = {'X-Requested-With': 'application/json'}
+            try{
+                paramsType =  paramsType.toLowerCase()
+                if(paramsType === 'query'){
+                    myAxios(customOptions).post(url,null,{params}).then(res => {
+                        resolve(res)
+                    }).catch(err => {
+                        reject(err)
+                    })
+                }else if(paramsType === 'file'){
+                    let formData = new FormData(); 
+                    if(params instanceof File){
+                        formData.append(`file`,params)
+                    }else{
+                        for(let item in params){
+                            if(params[item] instanceof File){
+                                formData.append(`${item}`, params[item]);
+                            }else if(Object.prototype.toString.call(params[item]) == '[object Array]'){
+                                let fileList = params[item].filter(el => el instanceof File)
+                                if(fileList.length && fileList.length <= params[item].length){
+                                    fileList.forEach((file,i) => {
+                                        formData.append(`${item}[${i}]`,file)
+                                    })
+                                    if(fileList.length < params[item].length){
+                                        console.warn(`数组${item}存在非文件类型对象，已被忽略`)
+                                    }
+                                }else{
+                                    formData.append(`${item}`,JSON.stringify(params[item]))
+                                }
+                            }else{
+                                formData.append(`${item}`,JSON.stringify(params[item]))
+                            }
+                        }
+                    }
+                    myAxios(customOptions).post(url, formData).then(res => {
+                        resolve(res)
+                    }).catch(err => {
+                        reject(err)
+                    })
+                }else if(paramsType === 'data' || paramsType === 'form-data'|| paramsType === 'formdata'){
+                    myAxios(customOptions).post(url, QS.stringify(params)).then(res => {
+                        resolve(res)
+                    }).catch(err => {
+                        reject(err)
+                    })
+                }else{
+                    myAxios(customOptions).post(url, params).then(res => {
+                        resolve(res)
+                    }).catch(err => {
+                        reject(err)
+                    })
+                }
+            }catch{
+                myAxios(customOptions).post(url,params,{ headers }).then(res => {
                     resolve(res)
                 }).catch(err => {
                     reject(err)
                 })
             }
-        }catch{
-            myAxios(customOptions).post(url,params,{ headers }).then(res => {
-                resolve(res)
-            }).catch(err => {
-                reject(err)
-            })
+        }else{
+            console.error('参数类型仅支持 Object、Array、File')
         }
     })
 }

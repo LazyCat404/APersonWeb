@@ -15,8 +15,20 @@ let url = '/api/v1/system/userExcel/template';
 let dom = document.getElementById('input')
 dom.onchange = function(par){
     let fileList = dom.files[0]
-    console.log(dom.files[0])
-    post(url,fileList).then(res =>{
+    // console.log(dom.files[0])
+    // let obj = {
+    //     fileList,
+    //     list:[fileList,fileList,1,'11'],
+    //     list1:[1,'11'],
+    //     list2:[],
+    //     value:1,
+    //     onj:{
+    //         name:'小明',
+    //         age:18
+    //     }
+    // }
+    let obj = fileList
+    post(url,obj,'file').then(res =>{
         console.log('请求结果：',res)
     })
 }
