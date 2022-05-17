@@ -137,7 +137,7 @@ export function get(url,...theArgs){
                     console.error('请求参数仅支持 Object、Array类型')
                 } 
             }else if (i < 3){
-                if(typeof item == '[object Object]'){
+                if(Object.prototype.toString.call(item) == '[object Object]'){
                     customOptions = item
                 }else if(typeof item == 'string'){
                     if(item.toLowerCase() === 'blob'){
