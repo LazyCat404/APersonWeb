@@ -2,7 +2,7 @@
 
 ### 目录
 
-#### [Vue基础](基础.md)
+#### [Vue2基础](./Vue2/基础.md)
 
 #### [vue-routes(一)](Vue-routes/vue-routes(一).md)
 
