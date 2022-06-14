@@ -10,15 +10,15 @@
 
     - tokens : JS 嵌套数组 -> 模板字符串的 JS 表示
     
-![dom模板字符串](../../Img/Vue/dom模板字符串.png)
+![dom模板字符串](../../../Img/Vue/dom模板字符串.png)
 
 转成 tokens 如下 :
 
-![tokens](../../Img/Vue/tokens.png)
+![tokens](../../../Img/Vue/tokens.png)
 
 tokens 数组展开:
 
-![tokens展开](../../Img/Vue/tokens展开.png)
+![tokens展开](../../../Img/Vue/tokens展开.png)
 
 ```js
 // 正则实现简单的模板引擎
@@ -38,4 +38,4 @@ function render(template,data){
 // 测试调用
 let result = render(templateStr,data);  // 已经得到拼接好的DOM字符串
 ```
-[Mustache 简易封装](../../优化/封装/Mustache/src/index.js)
+[Mustache 简易封装](../../../优化/封装/Mustache/src/index.js)
