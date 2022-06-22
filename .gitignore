@@ -1,6 +1,12 @@
 .DS_Store
 node_modules
-/dist
+dist
+coverage
+temp
+explorations
+TODOs.md
+*.log
+.idea
 
 
 # local env files
