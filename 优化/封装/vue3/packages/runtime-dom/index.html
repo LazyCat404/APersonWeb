@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./dist/runtime-dom.global.js"></script>
+    <!-- <script src="./runtime-dom.global.js"></script> -->
+</head>
+<body>
+    <div id="app"></div>
+    <script> 
+
+
+
+        const {createApp,h,ref} = VueRuntimeDOM;
+        function useCounter(){
+            const count = ref(0);
+            const add = ()=>{
+                count.value++;
+            }
+            return {count,add}
+        }
+        let App = {
+            setup(){
+                let {count,add} = useCounter()
+                // setup 可以返回render函数，或者可以返回渲染所需的数据结果
+                // return ()=>{
+                //     return h('h1',{onClick:this.add},`hello word${this.count}`) 
+                // }
+                return {
+                    count,
+                    add
+                }
+            },
+            render(proxy){
+                return h('h1',{onClick:this.add},`hello word${this.count}`)
+            }
+        }
+        let app = createApp(App)
+        app.mount('#app')
+    </script>
+</body>
+</html>

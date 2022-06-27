@@ -3,7 +3,7 @@ const execa = require('execa')
 const args = minimist(process.argv.slice(2))
 
 // 获取打包参数
-const target = args._.length ? args._[0] : 'reactivity' 
+const target = args._.length ? args._[0] : 'runtime-dom' 
 const format = args.f || 'global'
 const sourcemap = args.s || false
 

@@ -1,0 +1,17 @@
+{
+    "name": "@vue/runtime-dom",
+    "module": "dist/runtime-dom.esm-bundler.js",
+    "files": [
+        "index.js",
+        "dist"
+    ],
+    "buildOptions": {
+        "name": "VueRuntimeDOM",
+        "formats": [
+            "esm-bundler",
+            "cjs",
+            "global"
+        ]
+    }
+  }
+  
