@@ -1,18 +1,22 @@
 import { ShapeFlags } from '@vue/shared'
 import { createAppAPI } from './apiCreateApp'
+import { createComponentInstance, setupComponent } from './component'
+
 export * from '@vue/reactivity'
 
 export function createRenderer(renderOptions: any) {
     /**
      * 初始化节点
-     * @param initialVNode 初始节点
+     * @param initialVNode 初始节点（vuni节点）
      * @param container 渲染容器
      */
     const mountComponent = (initialVNode:any,container:Element,)=> {
         // 根据组件的虚拟节点，创造一个真实的节点，渲染到容器中
-        console.log(initialVNode,container)
+        // 1. 创建组件实例
+        const instance = initialVNode.component  = createComponentInstance(initialVNode)
+        // 2. 给组件实例赋值
+        setupComponent(instance);  
     }
-
 
     const processComponent = (n1:any,n2:any,container:Element) => {
         if(n1 == null){

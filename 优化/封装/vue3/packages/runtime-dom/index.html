@@ -23,7 +23,10 @@
             return {count,add}
         }
         let App = {
-            setup(){
+            props:{
+                title:''
+            },
+            setup(props,ctx){
                 let {count,add} = useCounter()
                 // setup 可以返回render函数，或者可以返回渲染所需的数据结果
                 // return ()=>{
@@ -38,7 +41,7 @@
                 return h('h1',{onClick:this.add},`hello word${this.count}`)
             }
         }
-        let app = createApp(App)
+        let app = createApp(App,{title:'小红',age:18})
         app.mount('#app')
     </script>
 </body>
