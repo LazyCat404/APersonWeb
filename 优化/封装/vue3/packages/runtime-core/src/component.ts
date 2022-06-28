@@ -1,5 +1,5 @@
 import { reactive } from "@vue/reactivity";
-import { isFunction, isObject } from "@vue/shared";
+import { hasOwn, isFunction, isObject } from "@vue/shared";
 
 /**
  * 创建组件实例
@@ -55,12 +55,36 @@ export function createSetupContext(instance: any) {
 
     }
 }
-
+const PublicInstanceProxyHandlers = {
+    get({ _: instance }: any, key: string){
+        const { setupState, props } = instance
+        if(hasOwn(setupState,key)){
+            return setupState[key];
+        }else if(hasOwn(props,key)){
+            return props[key];
+        }else{
+            // ……
+        }
+    },
+    set({ _: instance }: any, key: string,value:any){
+        const { setupState, props } = instance
+        if(hasOwn(setupState,key)){
+           setupState[key] = value
+        }else if(hasOwn(props,key)){
+            console.warn('属性是只读的！')
+            return false;
+        }else{
+            // ……
+        }
+        return true
+    }
+}
 
 export function setupStatefulComponent(instance: any) {
     // 调用组件的setup 函数
     const Component = instance.type;
     const { setup } = Component;  // 组件中setup 方法
+    instance.proxy = new Proxy(instance.ctx,PublicInstanceProxyHandlers) // 代理的上下文
     if (setup) {
         const setupContext = createSetupContext(instance);
         let setupResult =  setup(instance.props,setupContext);  // 获取setup 返回值

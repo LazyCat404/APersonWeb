@@ -15,3 +15,10 @@ export const enum ShapeFlags {
     COMPONENT_KEPT_ALIVE = 1 << 9,
     COMPONENT = ShapeFlags.STATEFUL_COMPONENT | ShapeFlags.FUNCTIONAL_COMPONENT
 }
+
+const hasOwnProperty = Object.prototype.hasOwnProperty
+export const hasOwn = (
+    val: object,
+    key: string | symbol
+  ): key is keyof typeof val => hasOwnProperty.call(val, key)
+  

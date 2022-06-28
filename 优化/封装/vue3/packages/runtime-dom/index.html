@@ -38,7 +38,7 @@
                 }
             },
             render(proxy){
-                return h('h1',{onClick:this.add},`hello word${this.count}`)
+                return h('h1',{onClick:this.add},`hello word${this.count.value}`)
             }
         }
         let app = createApp(App,{title:'小红',age:18})
