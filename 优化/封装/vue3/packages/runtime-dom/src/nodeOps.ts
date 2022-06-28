@@ -25,7 +25,7 @@ export const nodeOps = {
      * @param tag dom 标签名
      * @returns 
      */
-    createdElement: (tag: keyof HTMLElementTagNameMap) => document.createElement(tag),
+    createElement: (tag: keyof HTMLElementTagNameMap) => document.createElement(tag),
 
     /**
      * 创建文本

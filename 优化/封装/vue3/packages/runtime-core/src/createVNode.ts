@@ -6,7 +6,7 @@ import { isObject, isString, ShapeFlags } from "@vue/shared"
  * @param props 虚拟节点的属性
  * @param children 虚拟节点的子节点
  */
-export function createVNode(type: any, props: any, children = null) {
+export function createVNode(type: any, props: any, children:any = null) {
     // 是对象，就是一个组件；是字符串，就是一个元素
     const shapeFlag = isObject(type) ?
         ShapeFlags.COMPONENT :
@@ -29,4 +29,17 @@ export function createVNode(type: any, props: any, children = null) {
         // vnode.shapeFlags = vnode.shapeFlags ||(isString(children) ? ShapeFlags.TEXT_CHILDREN : ShapeFlags.ARRAY_CHILDREN) 
     }
     return vnode
+}
+
+export function isVNode(vnode:any){
+    return !!vnode.__v_isVNode;
+}  
+ 
+export const Text = Symbol();
+
+export function normalizeVNode(vnode:any){
+    if(isObject(vnode)){
+        return vnode;
+    }
+    return createVNode(Text,null,String(vnode))
 }

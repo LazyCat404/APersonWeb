@@ -19,6 +19,7 @@
             const count = ref(0);
             const add = ()=>{
                 count.value++;
+                console.log(count.value)
             }
             return {count,add}
         }
@@ -38,7 +39,8 @@
                 }
             },
             render(proxy){
-                return h('h1',{onClick:this.add},`hello word${this.count.value}`)
+                return h('h1',{onClick:this.add,style:{color:'red'}},'hello word'+this.count.value,)
+                // return h('h1',{onClick:this.add},'hello word')
             }
         }
         let app = createApp(App,{title:'小红',age:18})
