@@ -43,3 +43,8 @@ export function normalizeVNode(vnode:any){
     }
     return createVNode(Text,null,String(vnode))
 }
+
+// 判断两个虚拟节点是否是同一节点
+export function isSameVNodeType(n1:any,n2:any){
+    return n1.type === n2.type && n1.key === n2.key;
+}
