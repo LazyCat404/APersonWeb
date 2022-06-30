@@ -35,7 +35,7 @@
                 let flag = ref(true);
                 setTimeout(() => {
                     flag.value = !flag.value
-                },1000)
+                },3000)
                 return {
                     count,
                     flag,
@@ -43,7 +43,7 @@
                 }
             },
             render(proxy){
-                return proxy.flag.value ? h('div',{style:{color:'red'}},'hello'): h('span',{style:{color:'green'}},'word')
+                return proxy.flag.value ? h('h1',{style:{color:'red'}}): h('h1',{style:{color:'green'}})
                 // return h('h1',{onClick:this.add,style:{color:'red'}},'hello word'+this.count.value,)
                 // return h('h1',{onClick:this.add},'hello word')
             }

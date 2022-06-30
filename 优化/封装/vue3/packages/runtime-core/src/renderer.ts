@@ -83,7 +83,7 @@ export function createRenderer(renderOptions: any) {
         if (shapeFlag & ShapeFlags.TEXT_CHILDREN) { // 文本
             hostSetElementText(el, children)
         } else if (shapeFlag & ShapeFlags.ARRAY_CHILDREN) { // 数组
-            mountChildren(children, container)
+            mountChildren(children, el)
         }
         // 处理属性
         if(props){
@@ -121,13 +121,67 @@ export function createRenderer(renderOptions: any) {
         }
     }
 
+    // 删除子节点
+    const unmountChildren = (children:any) => {
+        for(let i = 0;i<children.length;i++){
+            unmount(children[i])
+        }
+    }
+    /**
+     * 用新的子元素（n2）与老的子元素（n1）作比较，更新容器元素
+     * @param n1 原来的子元素
+     * @param n2 新的子元素
+     * @param el 挂载容器
+     */
+    const patchChildren = (n1: any, n2: any, el: Element) =>{
+        const c1 = n1 && n1.children;
+        const c2 = n2 && n2.children;
+        const prevShapeFlag  = n1.shapeFlag;
+        const shapeFlag = n2.shapeFlag;
+        /**
+         * c1、c2 子元素有那些类型
+         * 1. 之前是数组，现在是文本：删除老节点，替换上新的文本
+         * 2. 之前是数组，现在也是数组：比较两次子节点的差异（* diff 算法核心）
+         * 3. 之前是文本，现在是空：直接删除老文本
+         * 4. 之前是文本，现在也是文本：直接更新文本
+         * 5. 之前是文本，现在是数组：删除文本，替换上新的子节点
+         * 6. 之前是空，现在是文本/数组：插入新的文本/数组
+         */
+        if(shapeFlag & ShapeFlags.TEXT_CHILDREN){
+            // 现在是文本
+            if(prevShapeFlag & ShapeFlags.ARRAY_CHILDREN){
+                // 之前是数组
+                unmountChildren(c1);
+            }
+            if(c1 !== c2){
+                // 之前是文本/空
+                hostSetElementText(el,c2)
+            }
+        }else if(shapeFlag & ShapeFlags.ARRAY_CHILDREN){
+            // 现在是数组
+            if(prevShapeFlag & ShapeFlags.ARRAY_CHILDREN){
+                // 之前也是数组（最复杂、核心、diff算法）
+                
+            }else{
+                // 之前是文本/空
+                mountChildren(c2,el)
+            }
+        }else{
+            // 现在是空
+            hostSetElementText(el,'')
+        }
+    }
+
     const patchElement = (n1: any, n2: any) => {
-        let el = n2.el = n1.el; // 如果元素一致，则复用
+        // 2. 如果两个元素一致（类型和key相等），则比对俩个元素的属性（patchProps）
+        let el = n2.el = n1.el; 
         const oldProps = n1.props || {};
         const newProps = n2.props || {};
-        // 比较属性
-        patchProps(oldProps,newProps,el);
-        // 比较儿子
+       
+        patchProps(oldProps,newProps,el); // 比较属性
+
+        // 3. 比较两个元素的子元素：diff 算法，同级比较
+        patchChildren(n1,n2,el) 
     }
     const processElement = (n1: any, n2: any, container: Element) => {
         if (n1 == null) {
@@ -143,6 +197,7 @@ export function createRenderer(renderOptions: any) {
         if (n1 == null) {
             // 文本初始化
             let textNode = hostCreateText(n2.children);
+            n2.el = textNode;
             hostInsert(textNode, container)
         } else {
             // 文本更新
@@ -156,7 +211,7 @@ export function createRenderer(renderOptions: any) {
 
     const patch = (n1: any, n2: any, container: Element) => {
         if(n1 && !isSameVNodeType(n1,n2)){
-            // 如果前后元素不一致，直接替换
+            // 1. 先比较两个元素是否一致，不一致（div->span）直接删除（div）替换（span），不需要diff
             unmount(n1);
             n1 = null;
         }
