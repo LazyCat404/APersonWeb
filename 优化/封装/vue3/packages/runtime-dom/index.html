@@ -35,7 +35,7 @@
                 let flag = ref(true);
                 setTimeout(() => {
                     flag.value = !flag.value
-                },3000)
+                },1000)
                 return {
                     count,
                     flag,
@@ -43,9 +43,48 @@
                 }
             },
             render(proxy){
-                return proxy.flag.value ? h('h1',{style:{color:'red'}}): h('h1',{style:{color:'green'}})
-                // return h('h1',{onClick:this.add,style:{color:'red'}},'hello word'+this.count.value,)
-                // return h('h1',{onClick:this.add},'hello word')
+                // return proxy.flag.value ? 
+                //     h('ul',{},[
+                //         h('li',{key:'a'},'a'),
+                //         h('li',{key:'b'},'b'),
+                //     ]): 
+                //     h('ul',{},[
+                //         h('li',{key:'c'},'c'),
+                //         h('li',{key:'a'},'a'),
+                //         h('li',{key:'b'},'b'),
+                //     ])
+
+                // return proxy.flag.value ? 
+                //     h('ul',{},[
+                //         h('li',{key:'c'},'c'),
+                //         h('li',{key:'a'},'a'),
+                //         h('li',{key:'b'},'b'),
+                //     ]): 
+                //     h('ul',{},[
+                //         h('li',{key:'a'},'a'),
+                //         h('li',{key:'b'},'b'),
+                //     ])
+                return proxy.flag.value ? 
+                    h('ul',{},[
+                        h('li',{key:'a'},'a'),
+                        h('li',{key:'b'},'b'),
+                        h('li',{key:'c'},'c'),
+                        h('li',{key:'d'},'d'),
+                        h('li',{key:'e'},'e'),
+                        h('li',{key:'q'},'q'),
+                        h('li',{key:'f'},'f'),
+                        h('li',{key:'g'},'g'),
+                    ]): 
+                    h('ul',{},[
+                        h('li',{key:'a'},'a'),
+                        h('li',{key:'b'},'b'),
+                        h('li',{key:'e'},'e'),
+                        h('li',{key:'c'},'c'),
+                        h('li',{key:'d'},'d'),
+                        h('li',{key:'h'},'h'),
+                        h('li',{key:'f'},'f'),
+                        h('li',{key:'g'},'g'),
+                    ])
             }
         }
         let app = createApp(App,{title:'小红',age:18})

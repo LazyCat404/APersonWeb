@@ -75,7 +75,7 @@ export function createRenderer(renderOptions: any) {
      * @param vnode 虚拟节点
      * @param container 挂载容器
      */
-    const mountElement = (vnode: any, container: Element) => {
+    const mountElement = (vnode: any, container: Element, anchor:any) => {
         // vnode 中的children 可能是字符串、数组、对象数组、字符串串数组
         let { type, props, shapeFlag, children } = vnode;
         // 创建真实元素
@@ -91,7 +91,7 @@ export function createRenderer(renderOptions: any) {
                 hostPatchProp(el,key,null,props[key])
             }
         }
-        hostInsert(el, container)
+        hostInsert(el, container, anchor)
     }
 
     const processComponent = (n1: any, n2: any, container: Element) => {
@@ -125,6 +125,89 @@ export function createRenderer(renderOptions: any) {
     const unmountChildren = (children:any) => {
         for(let i = 0;i<children.length;i++){
             unmount(children[i])
+        }
+    }
+    const patchKeyedChildren = (c1: Array<any>, c2:  Array<any>, container: Element) => {
+        let e1 = c1.length - 1; // 旧节点结束位置
+        let e2 = c2.length - 1; // 新节点结束位置
+        let i = 0;  // 当前位置（指针），从头开始
+        // 从前往后比
+        while(i <= e1 && i<= e2){
+            const n1 = c1[i];    // 旧节点当前位置
+            const n2 = c2[i];    // 新节点当前位置 
+            if(isSameVNodeType(n1,n2)){
+                // 如果两个节点是相同节点，则递归比较子节点和自身属性
+                patch(n1,n2,container);
+            }else{
+                break;
+            }
+            i++;    // 指针向后移动
+        }
+        // 从后往前比
+        while(i <= e1 && i<= e2){
+            const n1 = c1[e1];    // 旧节点当前位置
+            const n2 = c2[e2 ];    // 新节点当前位置 
+            if(isSameVNodeType(n1,n2)){
+                // 如果两个节点是相同节点，则递归比较子节点和自身属性
+                patch(n1,n2,container);
+            }else{
+                break;
+            }
+            e1--;    
+            e2--;    
+        }
+        // 以下是新旧节点不一样多的情况
+        if(i > e1){ // 看i 和 e1 之间的关系，如果 i 大于 e1，说明有新增的元素（新的比旧得多）
+            if(i <= e2){    // i 和 e2 之间的内容就是新增的
+                // e2 的下一个元素，如果下一个个没有，则长度和当前长度相同，说明追加
+                const nextPos = e2 + 1; 
+                // 如果有，说明在头部插入，则取出下一个节点作为参照物
+                const anchor = nextPos < c2.length ? c2[nextPos].el : null; 
+                // anchor 为参照节点，以此判断向前插入向后插入
+                while(i <= e2){
+                    patch(null,c2[i],container,anchor);
+                    i++;
+                }
+            }
+        }else if(i > e2){   // 看i和额e2的关系，如果e2 比 i 小，说明：旧的多，新的少
+            while(i <= e1){
+                unmount(c1[i]);
+                i++;
+            }
+        }
+        // 未知序列对比
+        const s1 = i; // s1 -> e1 旧的孩子列表（排除首尾可复用后的子列表）
+        const s2 = i; // s2 -> e2 新的孩子列表（排除首尾可复用后的子列表）
+        // 根据新的节点，创造一个映射表，用老的列表去里边找，有则复用，没有则删除。多余的追加
+        const keyToNewIndexMap = new Map(); // 新的孩子列表索引和内容做的映射
+        for(let i = s2;i <= e2; i++){
+            const child = c2[i];
+            keyToNewIndexMap.set(child.key,i)
+        }
+        const toBepatched = e2 - s2 + 1;    // 新的孩子列表长度
+        const newIndexToOldMapIndex =  new Array(toBepatched).fill(0);   // 创建一个已知长度，并且每一项都填充为0的数组
+        for(let i = s1;i <= e1; i++){
+            const prevChild = c1[i];    // 拿到老的每一个节点
+            let newIndex = keyToNewIndexMap.get(prevChild.key);
+            if(newIndex == undefined){
+                // 在新列表中没有找到对应的旧的节点，则直接将这个节点从旧的中删除
+                unmount(prevChild)
+            }else {
+                newIndexToOldMapIndex[newIndex -s2] = i + 1 ; // +1 保证值不为0
+                // 比较节点
+                patch(prevChild,c2[newIndex],container);    
+            }
+        };
+        for(let i = toBepatched -1; i >= 0; i--){
+            let lastIndex = s2 + i;
+            let lastChild = c2[lastIndex];
+            let anchor = lastIndex + 1 < c2.length ? c2[lastIndex + 1].el : null
+            if(newIndexToOldMapIndex[i] === 0){ // 数组项为0，说明在旧得中没有找到对应项，这是一个新增的节点，需要创建真实节点后在插入
+                patch(null,lastChild,container,anchor); 
+            }else{
+                // 这里可以进行优化
+                hostInsert(lastChild.el,container,anchor); // 倒序插入
+            }
         }
     }
     /**
@@ -161,7 +244,7 @@ export function createRenderer(renderOptions: any) {
             // 现在是数组
             if(prevShapeFlag & ShapeFlags.ARRAY_CHILDREN){
                 // 之前也是数组（最复杂、核心、diff算法）
-                
+                patchKeyedChildren(c1,c2,el);
             }else{
                 // 之前是文本/空
                 mountChildren(c2,el)
@@ -183,12 +266,12 @@ export function createRenderer(renderOptions: any) {
         // 3. 比较两个元素的子元素：diff 算法，同级比较
         patchChildren(n1,n2,el) 
     }
-    const processElement = (n1: any, n2: any, container: Element) => {
+    const processElement = (n1: any, n2: any, container: Element,anchor?:any) => {
         if (n1 == null) {
-            // 组件初始化
-            mountElement(n2, container)
+            // 元素初始化
+            mountElement(n2, container, anchor)
         } else {
-            // 组件更新 diff
+            // 更新 diff
             patchElement(n1,n2)  // 更新两个元素之间的差异
         }
     }
@@ -209,7 +292,7 @@ export function createRenderer(renderOptions: any) {
         hostRemove(vnode.el)
     }
 
-    const patch = (n1: any, n2: any, container: Element) => {
+    const patch = (n1: any, n2: any, container: Element, anchor = null) => {
         if(n1 && !isSameVNodeType(n1,n2)){
             // 1. 先比较两个元素是否一致，不一致（div->span）直接删除（div）替换（span），不需要diff
             unmount(n1);
@@ -226,7 +309,7 @@ export function createRenderer(renderOptions: any) {
                 if (shapeFlag & ShapeFlags.COMPONENT) {
                     processComponent(n1, n2, container)   // 组件
                 } else if (shapeFlag & ShapeFlags.ELEMENT) {
-                    processElement(n1, n2, container);// 元素
+                    processElement(n1, n2, container, anchor);// 元素
                 }
         }
     }
