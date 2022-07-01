@@ -198,6 +198,8 @@ export function createRenderer(renderOptions: any) {
                 patch(prevChild,c2[newIndex],container);    
             }
         };
+        let queue = getSequence(newIndexToOldMapIndex)  // 得到的结果（索引）不需要变动
+        let j = queue.length - 1;   // 拿到最长递增子序列的末尾索引
         for(let i = toBepatched -1; i >= 0; i--){
             let lastIndex = s2 + i;
             let lastChild = c2[lastIndex];
@@ -205,8 +207,11 @@ export function createRenderer(renderOptions: any) {
             if(newIndexToOldMapIndex[i] === 0){ // 数组项为0，说明在旧得中没有找到对应项，这是一个新增的节点，需要创建真实节点后在插入
                 patch(null,lastChild,container,anchor); 
             }else{
-                // 这里可以进行优化
-                hostInsert(lastChild.el,container,anchor); // 倒序插入
+                if(i !== queue[j]){
+                    hostInsert(lastChild.el,container,anchor); // 倒序插入
+                }else{
+                    j--;    // 元素不许要移动
+                }
             }
         }
     }
@@ -326,5 +331,47 @@ export function createRenderer(renderOptions: any) {
         createApp: createAppAPI(render),
         render
     }
+}
+
+// 最长递增子序列
+function getSequence(arr: number[]): number[] {
+    const p = arr.slice()
+    const result = [0]
+    let i, j, u, v, c
+    const len = arr.length
+    for (i = 0; i < len; i++) {
+        const arrI = arr[i]
+        if (arrI !== 0) {
+            j = result[result.length - 1]
+            if (arr[j] < arrI) {
+                p[i] = j
+                result.push(i)
+                continue
+            }
+            u = 0
+            v = result.length - 1
+            while (u < v) {
+                c = (u + v) >> 1
+                if (arr[result[c]] < arrI) {
+                    u = c + 1
+                } else {
+                    v = c
+                }
+            }
+            if (arrI < arr[result[u]]) {
+                if (u > 0) {
+                    p[i] = result[u - 1]
+                }
+                result[u] = i
+            }
+        }
+    }
+    u = result.length
+    v = result[u - 1]
+    while (u-- > 0) {
+        result[u] = v
+        v = p[v]
+    }
+    return result
 }
 
