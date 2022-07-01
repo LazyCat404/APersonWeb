@@ -11,10 +11,7 @@
 <body>
     <div id="app"></div>
     <script> 
-
-
-
-        const {createApp,h,ref} = VueRuntimeDOM;
+        const {createApp,h,ref,Text,Fragment} = VueRuntimeDOM;
         function useCounter(){
             const count = ref(0);
             const add = ()=>{
@@ -33,9 +30,9 @@
                 //     return h('h1',{onClick:this.add},`hello word${this.count}`) 
                 // }
                 let flag = ref(true);
-                setTimeout(() => {
-                    flag.value = !flag.value
-                },1000)
+                // setTimeout(() => {
+                //     flag.value = !flag.value
+                // },1000)
                 return {
                     count,
                     flag,
@@ -64,27 +61,29 @@
                 //         h('li',{key:'a'},'a'),
                 //         h('li',{key:'b'},'b'),
                 //     ])
-                return proxy.flag.value ? 
-                    h('ul',{},[
-                        h('li',{key:'a'},'a'),
-                        h('li',{key:'b'},'b'),
-                        h('li',{key:'c'},'c'),
-                        h('li',{key:'d'},'d'),
-                        h('li',{key:'e'},'e'),
-                        h('li',{key:'q'},'q'),
-                        h('li',{key:'f'},'f'),
-                        h('li',{key:'g'},'g'),
-                    ]): 
-                    h('ul',{},[
-                        h('li',{key:'a'},'a'),
-                        h('li',{key:'b'},'b'),
-                        h('li',{key:'e'},'e'),
-                        h('li',{key:'c'},'c'),
-                        h('li',{key:'d'},'d'),
-                        h('li',{key:'h'},'h'),
-                        h('li',{key:'f'},'f'),
-                        h('li',{key:'g'},'g'),
-                    ])
+
+                // return proxy.flag.value ? 
+                //     h('ul',{},[
+                //         h('li',{key:'a'},'a'),
+                //         h('li',{key:'b'},'b'),
+                //         h('li',{key:'c'},'c'),
+                //         h('li',{key:'d'},'d'),
+                //         h('li',{key:'e'},'e'),
+                //         h('li',{key:'q'},'q'),
+                //         h('li',{key:'f'},'f'),
+                //         h('li',{key:'g'},'g'),
+                //     ]): 
+                //     h('ul',{},[
+                //         h('li',{key:'a'},'a'),
+                //         h('li',{key:'b'},'b'),
+                //         h('li',{key:'e'},'e'),
+                //         h('li',{key:'c'},'c'),
+                //         h('li',{key:'d'},'d'),
+                //         h('li',{key:'h'},'h'),
+                //         h('li',{key:'f'},'f'),
+                //         h('li',{key:'g'},'g'),
+                //     ])
+                return h(Fragment,[h('div','Hello'),h('h1','Word')])
             }
         }
         let app = createApp(App,{title:'小红',age:18})

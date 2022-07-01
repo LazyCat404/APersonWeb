@@ -35,7 +35,8 @@ export function isVNode(vnode:any){
     return !!vnode.__v_isVNode;
 }  
  
-export const Text = Symbol();
+export const Text = Symbol('Text');
+export const Fragment = Symbol('Fragment');
 
 export function normalizeVNode(vnode:any){
     if(isObject(vnode)){
@@ -48,3 +49,4 @@ export function normalizeVNode(vnode:any){
 export function isSameVNodeType(n1:any,n2:any){
     return n1.type === n2.type && n1.key === n2.key;
 }
+

@@ -2,7 +2,7 @@ import { ReactiveEffect } from '@vue/reactivity'
 import { ShapeFlags } from '@vue/shared'
 import { createAppAPI } from './apiCreateApp'
 import { createComponentInstance, setupComponent } from './component'
-import { isSameVNodeType, normalizeVNode, Text } from './vnode'
+import { Fragment, isSameVNodeType, normalizeVNode, Text } from './vnode'
 
 export function createRenderer(renderOptions: any) {
     const {
@@ -289,7 +289,16 @@ export function createRenderer(renderOptions: any) {
             hostInsert(textNode, container)
         } else {
             // 文本更新
-
+            patchElement(n1,n2);
+        }
+    }
+    const processFragment = (n1: any, n2: any, container: Element) => {
+        if (n1 == null) {
+            // 初始化
+            mountChildren(n2.children,container)
+        } else {
+            // 更新
+            patchChildren(n1,n2,container)
         }
     }
 
@@ -309,6 +318,9 @@ export function createRenderer(renderOptions: any) {
         switch (type) {
             case Text:
                 processText(n1, n2, container)
+                break;
+            case Fragment:
+                processFragment(n1, n2, container)
                 break;
             default:
                 if (shapeFlag & ShapeFlags.COMPONENT) {
