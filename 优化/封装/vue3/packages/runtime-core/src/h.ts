@@ -1,5 +1,5 @@
 import { isObject } from "@vue/shared"
-import { createVNode, isVNode } from "./createVNode"
+import { createVNode, isVNode } from "./vnode"
 
 /**
  * 

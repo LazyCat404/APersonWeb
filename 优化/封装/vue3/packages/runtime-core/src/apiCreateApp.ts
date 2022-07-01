@@ -1,4 +1,4 @@
-import { createVNode } from "./createVNode"
+import { createVNode } from "./vnode"
 
 
 export function createAppAPI(render: any) {
