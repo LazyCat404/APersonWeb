@@ -184,6 +184,36 @@ test().then(s => console.log(s),e => console.log(e))
 
 ![立即执行函数写异步等待](../Img/JS/立即执行函数写异步等待.png)
 
+#### 判断函数是否标记了 async
+
+> 要求是写一个方法`isAsyncFun`，用来判断传入的函数是否标记了**async**
+
+分析：
+
+1. 我们知道，**async** 函数回返回一个 `Promise`，因此可能会想到，调用传入的方法，判断返回值。这里有两个错误，首先，传入的方法作用未知，如果直接调用，可能会引起全局改变；其次即使没有标记 async 也可以返回`Promise`，比如：`function f(){ return new Promise() }`
+
+2. 通过原型对比：
+
+![普通函数 VS async函数](../Img/JS/普通函数VSasync函数.png)
+
+可以看到，二者构造函数不同，并且**async**标记的函数上有一个符号`Symbol(Symbol.toStringTag)`因此可以这样实现：
+
+```js
+function isAsyncFun (fun){
+    return fun[Symbol.toStringTag] === 'AsyncFunction'
+}
+```
+
+3. 我们在判断数组的时候经常用到`Object.prototype.toString.call()`这个方法，同理我们也可以用这个方法去判断 **async**函数，
+
+```js
+async function  a() {}
+function  b() {}
+
+console.log(Object.prototype.toString.call(a)); // [object AsyncFunction]
+console.log(Object.prototype.toString.call(b)); // [object Function]
+```
+
 ### [ArrayBuffer](https://es6.ruanyifeng.com/#docs/arraybuffer)
 
 > JS没有直接处理二进制数据的能力，但可以通过一个接口 —— `ArrayBuffer`，以数组的语法处理二进制数据（二进制数组），使得JS具有了直接操作内存（更快）的能力，并有可能与操作系统原生接口进行二进制通信。
