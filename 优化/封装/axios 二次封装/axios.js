@@ -242,8 +242,10 @@ export function post(url,...theArgs){
                         }else{
                             formData.append(`${item}`,JSON.stringify(params[item]))
                         }
-                    }else{
-                        formData.append(`${item}`,JSON.stringify(params[item]))
+                    } else if (typeof params[item] == 'string') {
+                        formData.append(`${item}`, params[item]);
+                    } else {
+                        formData.append(`${item}`, JSON.stringify(params[item]));
                     }
                 }
             }
@@ -408,8 +410,10 @@ export function put(url,...theArgs){
                         }else{
                             formData.append(`${item}`,JSON.stringify(params[item]))
                         }
-                    }else{
-                        formData.append(`${item}`,JSON.stringify(params[item]))
+                    } else if (typeof params[item] == 'string') {
+                        formData.append(`${item}`, params[item]);
+                    } else {
+                        formData.append(`${item}`, JSON.stringify(params[item]));
                     }
                 }
             }
