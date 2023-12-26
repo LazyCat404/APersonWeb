@@ -1,10 +1,6 @@
-# 让交互更简单 —— Lottie-api
+# 让交互更简单
 
-## lottie-web
-
-## Lottie-api
-
-### createAnimationApi()
+## createAnimationApi()
 
 > 它是`lottie-api`唯一方法，它将返回一个API实例，该实例通过传入的参数获取动画关键路径，并返回
 
@@ -12,7 +8,7 @@
 
 - 返回动画API实例
 
-### 附加方法
+## 附加方法
 
 > 由动画API实例调用
 

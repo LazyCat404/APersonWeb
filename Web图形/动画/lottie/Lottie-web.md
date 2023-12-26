@@ -1,32 +1,8 @@
-# 前端常用动效实现方式
-
-### CSS3 帧动画
-
-CSS 发展到了今天，它的强大几乎不是我们可以想像到的。合理的使用`Animation`可以实现很多神奇效果。配合设计师的导出图，前端使用序列帧即可实现动画效果。
-
-![序列帧](../Img/Web图形/css3序列帧.png)
-
-帧动画的缺点和局限性比较明显，导出图文件大，且在不同屏幕分辨率下可能会失真。
-
-### JS
-
-通过**JS**方法控制`DOM`，从而实现动画效果
-
-### GIF
-
-关于这个不想多废话了！！！
-
-### canvas/svg
-
-> 首先说明这篇文章不是在叙述`canvas/svg`的用法，所以并不过多赘述。
-
-`js + canvas/svg` 应该是目前前端实现复杂动效的最优方案了，但要注意`canvas`和`svg`二者之间区别，根据不同使用场景选取最优的实现方案。
-
-### Lottie 重点来了o(*￣▽￣*)ブ
+# 不炫，怎么够酷
 
 > Lottie一个适用于[Web](https://github.com/airbnb/lottie-web)，[Android](https://github.com/airbnb/lottie-android)，[iOS](https://github.com/airbnb/lottie-ios)，[React Native](https://github.com/airbnb/lottie-react-native)和[Windows](https://aka.ms/lottie) 的移动库，它可以使用`Bodymovin`解析以`json`格式导出的**Adobe After Effects**动画，并在移动设备上进行本地渲染！
 
-#### 安装
+## 安装
 
 关于lottie的用法，在网上可以查到很多，今天我们要说的是`vue  + lottie-web`
 
@@ -87,7 +63,7 @@ export default {
 </style>
 ```
 
-#### 基本用法
+## 基本用法
 
 ```js
 const animation = lottie.loadAnimation({
@@ -99,7 +75,7 @@ const animation = lottie.loadAnimation({
 })
 ```
 
-#### 常用方法
+## 常用方法
 
 - `animation.play()`：播放，从当前帧开始播放
 
@@ -135,7 +111,7 @@ const animation = lottie.loadAnimation({
 
     > 在`unmount`的时候，需要调用该方法
 
-#### 常用钩子
+## 常用钩子
 
 - `data_ready`：动画数据加载完毕
 
