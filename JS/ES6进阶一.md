@@ -1,10 +1,10 @@
 # 你以为结束了？天真！
 
-### module（模块）
+## module（模块）
 
 > ES6模块自动采用严格模式（严格模式相关可查看[常识](./常识.md)），其中，`this`的限制使得ES6模块中，顶层的`this`指向`undefined`，即不应该在顶层代码使用`this`
 
-#### export（输出/出口）
+### export（输出/出口）
 
 > `export`命令用于规定模块的对外接口
 
@@ -66,7 +66,7 @@ function foo() {
 }
 ```
 
-#### import（引入/入口）
+### import（引入/入口）
 
 > 通过`import`命令加载`export`定义的接口模块（不同js文件），有提升效果，会提升到整个模块最前边，如下：
 
@@ -107,7 +107,7 @@ console.log(test.name)  //正确打印
 test.heigt = '180cm'    
 ```
 
-#### export default 命令
+### export default 命令
 
 > 使用`import`命令的时候，用户需要知道所要加载的变量名/函数名，否则无法加载，为了解决这个问题就用到了`export default`命令，为模块指定默认输出（绝大多数第三方模块都是使用该命令）。
 
@@ -153,7 +153,7 @@ import MyClass from 'MyClass';
 let o = new MyClass();
 ```
 
-#### import()
+### import()
 
 > 阅读完上边，我们可以知道`import`被js引擎静态分析（编译时加载），因此它并**不能实现**按需加载
 
@@ -183,7 +183,7 @@ import('./myModule.js')
 });
 ```
 
-#### [模块化使用](http://www.ruanyifeng.com/blog/2020/08/how-nodejs-use-es6-module.html) 
+### [模块化使用](http://www.ruanyifeng.com/blog/2020/08/how-nodejs-use-es6-module.html) 
 
 > 因为现在浏览器还没有完全支持`import`,在无服务器支持的情况下，不同浏览器可能会出现不同的报错，因此需要引入第三方工具使得浏览器识别 ES6 语法 —— [bable](https://www.babeljs.cn/)
 
@@ -201,11 +201,11 @@ babel src -d dist
 ```
 PS：关于ConmmonJS 的使用，请移步[Node 模块化](../Node/常识.md)
 
-### Promise （承诺、保证、答应）
+## Promise （承诺、保证、答应）
 
 > `Promise` 是异步编程的一种解决方案，比传统的解决方案（回调函数和事件）更合理，更强大
 
-#### 特点
+### 特点
 
 > `Promise`可以理解为一个容器（或状态集），里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。从语法上说，`Promise` 是一个对象，通过它可以获取异步操作的消息
 
@@ -233,7 +233,7 @@ PS：关于ConmmonJS 的使用，请移步[Node 模块化](../Node/常识.md)
 
 > 如果某些事件**不断地反复**发生，一般来说，使用 [Stream](https://nodejs.org/api/stream.html) 模式是比部署`Promise`更好的选择。
 
-#### 基本用法
+### 基本用法
 
 > ES6 规定`Promise`对象是一个构造函数，用来生成`Promise`实列
 
@@ -273,7 +273,7 @@ pro.then(function(){
 console.log('我会第二个输出'); // 同步任务，执行完后才执行then方法回调函数
 ```
 
-#### Promise.prototype.then() 
+### Promise.prototype.then() 
 
 > 为 `Promise` 实例添加**状态改变时**的回调函数，第一个参数是`resolved`状态的回调函数，第二个参数（可选）是`rejected`状态的回调函数；返回一个**新的**`Promise`实列，因此可以采用链式写法调用
 
@@ -295,7 +295,7 @@ getJSON("/post/1.json").then(
 );
 ```
 
-#### Promise.prototype.catch()
+### Promise.prototype.catch()
 
 > 该方法是`.then(null, rejection)`或`.then(undefined, rejection)`的别名，用于指定**发生错误**时的回调函数
 
@@ -329,7 +329,7 @@ promise.then(function(data) { //cb
 });
 ```
 
-#### Promise.prototype.finally()
+### Promise.prototype.finally()
 
 > 该方法用于指定不管`Promise`对象最后状态如何，都会执行的操作
 
@@ -343,7 +343,7 @@ promise.then(result => {
 });
 ```
 
-#### Promise.all()
+### Promise.all()
 
 > 该方法用于将多个`Promise`实例，包装成一个新的`Promise`实例，参数必须有`Iterator`接口，返回`Promise`实例
 
@@ -358,7 +358,7 @@ const p = Promise.all([p1, p2, p3]); //p1、p2、p3都是 Promise 实例，如�
 */
 ```
 
-#### Promise.race()
+### Promise.race()
 
 > 该方法也是将多个`Promise`实例，包装成一个新的`Promise`实例（参考`Promise.all()`）
 
@@ -383,15 +383,15 @@ var P3 = new Promise((resolved,rejected) =>{
 Promise.race([P1,P2,P3]).then(data => console.log(data),err => console.log(err))    //谁先达到resolved,就用谁的
 ```
 
-#### Promise.allSettled()
+### Promise.allSettled()
 
 > 该方法接受一组`Promise`实例作为参数，包装成一个新的`Promise`实例。只有等到所有这些参数实例都返回结果，不管是`fulfilled`还是`rejected`，包装实例才会结束
 
-### Generator 函数（生成器）
+## Generator 函数（生成器）
 
 > 是ES6标准引入的**新的数据类型**。一个Generator看上去像一个函数，但可以**返回多次**，返回值是`Iterator`对象。
 
-#### Generator由function*定义（注意多出的 * 号，普通函数没有），并且除了return语句，还可以用yield(关键字)返回多次
+### Generator由function*定义（注意多出的 * 号，普通函数没有），并且除了return语句，还可以用yield(关键字)返回多次
 
 > `co`模块约定，`yield`命令后只能是`Thunk`函数或`Promise`对象
 
@@ -406,7 +406,7 @@ function* test(x) {
 
 ![test(1)结果截图](../Img/JS/Generator1.jpg)
 
-#### Generator调用：
+### Generator调用：
 
 > 通过上边的截图我们可以看出按照普通函数的调用方式`test(1)`，仅仅是创建了一个`Generator`对象，还没有去执行它
 
@@ -427,7 +427,7 @@ for (var x of test(1)) {
     console.log(x); //2 3   (并没有返回 return 的返回值)
 }
 ```
-#### Generator作用 ：
+### Generator作用 ：
 
 - `Generator`可以在执行过程中**多次返回**，所以它看上去就像一个可以**记住执行状态**的函数，利用这一点，写一个`Generator`就可以实现需要用面向对象才能实现的功能
 
@@ -462,7 +462,7 @@ catch (err) {
     handle(err);
 }
 ```
-#### 此外,作为对象属性时简写Generator
+### 此外,作为对象属性时简写Generator
 
 ```js
 var obj = {
@@ -478,8 +478,8 @@ var obj = {
 };
 ```
 
-### [下一篇：ES6进阶二](./ES6进阶二.md)
+## [下一篇：ES6进阶二](./ES6进阶二.md)
 
-### [上一篇：ES6基础二](./ES6基础二.md)
+## [上一篇：ES6基础二](./ES6基础二.md)
 
-### [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com)
+## [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com)

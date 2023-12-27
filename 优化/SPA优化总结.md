@@ -1,8 +1,8 @@
-### 首屏加载
+## 首屏加载
 
 > 首屏加载时间：浏览器相从相应用户输入网址，到首屏内容渲染完成的时间；通常，2s以内优秀，5s以内可以接受，10s以上不可容忍！！！
 
-#### 加载时间计算
+### 加载时间计算
 
 > 通过**DOMContentLoad**或**performance**来计算出首屏时间
 
@@ -25,7 +25,7 @@ performance.getEntriesByName("first-contentful-paint")[0].startTime
 
 ```
 
-#### 加载慢原因
+### 加载慢原因
 
 1. 网络延迟
 
@@ -35,7 +35,7 @@ performance.getEntriesByName("first-contentful-paint")[0].startTime
 
 4. 加载脚本时，渲染内容堵塞
 
-#### 解决方案
+### 解决方案
 
 1. 减小入口文件体积（路由懒加载）
 

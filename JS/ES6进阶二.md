@@ -1,10 +1,10 @@
 # 坚持到现在，不错~
 
-### async 函数
+## async 函数
 
 > 在[ES6进阶一](./ES6进阶一.md)中我们了解到了两种异步操作解决方案（`Promise`，`Generator`），ES2017 引入的`async` 则使异步操作更加简单方便（可以将其理解为`Generator`语法糖）。
 
-#### 基本用法
+### 基本用法
 
 > `Generator` 函数调用时，我们需要不断调用`.next()`（执行器），才能的到结果，这显得有些麻烦，`async` 函数就很好的解决了这一点（相当于自带执行器）。
 
@@ -84,7 +84,7 @@ runReadFile();
 ```
 > `await` **只能**配合`async`函数使用，在普通函数中会报错
 
-#### 返回值的变化理解
+### 返回值的变化理解
 
 > 前面说到，`async`函数会返回一个`Promise`对象，所以它可以有`.then()`回调方法。而`async`函数内部的`return`的值，就是`.then（）`的参数。
 
@@ -148,7 +148,7 @@ async function test(){
 test().then(s => console.log(s),e => console.log(e))
 ```
 
-#### 配合立即执行函数
+### 配合立即执行函数
 
 实际应用中的异步远远不是这样简单的异步，如果在关联上循环，就会更复杂，这里有一个小技巧，利用立即执行函数，去书写异步等待，不但能减少变量定义，还能使代码更清晰。
 
@@ -184,7 +184,7 @@ test().then(s => console.log(s),e => console.log(e))
 
 ![立即执行函数写异步等待](../Img/JS/立即执行函数写异步等待.png)
 
-#### 判断函数是否标记了 async
+### 判断函数是否标记了 async
 
 > 要求是写一个方法`isAsyncFun`，用来判断传入的函数是否标记了**async**
 
@@ -214,13 +214,13 @@ console.log(Object.prototype.toString.call(a)); // [object AsyncFunction]
 console.log(Object.prototype.toString.call(b)); // [object Function]
 ```
 
-### [ArrayBuffer](https://es6.ruanyifeng.com/#docs/arraybuffer)
+## [ArrayBuffer](https://es6.ruanyifeng.com/#docs/arraybuffer)
 
 > JS没有直接处理二进制数据的能力，但可以通过一个接口 —— `ArrayBuffer`，以数组的语法处理二进制数据（二进制数组），使得JS具有了直接操作内存（更快）的能力，并有可能与操作系统原生接口进行二进制通信。
 
 PS：这里的 `ArrayBuffer` 和`node`中的**缓存器**不完全一样哦！
 
-#### ArrayBuffer对象
+### ArrayBuffer对象
 
 > `ArrayBuffer`对象代表存储二进制数据的一段内存，不能直接读写，只能通过视图（以*指定格式*解读二进制数据）来读写。
 
@@ -255,7 +255,7 @@ PS：除了`slice`方法，`ArrayBuffer`不提供任何直接读写内存的方�
 
 - `ArrayBuffer.isView()`：（静态方法）表示参数是否为`ArrayBuffer`的视图（`TypedArray`或`DataView`）实例，返回布尔值。
 
-#### 视图
+### 视图
 
 > `ArrayBuffer`对象作为内存区域，可以存放多种类型的数据。同一段内存，不同类型数据有不同的解读方式，这就叫做**视图（view）**，每一种视图类型都是一个构造函数，利用这些构造函数生成的数组，具有普通数组的属性和方法。
 
@@ -315,8 +315,8 @@ TypedArray 数组的溢出处理规则，简单来说，就是抛弃溢出的位
 
 PS：每种视图都有一个`BYTES_PER_ELEMENT`属性，表示这种数据类型占据的字节数。
 
-### 装饰器[Decorator函数](https://juejin.im/post/59f1c484f265da431c6f8940)
+## 装饰器[Decorator函数](https://juejin.im/post/59f1c484f265da431c6f8940)
 
-### [上一篇：ES6进阶一](./ES6进阶一.md)
+## [上一篇：ES6进阶一](./ES6进阶一.md)
 
-### [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com)
+## [参考连接：阮一峰-ES6入门](http://es6.ruanyifeng.com)

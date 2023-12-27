@@ -1,11 +1,11 @@
 # 还没完呢
 
-### Set/Map 数据结构
+## Set/Map 数据结构
 
 > ES6 提供的新的数据结构`Set`（类似于数组）
 > ES6 还提供了`Map`数据结构（它类似于对象）
 
-#### Set
+### Set
 
 > `Set`本身是一个构造函数，用来生成`Set`数据结构
 
@@ -121,7 +121,7 @@ for (let x of set) {
 
 > `forEach`方法还可以有第二个参数，表示绑定处理函数内部的`this`对象。
 
-#### WeakSet（不能遍历，强行遍历会返回undefined）
+### WeakSet（不能遍历，强行遍历会返回undefined）
 
 > `WeakSet 结构`与 `Set` 类似，也是不重复的值的集合。但`WeakSet`的成员**只能是对象**，否则报错
 
@@ -136,7 +136,7 @@ ws.add(Symbol())
 
 **PS：`WeakSet`方法请参照`Set`（遍历方法除外，它不能遍历）**
 
-#### Map   
+### Map   
 
 > 类似于对象（键-值组合），但是‘键’的范围不限，各种类型甚至包括对象都可以（对象的键名只能是字符串）
 
@@ -189,7 +189,7 @@ map.get(['a']) // undefined ，两个方法看上去是针对同一个键，但�
 
 **PS：`Map`遍历方法请参照`Set`遍历方法，但需要注意的是，Map的遍历顺序就是插入顺序**
 
-#### WeakMap
+### WeakMap
 
 > `WeakMap`结构与`Map`结构类似，也是用于生成键值对的集合，但与Map有以下两点区别：
 
@@ -199,11 +199,11 @@ map.get(['a']) // undefined ，两个方法看上去是针对同一个键，但�
 
 > 应用场景：在网页的 `DOM` 元素上添加数据，就可以使用`WeakMap`结构。当该 `DOM` 元素被清除，其所对应的`WeakMap`记录就会自动被移除。
 
-### Proxy（代理/拦截）
+## Proxy（代理/拦截）
 
 > 对目标对象的读取、函数调用等操作进行**拦截**，然后进行操作处理。它不直接操作对象，而是像代理模式，通过对象的代理对象进行操作
 
-#### Proxy 构造函数，用来生成 Proxy 实例
+### Proxy 构造函数，用来生成 Proxy 实例
 
 ```js
 /*
@@ -222,19 +222,19 @@ var proxy = new Proxy({}, { // 目标对象设置为空对象
 ```
 **PS：handler没有设置任何拦截，那就等于直接通向原对象（访问`proxy`就等同于访问`target`）**
 
-#### 将Proxy对象，设置到object.proxy属性，就可以在object对象上调用
+### 将Proxy对象，设置到object.proxy属性，就可以在object对象上调用
 
 ```js
 var object = { proxy: new Proxy(target, handler) };
 ```
-#### Proxy 实例可以作为其它对象的原型
+### Proxy 实例可以作为其它对象的原型
 
 ```js
 //结合上边的 proxy 实例代码
 let obj = Object.create(proxy); // Object.create 在原型上创建对象
 obj.time // 35   obj 对象本身没有time属性，根据原型链读取proxy对象上属性，被拦截
 ```
-#### Proxy支持得拦截操作（实例方法）
+### Proxy支持得拦截操作（实例方法）
 
 > 以下方法参数对应：`target`< = >目标对象、`propKey`< = >属性名、`receiver`< = >`proxy`实例本身
 
@@ -355,7 +355,7 @@ var p = new Proxy(function () {}, {
 });
 new p(1)    // {value: 10}
 ```
-#### Proxy.revocable()
+### Proxy.revocable()
 
 > 该法返回一个可取消的 `Proxy` 实例，方法返回一个对象，该对象的`proxy`属性是`Proxy`实例，`revoke`属性是一个函数
 
@@ -373,11 +373,11 @@ proxy.foo // TypeError: Revoked
 ```
 > 应用场景：目标对象不允许直接访问，必须通过代理访问，一旦访问结束，就收回代理权，不允许再次访问
 
-### Reflect
+## Reflect
 
 > 与`Proxy`对象一样，为了操作对象二提供新的API
 
-#### 设计目的
+### 设计目的
 
 **1. 将Object对象的一些明显属于语言内部的方法（如：`Object.defineProperty`），放到Reflect对象上**
 
@@ -413,7 +413,7 @@ if (Reflect.defineProperty(target, property, attributes)) {
 
 > 不管`Proxy`怎么修改默认行为，你总可以在`Reflect`上获取默认行为
 
-#### 静态方法
+### 静态方法
 
 > 大部分与`Object对象`的同名方法的作用都是相同的，而且它与`Proxy对象`的方法是一一对应的
 
@@ -443,7 +443,7 @@ if (Reflect.defineProperty(target, property, attributes)) {
 
 - `Reflect.ownKeys (target)`：用于返回对象的所有属性
 
-#### Proxy简单实现观察者模式
+### Proxy简单实现观察者模式
 
 > 观察者模式即实现`observable`和`observe`两个函数：`observable`函数返回一个原始对象的`Proxy`代理，拦截赋值操作，触发充当观察者的各个函数
 
@@ -461,11 +461,11 @@ function set(target, key, value, receiver) {    //观察者
 }
 ```
 
-### Iterator（迭代器/遍历器）
+## Iterator（迭代器/遍历器）
 
 > 为各种不同的数据结构提供统一的访问机制，任何数据结构只要部署 Iterator 接口，就可以完成遍历操作；可结合[ES6进阶一](./ES6进阶一.md)中的`Generator`函数部分理解
 
-#### 作用
+### 作用
 
 1. 为各种数据结构，提供一个统一的、简便的访问接口
 
@@ -479,7 +479,7 @@ function set(target, key, value, receiver) {    //观察者
         console.log(key, value)
     }
     ```
-#### 默认 Iterator 接口
+### 默认 Iterator 接口
 
 > 默认的 `Iterator` 接口部署在数据结构的`Symbol.iterator`属性，或者说，一个数据结构只要具有`Symbol.iterator`属性，就可以认为是“可遍历的”。`Symbol.iterator`属性本身是一个函数，就是当前数据结构默认的遍历器生成函数。执行这个函数，就会返回一个遍历器，原生具备 Iterator 接口的数据结构有：
 
@@ -505,7 +505,7 @@ iter.next() // { value: 'a', done: false }
 iter.next() // { value: 'b', done: false }
 iter.next() // { value: undefined, done: true }
 ```
-#### 其它数据结构需要自己在Symbol.iterator属性上面部署Iterator接口
+### 其它数据结构需要自己在Symbol.iterator属性上面部署Iterator接口
 
 **1. 类部署 Iterator 接口的写法**
 
@@ -599,11 +599,11 @@ for (let item of iterable) {
 }
 ```
 
-### Class 类
+## Class 类
 
 > 在ES6中，`class`(类)作为**对象的模板**被引入，可以通过`class`关键字定义类；其本质就是`function`，只是它的出现让对象原型的写法更**清晰**，更像面向对象编程语法
 
-#### 类声明/类定义
+### 类声明/类定义
 
 > 1. 类声明**不会提升**，也就是需要先声明，在访问，否则会报错
 >
@@ -634,7 +634,7 @@ let Test = class Test{
 }
 ```
 
-#### constructor => 构造方法
+### constructor => 构造方法
 
 > * 看过上边我们会发现，每个类里都有一个 `constructor`的方法，其实`constructor`方法是类的默认方法，通过`new`命令生成对象实例时，自动调用该方法（默认返回实例对象 `this`）
 >
@@ -670,7 +670,7 @@ var obj=new Person("小明");
 console.log(obj.say()); // My name is 小明
 ```
 
-#### 类中的方法
+### 类中的方法
 
 > 类的所有方法都定义在类的`prototype`属性上面，在类的实例上面调用方法，其实就是调用原型上的方法
 
@@ -740,7 +740,7 @@ p.sum()       // I so cool
 Person.sum()    // 报错
 ```
 
-#### 继承
+### 继承
 
 > 子类`constructor`方法中必须有`super`，且必须出现在`this`之前：（因为）子类没有`this`，需要使用`super`方法，调用父类的构造函数，将`this`绑定到自己身上
 ```js
@@ -797,7 +797,7 @@ var b = new B()
 b.print()  // Name A （如果没有‘A.prototype.name = 'Name A'’ 则是 undefined）
 ```
 
-#### 其它
+### 其它
 
 **1. 立即执行class**
 
@@ -811,6 +811,6 @@ new class{
 > 普通函数：谁调用指向谁
 > 箭头函数：父级作用域
 
-### [下一篇：ES6进阶一](./ES6进阶一.md)
+## [下一篇：ES6进阶一](./ES6进阶一.md)
 
-### [上一篇：ES6基础一](./ES6基础一.md)
+## [上一篇：ES6基础一](./ES6基础一.md)

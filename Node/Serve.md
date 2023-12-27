@@ -3,7 +3,7 @@
 > 基础模块引入： <br>
   `const http = require('http');`
   
-### 构建 Web 服务器 
+## 构建 Web 服务器 
 
 ```js
 const http = require('http');   //引入http模块
@@ -49,7 +49,7 @@ http.createServer(function (request, response) {
 console.log('Server running at http://127.0.0.1:8081/');
 ```
 
-### [Content-Type](https://tool.oschina.net/commons)
+## [Content-Type](https://tool.oschina.net/commons)
 
 PS: 我们已经可以创建一个简单的**Web服务**，但是仍旧存在一些问题，在 `Chrome` 浏览器中，中文会出现乱码（有的浏览器的可能不会乱码），其实这是因为我们在响应请求的时候，没有告诉浏览器的正确的编码格式（浏览器会按照操作系统默认编码格式进行编码）。
 

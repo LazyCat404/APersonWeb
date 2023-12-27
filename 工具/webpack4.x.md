@@ -1,10 +1,10 @@
 # 好用的模块化打包工具
 
-### 模块化开发
+## 模块化开发
 
 > 模块更多详细可查看[ES6进阶一](./ES6进阶一.md)
 
-#### 模块
+### 模块
 
 ```js
 module.exports = {
@@ -14,18 +14,18 @@ module.exports = {
 }
 ```
 
-#### 引入
+### 引入
 
 ```js
 var tool = require('xx/xx.js'); //在需要引入模块的js文件内引入模块js
 tool.hello()    //调用模块内的hello方法
 ```
 
-### [webpack[4.x]](https://www.webpackjs.com/)
+## [webpack[4.x]](https://www.webpackjs.com/)
 
 > 使用 webpack 前需要安装[node.js](http://nodejs.cn/)
 
-#### 安装
+### 安装
 
 1. 全局安装
 
@@ -51,6 +51,7 @@ npm install --save-dev webpack
 //安装固定版本
 npm install --save-dev webpack@<version>
 ```
+
 > 多出名为：`node_modules`的文件夹，和`package-lock.json`文件
 
 4. 如果是` webpack 4+` 版本，还需要安装 CLI
@@ -75,7 +76,7 @@ npm run build
 ![](../Img/JS/build.png)
 
 
-#### loader[装载机]
+### loader[装载机]
 
 > `loader` 用于对模块的源代码进行**转换**。`loader` 可以使你在 `import` 或“加载”模块时**预处理**文件。因此，`loader` 类似于其他构建工具中的“**任务(task)**”，并提供了**处理前端构建步骤的强大方法**。`loader` 可以将文件从不同的语言（如 `TypeScript`）转换为 `JavaScript`，或将内联图像转换为 `data URL`。`loader` 甚至允许你直接在 `JavaScript` 模块中 `import` CSS文件。
 
@@ -92,9 +93,10 @@ module.exports = {
     }
 }
 ```
+
 在配置中我们使用了 `babel-loader`，但是我们并没有下载，（如果直接打包会报错）
 
-#### 常用`loader`
+### 常用`loader`
 
 **加载CSS**
 
@@ -102,6 +104,7 @@ module.exports = {
 //可在JS模块中 import CSS文件
 npm install --save-dev style-loader css-loader
 ```
+
 ```js
  rules: [
     {
@@ -120,6 +123,7 @@ npm install --save-dev style-loader css-loader
 //背景图、图标等图片处理，使它们轻松混到CSS中,也可以import引入图片
 npm install --save-dev file-loader
 ```
+
 ```js
 {
     test: /\.(png|svg|jpg|gif)$/,
@@ -141,6 +145,7 @@ npm install --save-dev file-loader
     ]
 }
 ```
+
 字体文件在**CSS文件**中的使用
 
 ```css
@@ -159,6 +164,7 @@ npm install --save-dev file-loader
 // CSV、TSV 和 XML import 引入
 npm install --save-dev csv-loader xml-loader
 ```
+
 ```js
 {
     test: /\.(csv|tsv)$/,
@@ -173,6 +179,7 @@ npm install --save-dev csv-loader xml-loader
     ]
 }
 ```
+
 > JSON 文件支持实际上是内置的，直接 impport 引入即可以
 
 ```js
@@ -185,10 +192,12 @@ import Data from './data.json'
 //没吃输出新的.HTML文件，并正确引入打包后的js文件
 npm install --save-dev html-webpack-plugin
 ```
+
 ```js
 //每次打包清空打包生成文件
 npm install clean-webpack-plugin --save-dev
 ```
+
 > 这两个一般都会方法一起用
 
 ```js
@@ -205,7 +214,7 @@ plugins: [
 ]
 ```
 
-#### webpack-dev-server
+### webpack-dev-server
 
 > 一个简单的 web 服务器，并且能够实时重新加载(live reloading)。
 
@@ -223,6 +232,7 @@ devServer: {
     contentBase: './dist'
 },
 ```
+
 ```js
 //package.json
 "scripts": {
@@ -236,6 +246,7 @@ devServer: {
 > 为了进行更多自定义设置来实现更多的需求，还需要进行以下配置
 
 3. 
+
 ```js
 npm install --save-dev express webpack-dev-middleware
 ```
@@ -248,6 +259,7 @@ output: {
     //……
 }
 ```
+
 新建**server.js**文件，用来配置`webpack-dev-server`相关(端口号、跨域等)
 
 ```js
@@ -283,7 +295,7 @@ app.listen(3000, function () {
 },
 ```
 
-#### 开发环境 & 生产环境
+### 开发环境 & 生产环境
 
 1. **开发环境** --> **development**
 
@@ -295,7 +307,7 @@ app.listen(3000, function () {
 
 > 具体配置省略，毕竟官网写的很清楚了
 
-#### 卸载
+### 卸载
 
 > 简单粗暴的按下边顺序执行一遍基本就卸载干净了
 

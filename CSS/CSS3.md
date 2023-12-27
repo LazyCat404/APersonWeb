@@ -2,11 +2,11 @@
 
 >其实CS3在平时我们就会经常用到，但是很多时候经常搞不懂到底那些是CS3傻傻的分不清楚，下面咱们就好好掰扯掰扯。
 
-### 新增属性
+## 新增属性
 
 >这些属性和用法都太过简单的，就不废话了，有些不常见的，具体说一下。
 
-#### 边框
+### 边框
 
 - `border-radius` : 边框圆角。
 
@@ -17,7 +17,7 @@
 > Internet Explorer 9+ 支持 `border-radius` 和 `box-shadow` 属性。Firefox、Chrome 以及 Safari 支持所有新的边框属性。
 > 注释：对于 `border-image`，Safari 5 以及更老的版本需要前缀 `-webkit-`。Opera 支持 `border-radius` 和 `box-shadow` 属性，但是对于 `border-image` 需要前缀 `-o-`。
 
-#### 文本字体
+### 文本字体
 
 - `text-shadow` : 文字阴影
 
@@ -39,11 +39,11 @@ div{
 ```
 > CS3的这些属性还有很多延申用法，可能平时并不常见，但思维不要紧限于此。
 
-### 2D or 3D （平移、旋转、缩放、翻转）
+## 2D or 3D （平移、旋转、缩放、翻转）
 
 > Opera 不支持 3D 转换
 
-#### translate() 
+### translate() 
 
 > 移动
 
@@ -57,7 +57,7 @@ div{
 
 - translateZ(z)
 
-#### rotate()
+### rotate()
 
 > 旋转,允许负值，元素将逆时针旋转。
 PS: `angle` 表示旋转角度，如：30deg ,即 30° 。
@@ -84,7 +84,7 @@ PS: `angle` 表示旋转角度，如：30deg ,即 30° 。
 
 > x、y、z的值取 0 或 1，0表示不旋转，1表示旋转；也就是说，rotateX(angle)相当于rotate3d(1,0,0,angle)。
 
-#### scale()
+### scale()
 
 > 缩放，根据给定的宽度（X 轴）和高度（Y 轴）参数，元素的尺寸会增加或减少，值等于 1 的时候，不进行缩放转换。
 PS: 1. 进行所方变换时子元素也进行相应变换；
@@ -100,7 +100,7 @@ PS: 1. 进行所方变换时子元素也进行相应变换；
 
 - scaleZ(z)
 
-#### skew() 
+### skew() 
 
 > 翻转，根据给定的水平线（X 轴）和垂直线（Y 轴）参数，翻转给定的角度。
 
@@ -110,11 +110,11 @@ PS: 1. 进行所方变换时子元素也进行相应变换；
 
 - skewY(angle)
 
-#### matrix() 和 matrix3d()
+### matrix() 和 matrix3d()
 
 > 组合方法
 
-### 变换transform
+## 变换transform
 
 > 无论是2D还是3D我们都需利用`transform`属性来完成转换。Internet Explorer 10、Firefox 以及 Opera 支持`transform` 属性；Chrome 和 Safari 需要前缀 `-webkit-`，Internet Explorer 9 需要前缀 `-ms-` 。
 
@@ -130,13 +130,14 @@ PS: 1. 进行所方变换时子元素也进行相应变换；
     -moz-transform: rotate(30deg);		/* Firefox */
 }
 ```
+
 JavaScript 语法
 
 ```js
 object.style.transform="rotate(30deg)"
 ```
 
-### 过渡 transition
+## 过渡 transition
 
 > Internet Explorer 9 以及更早的版本，不支持 transition 属性;
 JavaScript 语法：object.style.transition="width 2s"
@@ -198,13 +199,14 @@ div:hove{
     -o-transform:rotate(180deg); /* Opera */
 }
 ```
+
 > `transform`【定义变换】、`translate`【平移】、`transition`【过渡效果】
 
-### 帧动画 @keyframes
+## 帧动画 @keyframes
 
 > Internet Explorer 9，以及更早的版本，不支持 `@keyframe` 规则或 `animation` 属性。
 
-#### 帧动画
+### 帧动画
 
 > 0%、100%作为关键帧，必写！！！
 
@@ -229,7 +231,8 @@ div:hove{
     100%{}
 }
 ```
-#### animation
+
+### animation
 
 > 利用声明帧动画名作为`animation`属性值，将动画绑定到选择器。
 
@@ -272,9 +275,9 @@ div{
 }
 ```
 
-### [CSS 自定义属性（CSS 变量）](https://juejin.im/post/5dcbb766f265da4d3e174f6d)
+## [CSS 自定义属性（CSS 变量）](https://juejin.im/post/5dcbb766f265da4d3e174f6d)
 
-#### 常规使用
+### 常规使用
 
 ```css
 /* 在:root中声明自定义属性 */
@@ -288,7 +291,8 @@ body{
     color:var(--my-color);
 }
 ```
-#### calc() 计算
+
+### calc() 计算
 
 ```css
 :root {
@@ -299,10 +303,11 @@ body{
     font-size: calc(var(--block-font-size)*1.5);
 }
 ```
-#### [Generate Colors](../样例/Generate.html)
+
+### [Generate Colors](../样例/Generate.html)
 
 ![Generate Colors](../Img/CSS/Generate.gif)
-#### CSS to JS
+### CSS to JS
 
 ```css
 .breakpoints-data {
@@ -310,6 +315,7 @@ body{
     --tablet: 800px;
 }
 ```
+
 ```js
 const breakpointsData = document.querySelector('.breakpoints-data');
 
@@ -321,6 +327,6 @@ breakpointsData.style.setProperty('--phone', 'custom');
 
 ```
 
-### [上一篇：CSS基础](基础.md)
+## [上一篇：CSS基础](基础.md)
 
-### [下一篇：自适应布局](自适应.md)
+## [下一篇：自适应布局](自适应.md)
