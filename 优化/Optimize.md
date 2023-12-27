@@ -1,5 +1,17 @@
 # JS通用优化
 
+## 性能监控
+
+### 浏览器控制台 - Lighthouse
+
+> 实验室指标，只做参考
+
+![Lighthouse](../Img/碎片/Lighthouse.jpg)
+
+### 第三方库，收集数据
+
+- Web Vitals
+
 ## 在顶部声明
 
 把所有声明放在每段脚本或函数的顶部
