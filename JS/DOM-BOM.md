@@ -28,7 +28,7 @@
 
 3. 全局函数是 window 对象的方法。
 
-##  DOM --> Document Object Model(文档对象模型)
+## DOM --> Document Object Model(文档对象模型)
 
 > DOM 定义了表示和修改文档所需的方法（对象、这些对象的行为和属性以及这些对象之间的关系。）DOM 对象即为宿主对象，由浏览器厂商定义，用来操作 html和 xml 功能的一类对象的集合。
 
@@ -97,7 +97,7 @@
 
 - 元素节点 —— 1
 
-- 属性节点 —— 2 （基本没用，）
+- 属性节点 —— 2 （基本没用）
 
 - 文本节点 —— 3
 
@@ -154,6 +154,30 @@ div.appendChild(span)
 
 - `ele.getAttribute('属性名')` : 取属性
 
+### DOM 详细信息
+
+> DOM 的操作是非常多的，上边提到的只是一部分
+
+```js
+  // *.html
+  <div id='myDiv'>一个div</div>
+  <canvas id='myCanvas'></canvas>
+  // *.js 
+  const myDiv = document.getElementById('myDiv')
+  const myDiv = document.getElementById('myCanvas')
+  // 打印dom节点   
+  console.log(myDiv);
+  // 打印dom节点详细信息
+  console.log(myDiv.__proto__);
+  console.log(myCanvas);
+  console.log(myCanvas.__proto__);
+  /**
+   * 除dom.__proto__ 也可通过 [dom]、{dom} 的方式查看详细信息
+   */   
+```
+
+![dom-detaile](../Img/JS/dom_detail.jpg)
+
 ### DOM 事件
 
 #### ele.on事件名 = function(形参){}
@@ -199,7 +223,7 @@ div.addEventListener('click',function(){},false)    //匿名函数，无法解�
 
 **PS：若绑定匿名函数，则无法解除**
 
-### 事件处理模型：事件冒泡、捕获（不能同事存在）
+### 事件处理模型：事件冒泡、捕获（不能同时间存在）
 
 > 同一个对象的同一个事件类型，上面绑定了两个事件处理函数，一个符合冒泡，一个符合捕获，触发顺序：**先捕获，后冒泡**
 
@@ -349,77 +373,6 @@ div.addEventListener('click',function(){},false)    //匿名函数，无法解�
 - `screenY` ： 返回当某个事件被触发时，鼠标指针的垂直坐标
 
 - `shiftKey` ： 返回当事件被触发时，"SHIFT" 键是否被按下
-
-### json
-
-> JSON 是一种传输数据的格式（以对象为样板，本质上就是对象，但用途有区别，对象就是本地用的，json 是用来传输的）
-
-2. `JSON.parse()` ： string — > json
-
-> 一般情况，接受到的 json 其实是一段字符串，需要通过`JSON.parse()`转化成**json对象**使用
-
-3. `JSON.stringify()` ： json — > string
-
-### RegExp 正则表达式（其它语言也有）
-
-> 正则表达式：匹配特殊字符或有特殊搭配原则的字符的最佳选择
-
-#### 创建一个正则表达式
-
-1. 字面量【建议】
-
-```js
-var reg = /abc/; 
-var str = 'abcde';
-reg.test(str);
-//正则表达式测验字符串（这里检验的字符串是 str）是否含有规定的片段（这里指的是 abc）
-```
-
-2. 构造函数
-
-`var reg = new RegExp('abc');`
-
-#### 增加属性
-
-- `i` ： 忽视大小写，例：`var reg = /abce/i;`
-
-- `g` ： 全局匹配，例：`var reg = /abce/g;`
-
-- `m` ： 多行匹配
-
-- `^a` ： 必须是这个 `a` 开头
-
-#### 常用方法
-
-- `reg.test( )` ： 只能判断这个字符串有没有符合要求的片段，返回结果只有 true 和 false
-
-- `str.match( )` ： 可以把所有东西都匹配出来，并返回，比上一种方法更直观，还能告诉返回了多少个
-
-#### 元字符(表达式里面可以写元字符)
-
-> 元字符（Metacharacter）是拥有特殊含义的字符
-
-- `\w === [0-9A-z_]`
-
-- `\W === [^\w]` 
-
-- `\d === [0-9]`
-
-- `\D ==== [^\d]`  
-
-- `\D ==== [^0-9]`
-
-- `\t` ： 制表符(tab character) 
-
-- `\r` ： 回车符(carriage return character) 
-
-- `\n` ： 换行符 (new line character) 
-
-- `\v` ： 垂直换行符 (vertical tab character) 
-
-- `\f` ： 换页符 (form feed character) 
-
-> 正则就不多说了，需要的时候可以去查
 
 ## [下一篇：进阶提升一](进阶提升一.md)
 
