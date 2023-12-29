@@ -123,6 +123,7 @@ PS: 1. 进行所方变换时子元素也进行相应变换；
 ```css
 /* 基本用法举例*/
 {
+    text-transform: uppercase;          /* 转大写 */
     transform: rotate(30deg);
     -ms-transform: rotate(30deg);		/* IE 9 */
     -webkit-transform: rotate(30deg);	/* Safari and Chrome */

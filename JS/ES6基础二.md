@@ -682,7 +682,7 @@ PS：有关原型方法/静态方法/实例方法的相关了解可在[常识](.
 
 ```js
 class Person {
-    static sum(a, b) {  //静态方法,ES6 中规定，Class 内部只有静态方法，（没有）静态属性有规范，浏览器没有实现，。
+    static sum(a, b) {  //静态方法,ES6 中规定，Class 内部只有静态方法，（没有）静态属性有规范，浏览器没有实现。
         console.log(a + b)
     }
 }
@@ -690,6 +690,7 @@ var p = new Person()    //p 是 Person 类的实例对象
 Person.sum(1, 2)  // 3
 p.sum(1,2)  //  TypeError p.sum is not a function
 ```
+
 **2. 原型方法**
 
 > 原型方法可以通过**实例对象调用**，但不能通过类名调用，会报错
@@ -723,6 +724,7 @@ var obj=new Person("小明");
 console.log(obj.getName());//小明
 console.log(obj.getAge());//18
 ```
+
 **3. 实例方法**
 
 > 实例方法可以通过**实例对象调用**，但同样不能通过类名调用，会报错
@@ -773,6 +775,7 @@ class B extends A {
 var b = new B()
 b.print()   //小红
 ```
+
 > `super`作为对象，在普通方法中，指向**父类的原型对象**，在静态方法中，指向**父类**，此外还具有绑定子类`this`的功能
 
 ```js
@@ -806,6 +809,7 @@ new class{
     //……
 }
 ```
+
 **2. this指向**
 
 > 普通函数：谁调用指向谁
