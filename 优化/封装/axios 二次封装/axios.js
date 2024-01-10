@@ -4,6 +4,11 @@ import axios from 'axios';
 // 声明一个 Map 用于存储每个请求的标识 和 取消函数
 const pending = new Map();
 
+/**
+ * @description 自定义axios请求对象
+ * @param { * }customOptions 自定义配置
+ * @returns axios请求对象
+ */
 function myAxios(customOptions) {
     let baseURL = 'http://172.27.122.202:9030'
     const myAxios = axios.create({
@@ -50,8 +55,8 @@ function myAxios(customOptions) {
 };
 
 /**
- * http response 错误处理
- * @param {Number} status 状态码
+ * @description http response 错误处理
+ * @param { Number } status 状态码
  */
 function errorHandling(status){
     switch (status) {
@@ -65,9 +70,10 @@ function errorHandling(status){
             console.log('通用错误');
     }
 }
+
 /**
- * 添加请求
- * @param {Object} config AxiosRequestConfig
+ * @description 添加请求
+ * @param { Object } config AxiosRequestConfig
  */
 function addPending(config){
     let key = pendingKey(config)
@@ -79,9 +85,10 @@ function addPending(config){
         }
     })
 };
+
 /**
- * 移除请求
- * @param {Object} config  AxiosRequestConfig / AxiosResponseConfig
+ * @description 移除请求
+ * @param { Object } config  AxiosRequestConfig
  */
 function removePending(config) {
     let key = pendingKey(config)
@@ -94,11 +101,11 @@ function removePending(config) {
         pending.delete(key)
     }
 };
+
 /**
- * 为每个请求生成唯一标识key
- * 当请求方式（method）、请求路径（url）、请求参数（params/data）都相同时，可以视为同一个请求
- * @param {*} config
- * @returns
+ * @description 为每个请求生成唯一标识key；当请求方式（method）、请求路径（url）、请求参数（params/data）都相同时，视为同一个请求
+ * @param { * } config
+ * @returns 唯一标识
  */
 function pendingKey(config) {
     let { url, method, params, data } = config
@@ -111,11 +118,12 @@ function pendingKey(config) {
 };
 
 /**
- * get 方法，对应 get 请求
- * @param {String} url 接口地址
- * @param {Object Array} params [请求参数]：只能作为第二个参数
- * @param {String} responseType [返回值类型]：（多用于下载）blob
- * @param {Object} customOptions [自定义设置]：不可作为前两个参数
+ * @description get 方法，对应 get 请求
+ * @param { String } url 接口地址
+ * @param { Object | Array } params [请求参数]：只能作为第二个参数
+ * @param { String } responseType [返回值类型]：（多用于下载）blob
+ * @param { Object } customOptions [自定义设置]：不可作为前两个参数
+ * @returns get请求的Promise处理
  */
 export function get(url,...theArgs){
     // 参数处理
@@ -163,12 +171,13 @@ export function get(url,...theArgs){
 }
 
 /**
- * post 方法，对应 post 请求
- * @param {String} url 接口地址
- * @param {Object Array File} params [请求参数]：只能作为第二个参数
- * @param {String} requestType [请求参数类型]：josn（默认）、query、file、data
- * @param {String} responseType [返回值类型]：（多用于下载）blob，请参数类型为query时失效
- * @param {Object} customOptions [自定义设置]：不可作为前两个参数
+ * @description post 方法，对应 post 请求
+ * @param { String } url 接口地址
+ * @param { Object | Array | File } params [请求参数]：只能作为第二个参数
+ * @param { String } requestType [请求参数类型]：josn（默认）、query、file、data
+ * @param { String } responseType [返回值类型]：（多用于下载）blob，请参数类型为query时失效
+ * @param { Object } customOptions [自定义设置]：不可作为前两个参数
+ * @returns post请求的Promise处理
  */
 export function post(url,...theArgs){
     // 参数处理
@@ -271,11 +280,12 @@ export function post(url,...theArgs){
 }
 
 /**
- * del 方法，对应 delete 请求
+ * @description del 方法，对应 delete 请求
  * @param {String} url 接口地址
  * @param {Object Array} params [请求参数]：只能作为第二个参数
  * @param {String} requestType [请求参数类型]：josn（默认）、query
  * @param {Object} customOptions [自定义设置]：不可作为前两个参数
+ * @returns del请求的Promise处理
  */
 export function del(url,...theArgs){
     // 参数处理
@@ -331,12 +341,13 @@ export function del(url,...theArgs){
 }
 
 /**
- * put 方法，对应 put 请求
- * @param {String} url 接口地址
- * @param {Object Array File} params [请求参数]：只能作为第二个参数
- * @param {String} requestType [请求参数类型]：josn（默认）、query、file、data
- * @param {String} responseType [返回值类型]：（多用于下载）blob，请参数类型为query时失效
- * @param {Object} customOptions [自定义设置]：不可作为前两个参数
+ * @description put 方法，对应 put 请求
+ * @param { String } url 接口地址
+ * @param { Object | Array | File } params [请求参数]：只能作为第二个参数
+ * @param { String } requestType [请求参数类型]：josn（默认）、query、file、data
+ * @param { String } responseType [返回值类型]：（多用于下载）blob，请参数类型为query时失效
+ * @param { Object } customOptions [自定义设置]：不可作为前两个参数
+ * @returns put请求的Promise处理
  */
 export function put(url,...theArgs){
     // 参数处理

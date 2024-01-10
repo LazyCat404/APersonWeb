@@ -4,15 +4,21 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import QS from 'qs';
 
-// 声明一个 Map 用于存储每个请求的标识 和 取消函数
-const pending = new Map();
-
-interface res{
+// 接口返回值类型
+interface res {
   msg: string;
   code: number;
   data: any;
 }
 
+// 声明一个 Map 用于存储每个请求的标识 和 取消函数
+const pending = new Map();
+
+/**
+ * @description 自定义axios请求对象
+ * @param { * }customOptions 自定义配置
+ * @returns axios请求对象
+ */
 function myAxios(customOptions: unknown) {
   let baseURL = '';
   // 线上环境基础地址（vite 写法）
@@ -75,8 +81,8 @@ function myAxios(customOptions: unknown) {
 }
 
 /**
- * http response 错误处理
- * @param {Number} status 状态码
+ * @description http response 错误处理
+ * @param { Number } status 状态码
  */
 function errorHandling(status: number) {
   switch (status) {
@@ -90,9 +96,10 @@ function errorHandling(status: number) {
       console.log('通用错误');
   }
 }
+
 /**
- * 添加请求
- * @param {Object} config AxiosRequestConfig
+ * @description 添加请求
+ * @param { Object } config AxiosRequestConfig
  */
 function addPending(config: AxiosRequestConfig) {
   const key = pendingKey(config);
@@ -106,9 +113,10 @@ function addPending(config: AxiosRequestConfig) {
       }
     });
 }
+
 /**
- * 移除请求
- * @param {Object} config  AxiosRequestConfig
+ * @description 移除请求
+ * @param { Object } config  AxiosRequestConfig
  */
 function removePending(config: AxiosRequestConfig) {
   const key = pendingKey(config);
@@ -121,11 +129,11 @@ function removePending(config: AxiosRequestConfig) {
     pending.delete(key);
   }
 }
+
 /**
- * 为每个请求生成唯一标识key
- * 当请求方式（method）、请求路径（url）、请求参数（params/data）都相同时，可以视为同一个请求
- * @param {*} config
- * @returns
+ * @description 为每个请求生成唯一标识key；当请求方式（method）、请求路径（url）、请求参数（params/data）都相同时，视为同一个请求
+ * @param { * } config
+ * @returns 唯一标识
  */
 function pendingKey(config: AxiosRequestConfig) {
   const { url, method, params } = config;
@@ -139,11 +147,12 @@ function pendingKey(config: AxiosRequestConfig) {
 }
 
 /**
- * get 方法，对应 get 请求
- * @param {String} url 接口地址
- * @param {Object Array} params [请求参数]：只能作为第二个参数
- * @param {String} responseType [返回值类型]：（多用于下载）blob
- * @param {Object} customOptions [自定义设置]：不可作为前两个参数
+ * @description get 方法，对应 get 请求
+ * @param { String } url 接口地址
+ * @param { Object | Array } params [请求参数]：只能作为第二个参数
+ * @param { String } responseType [返回值类型]：（多用于下载）blob
+ * @param { Object } customOptions [自定义设置]：不可作为前两个参数
+ * @returns get请求的Promise处理
  */
 export function get(url: string, ...theArgs: any[]): Promise<res> {
   // 参数处理
@@ -196,12 +205,13 @@ export function get(url: string, ...theArgs: any[]): Promise<res> {
 }
 
 /**
- * post 方法，对应 post 请求
- * @param {String} url 接口地址
- * @param {Object Array File} params [请求参数]：只能作为第二个参数
- * @param {String} requestType [请求参数类型]：josn（默认）、query、file、data
- * @param {String} responseType [返回值类型]：（多用于下载）blob，请参数类型为query时失效
- * @param {Object} customOptions [自定义设置]：不可作为前两个参数
+ * @description post 方法，对应 post 请求
+ * @param { String } url 接口地址
+ * @param { Object | Array | File } params [请求参数]：只能作为第二个参数
+ * @param { String } requestType [请求参数类型]：josn（默认）、query、file、data
+ * @param { String } responseType [返回值类型]：（多用于下载）blob，请参数类型为query时失效
+ * @param { Object } customOptions [自定义设置]：不可作为前两个参数
+ * @returns post请求的Promise处理
  */
 export function post(url: string, ...theArgs: any[]): Promise<res> {
   // 参数处理
@@ -332,11 +342,12 @@ export function post(url: string, ...theArgs: any[]): Promise<res> {
 }
 
 /**
- * del 方法，对应 delete 请求
+ * @description del 方法，对应 delete 请求
  * @param {String} url 接口地址
  * @param {Object Array} params [请求参数]：只能作为第二个参数
  * @param {String} requestType [请求参数类型]：josn（默认）、query
  * @param {Object} customOptions [自定义设置]：不可作为前两个参数
+ * @returns del请求的Promise处理
  */
 export function del(url: string, ...theArgs: any[]): Promise<res> {
   // 参数处理
@@ -400,12 +411,13 @@ export function del(url: string, ...theArgs: any[]): Promise<res> {
 }
 
 /**
- * put 方法，对应 put 请求
- * @param {String} url 接口地址
- * @param {Object Array File} params [请求参数]：只能作为第二个参数
- * @param {String} requestType [请求参数类型]：josn（默认）、query、file、data
- * @param {String} responseType [返回值类型]：（多用于下载）blob，请参数类型为query时失效
- * @param {Object} customOptions [自定义设置]：不可作为前两个参数
+ * @description put 方法，对应 put 请求
+ * @param { String } url 接口地址
+ * @param { Object | Array | File } params [请求参数]：只能作为第二个参数
+ * @param { String } requestType [请求参数类型]：josn（默认）、query、file、data
+ * @param { String } responseType [返回值类型]：（多用于下载）blob，请参数类型为query时失效
+ * @param { Object } customOptions [自定义设置]：不可作为前两个参数
+ * @returns put请求的Promise处理
  */
 export function put(url: string, ...theArgs: any[]): Promise<res> {
   // 参数处理
