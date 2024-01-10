@@ -343,10 +343,10 @@ export function post(url: string, ...theArgs: any[]): Promise<res> {
 
 /**
  * @description del 方法，对应 delete 请求
- * @param {String} url 接口地址
- * @param {Object Array} params [请求参数]：只能作为第二个参数
- * @param {String} requestType [请求参数类型]：josn（默认）、query
- * @param {Object} customOptions [自定义设置]：不可作为前两个参数
+ * @param { String } url 接口地址
+ * @param { Object | Array } params [请求参数]：只能作为第二个参数
+ * @param { String } requestType [请求参数类型]：josn（默认）、query
+ * @param { Object } customOptions [自定义设置]：不可作为前两个参数
  * @returns del请求的Promise处理
  */
 export function del(url: string, ...theArgs: any[]): Promise<res> {
