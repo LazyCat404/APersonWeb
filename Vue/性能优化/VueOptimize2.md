@@ -1,6 +1,6 @@
 # Vue性能优化详解（二）
 
->本文主要从Webpack角度讲述vue性能优化。
+> 本文主要从Webpack角度讲述vue性能优化。
 
 ## 1. Webpack 对图片进行压缩
 
